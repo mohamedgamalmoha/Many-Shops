@@ -39,7 +39,7 @@ class Restaurant(models.Model):
         return self.name
 
     def is_owner(self, user) -> bool:
-        return self.name == user
+        return self.owner == user
 
 
 class HeaderImage(models.Model):
