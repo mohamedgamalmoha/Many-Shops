@@ -1,50 +1,44 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant
+from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, ProductVariant
+from .base import PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin
 
 
-class HeaderImageInlineCustomerAdmin(admin.StackedInline):
+class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
+    extra = 1
+    min_num = 1
+    max_num = 5
+    can_delete = True
+    show_change_link = True
+    readonly_fields = ('create_at', 'update_at')
+
+
+class HeaderImageInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
     model = HeaderImage
-    extra = 1
-    min_num = 1
-    max_num = 5
-    can_delete = True
-    show_change_link = True
-    readonly_fields = ('create_at', 'update_at')
 
 
-class SocialMediaLInlineCustomerAdmin(admin.StackedInline):
+class SocialMediaLInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
     model = SocialMediaLink
-    extra = 1
-    min_num = 1
-    max_num = 5
-    can_delete = True
-    show_change_link = True
-    readonly_fields = ('create_at', 'update_at')
 
 
-class ProductVariantInlineCustomerAdmin(admin.StackedInline):
+class ProductVariantInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
     model = ProductVariant
-    extra = 1
-    min_num = 1
-    max_num = 5
-    can_delete = True
-    show_change_link = True
-    readonly_fields = ('create_at', 'update_at')
 
 
-class ProductInlineCustomerAdmin(admin.StackedInline):
-    model = Product
-    extra = 1
-    min_num = 1
-    max_num = 5
-    can_delete = True
-    show_change_link = True
-    readonly_fields = ('create_at', 'update_at')
+class BaseRestaurantOwnerFilterCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin):
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "restaurant":
+            kwargs["queryset"] = Restaurant.objects.filter(owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(restaurant__owner=request.user)
 
 
-class HeaderImageCustomerAdmin(admin.ModelAdmin):
+class HeaderImageCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -53,35 +47,8 @@ class HeaderImageCustomerAdmin(admin.ModelAdmin):
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
-    def has_view_or_change_permission(self, request, obj=None):
-        return True
 
-    def has_module_permission(self, request):
-        return True
-
-    def has_view_permission(self, request, obj=None):
-        return True
-
-    def has_add_permission(self, request):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def has_change_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "restaurant":
-            kwargs["queryset"] = Restaurant.objects.filter(owner=request.user)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.filter(restaurant__owner=request.user)
-
-
-class SocialMediaLinkCustomerAdmin(admin.ModelAdmin):
+class SocialMediaLinkCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -90,35 +57,8 @@ class SocialMediaLinkCustomerAdmin(admin.ModelAdmin):
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
-    def has_view_or_change_permission(self, request, obj=None):
-        return True
 
-    def has_module_permission(self, request):
-        return True
-
-    def has_view_permission(self, request, obj=None):
-        return True
-
-    def has_add_permission(self, request):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def has_change_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "restaurant":
-            kwargs["queryset"] = Restaurant.objects.filter(owner=request.user)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.filter(restaurant__owner=request.user)
-
-
-class RestaurantCustomerAdmin(admin.ModelAdmin):
+class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
@@ -130,25 +70,10 @@ class RestaurantCustomerAdmin(admin.ModelAdmin):
     )
     inlines = [HeaderImageInlineCustomerAdmin, SocialMediaLInlineCustomerAdmin]
 
-    def has_view_or_change_permission(self, request, obj=None):
-        return obj is None or (obj and obj.owner == request.user)
-
-    def has_module_permission(self, request):
-        return True
-
-    def has_view_permission(self, request, obj=None):
-        return obj is None or (obj and obj.owner == request.user)
-
     def has_add_permission(self, request):
         if self.get_queryset(request).count() >= 1:
             return False
         return True
-
-    def has_delete_permission(self, request, obj=None):
-        return obj is None or (obj and obj.owner == request.user)
-
-    def has_change_permission(self, request, obj=None):
-        return obj is None or (obj and obj.owner == request.user)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -160,43 +85,7 @@ class RestaurantCustomerAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-class ProductVariantCustomerAdmin(admin.ModelAdmin):
-    list_display = ['name', 'create_at', 'update_at']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('product', 'name', 'price')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-
-    def has_view_or_change_permission(self, request, obj=None):
-        return True
-
-    def has_module_permission(self, request):
-        return True
-
-    def has_view_permission(self, request, obj=None):
-        return True
-
-    def has_add_permission(self, request):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def has_change_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "product":
-            kwargs["queryset"] = Product.objects.filter(product__restaurant__owner=request.user)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.filter(product__category__restaurant__owner=request.user)
-
-
-class ProductCustomerAdmin(admin.ModelAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -206,24 +95,6 @@ class ProductCustomerAdmin(admin.ModelAdmin):
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductVariantInlineCustomerAdmin]
-
-    def has_view_or_change_permission(self, request, obj=None):
-        return True
-
-    def has_module_permission(self, request):
-        return True
-
-    def has_view_permission(self, request, obj=None):
-        return True
-
-    def has_add_permission(self, request):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def has_change_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "category":
@@ -235,7 +106,7 @@ class ProductCustomerAdmin(admin.ModelAdmin):
         return queryset.filter(category__restaurant__owner=request.user)
 
 
-class CategoryCustomerAdmin(admin.ModelAdmin):
+class CategoryCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -243,31 +114,3 @@ class CategoryCustomerAdmin(admin.ModelAdmin):
         (_('Main Info'), {'fields': ('restaurant', 'name', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [ProductInlineCustomerAdmin]
-
-    def has_view_or_change_permission(self, request, obj=None):
-        return True
-
-    def has_module_permission(self, request):
-        return True
-
-    def has_view_permission(self, request, obj=None):
-        return True
-
-    def has_add_permission(self, request):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def has_change_permission(self, request, obj=None):
-        return obj is None or obj.is_owner(request.user)
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "restaurant":
-            kwargs["queryset"] = Restaurant.objects.filter(owner=request.user)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.filter(restaurant__owner=request.user)
