@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant
+from ..constants import DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
 
 
 User = get_user_model()
@@ -21,6 +22,14 @@ class HeaderImageSerializers(serializers.ModelSerializer):
         model = HeaderImage
         exclude = ('restaurant', )
         read_only_fields = ('create_at', 'update_at')
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        if not representation.get('image', None):
+            representation['image'] = DEFAULT_HEADER_IMAGE_URL
+
+        return representation
 
 
 class SocialMediaLinkSerializers(serializers.ModelSerializer):
@@ -65,6 +74,15 @@ class ProductSerializers(FlexFieldsModelSerializer):
         expandable_fields = {
             'variants': (ProductVariantSerializers, {'many': True, "omit": ["product"]}),
         }
+
+    def to_representation(self, instance):
+        # Use the original to_representation method to get the initial representation
+        representation = super().to_representation(instance)
+
+        if not representation.get('image', None):
+            representation['image'] = DEFAULT_PRODUCT_IMAGE_URL
+
+        return representation
 
 
 class CategorySerializer(FlexFieldsModelSerializer):
