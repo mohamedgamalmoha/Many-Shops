@@ -8,6 +8,13 @@ from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product
 User = get_user_model()
 
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        exclude = ('password', 'is_superuser', 'is_staff', 'groups', 'user_permissions')
+
+
 class HeaderImageSerializers(serializers.ModelSerializer):
 
     class Meta:
@@ -25,6 +32,7 @@ class SocialMediaLinkSerializers(serializers.ModelSerializer):
 
 
 class RestaurantSerializers(FlexFieldsModelSerializer):
+    user = UserSerializer(many=False)
     header_images = HeaderImageSerializers(many=True)
     social_media_links = SocialMediaLinkSerializers(many=True)
 
@@ -33,8 +41,9 @@ class RestaurantSerializers(FlexFieldsModelSerializer):
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
+            'user': (User, {'many': False, "omit": ["restaurants"]}),
             'header_images': (HeaderImageSerializers, {'many': True, "omit": ["restaurant"]}),
-            'social_media_links': (SocialMediaLinkSerializers, {'many': True, "omit": ["restaurant"]})
+            'social_media_links': (SocialMediaLinkSerializers, {'many': True, "omit": ["restaurant"]}),
         }
 
 

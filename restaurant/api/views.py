@@ -15,11 +15,13 @@ class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     serializer_class = RestaurantSerializers
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
-    permit_list_expands = ['header_images', 'social_media_links']
+    permit_list_expands = ['user', 'header_images', 'social_media_links']
     filterset_class = RestaurantFilterSet
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if is_expanded(self.request, 'user'):
+            queryset = queryset.select_related('suer')
         if is_expanded(self.request, 'header_images'):
             queryset = queryset.select_related('header_images')
         if is_expanded(self.request, 'social_media_links'):
@@ -32,7 +34,7 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
-    permit_list_expands = ['products']
+    permit_list_expands = ['variants']
     filterset_class = CategoryFilterSet
 
     def get_queryset(self):
