@@ -45,13 +45,13 @@ class Restaurant(models.Model):
 class HeaderImage(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="header_images",
                                    verbose_name=_("Header Image"))
-    alt = models.CharField(max_length=250, verbose_name=_("Alternative (Alt)"),
+    alt = models.CharField(max_length=250, blank=True, null=True, verbose_name=_("Alternative (Alt)"),
                            help_text=_("Text is meant to convey the “why” of the image as it relates to the content of "
                                        "a document or webpage"))
-    image = models.ImageField(upload_to='headers/', verbose_name=_("Image"))
+    image = models.ImageField(null=True, upload_to='headers/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"),
                                     help_text=_("Setting it to false, makes the image disappear from the page"))
-    url = models.URLField(null=True, blank=True, verbose_name=_('Link'))
+    url = models.URLField(blank=True, null=True, verbose_name=_('Link'))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Creation Date'))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_('Update Date'))
 
