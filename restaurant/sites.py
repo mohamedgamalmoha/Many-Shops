@@ -2,7 +2,7 @@ from django.contrib.admin import AdminSite
 from django.contrib.admin.forms import AuthenticationForm
 
 
-class CustomAdminSite(AdminSite):
+class CustomerAdminSite(AdminSite):
     site_header = "Custom Admin Dashboard"
     login_form = AuthenticationForm
 
@@ -11,4 +11,4 @@ class CustomAdminSite(AdminSite):
         return request.user.is_active
 
 
-custom_admin_site = CustomAdminSite(name='custom_admin')
+customer_admin_site = CustomerAdminSite(name='customer_admin')

@@ -22,7 +22,7 @@ from django.urls import path, include
 from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView,
                                    SpectacularJSONAPIView, SpectacularYAMLAPIView)
 
-from restaurant.sites import custom_admin_site
+from restaurant.sites import customer_admin_site
 
 
 #: Spectacular package provides a suite of tools for auto-generating and presenting OpenAPI schema in various formats
@@ -36,7 +36,7 @@ docs_patterns = [
 ]
 
 urlpatterns = [
-    # path('dashboard/', custom_admin_site.urls),
+    path('dashboard/', customer_admin_site.urls),
     path('admin/', admin.site.urls),
     path('api/restaurant/', include('restaurant.api.urls'), name='restaurant'),
     *docs_patterns
