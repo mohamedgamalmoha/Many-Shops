@@ -19,7 +19,7 @@ class HeaderImageSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = HeaderImage
-        exclude = ()
+        exclude = ('restaurant', )
         read_only_fields = ('create_at', 'update_at')
 
 
@@ -27,12 +27,12 @@ class SocialMediaLinkSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = SocialMediaLink
-        exclude = ()
+        exclude = ('restaurant', )
         read_only_fields = ('create_at', 'update_at')
 
 
 class RestaurantSerializers(FlexFieldsModelSerializer):
-    user = UserSerializer(many=False)
+    owner = UserSerializer(many=False)
     header_images = HeaderImageSerializers(many=True)
     social_media_links = SocialMediaLinkSerializers(many=True)
 
@@ -41,7 +41,7 @@ class RestaurantSerializers(FlexFieldsModelSerializer):
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
-            'user': (User, {'many': False, "omit": ["restaurants"]}),
+            'owner': (User, {'many': False, "omit": ["restaurants"]}),
             'header_images': (HeaderImageSerializers, {'many': True, "omit": ["restaurant"]}),
             'social_media_links': (SocialMediaLinkSerializers, {'many': True, "omit": ["restaurant"]}),
         }
@@ -51,7 +51,7 @@ class ProductVariantSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = ProductVariant
-        exclude = ()
+        exclude = ('product', )
         read_only_fields = ('create_at', 'update_at')
 
 
