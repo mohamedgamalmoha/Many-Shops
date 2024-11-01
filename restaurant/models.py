@@ -36,7 +36,7 @@ class Restaurant(models.Model):
         ordering = ('-create_at', '-update_at')
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def is_owner(self, user) -> bool:
         return self.owner == user
@@ -63,6 +63,9 @@ class HeaderImage(models.Model):
     def is_owner(self, user) -> bool:
         return self.restaurant.is_owner(user)
 
+    def __str__(self):
+        return str(self.alt)
+
 
 class SocialMediaLink(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="social_media_links",
@@ -82,6 +85,9 @@ class SocialMediaLink(models.Model):
     def is_owner(self, user) -> bool:
         return self.restaurant.is_owner(user)
 
+    def __str__(self):
+        return str(self.url)
+
 
 class Category(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="categories",
@@ -98,6 +104,9 @@ class Category(models.Model):
 
     def is_owner(self, user) -> bool:
         return self.restaurant.is_owner(user)
+
+    def __str__(self):
+        return str(self.name)
 
 
 class Product(models.Model):
@@ -118,6 +127,9 @@ class Product(models.Model):
     def is_owner(self, user) -> bool:
         return self.category.is_owner(user)
 
+    def __str__(self):
+        return str(self.name)
+
 
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants", verbose_name=_("Product"))
@@ -133,3 +145,6 @@ class ProductVariant(models.Model):
 
     def is_owner(self, user) -> bool:
         return self.product.is_owner(user)
+
+    def __str__(self):
+        return str(self.name)
