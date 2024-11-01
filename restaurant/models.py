@@ -38,6 +38,9 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+    def is_owner(self, user) -> bool:
+        return self.name == user
+
 
 class HeaderImage(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="header_images",
@@ -57,6 +60,9 @@ class HeaderImage(models.Model):
         verbose_name_plural = _('Home Page Images')
         ordering = ('-create_at', '-update_at')
 
+    def is_owner(self, user) -> bool:
+        return self.restaurant.is_owner(user)
+
 
 class SocialMediaLink(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="social_media_links",
@@ -73,6 +79,9 @@ class SocialMediaLink(models.Model):
         unique_together = ('restaurant', 'platform')
         ordering = ('-create_at', '-update_at')
 
+    def is_owner(self, user) -> bool:
+        return self.restaurant.is_owner(user)
+
 
 class Category(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="categories",
@@ -86,6 +95,9 @@ class Category(models.Model):
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
         ordering = ('-create_at', '-update_at')
+
+    def is_owner(self, user) -> bool:
+        return self.restaurant.is_owner(user)
 
 
 class Product(models.Model):
@@ -103,6 +115,9 @@ class Product(models.Model):
         verbose_name_plural = _("Products")
         ordering = ('-create_at', '-update_at')
 
+    def is_owner(self, user) -> bool:
+        return self.category.is_owner(user)
+
 
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants", verbose_name=_("Product"))
@@ -115,3 +130,6 @@ class ProductVariant(models.Model):
         verbose_name = _("Product Variant")
         verbose_name_plural = _("Product Variants")
         ordering = ('-create_at', '-update_at')
+
+    def is_owner(self, user) -> bool:
+        return self.product.is_owner(user)
