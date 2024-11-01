@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ..models import HeaderImage, SocialMediaLink, ProductVariant
-from .base import PermissionsReadOnlyAdminMixin
+from .base import PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin
 
 
-class BaseVariantInlineAdmin(admin.StackedInline):
+class BaseInlineAdmin(admin.StackedInline):
     extra = 1
     min_num = 1
     max_num = 5
@@ -14,16 +14,17 @@ class BaseVariantInlineAdmin(admin.StackedInline):
     readonly_fields = ('create_at', 'update_at')
 
 
-class ProductVariantInlineAdmin(BaseVariantInlineAdmin):
+class ProductVariantInlineAdmin(BaseInlineAdmin):
     model = ProductVariant
 
 
-class SocialMediaLinkInlineAdmin(BaseVariantInlineAdmin):
+class SocialMediaLinkInlineAdmin(BaseInlineAdmin):
     model = SocialMediaLink
 
 
-class HeaderImageInlineAdmin(BaseVariantInlineAdmin):
+class HeaderImageInlineAdmin(ImageDisplayAminMixin, BaseInlineAdmin):
     model = HeaderImage
+    readonly_image_fields = ['view_image']
 
 
 class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
@@ -39,12 +40,12 @@ class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
     inlines = [HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
 
 
-class HeaderImageSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
+class HeaderImageSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, admin.ModelAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('alt', 'image', 'url', 'is_active')}),
+        (_('Main Info'), {'fields': ('restaurant', 'alt', 'url', 'image', 'view_image',  'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
@@ -69,13 +70,13 @@ class CategorySuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
     )
 
 
-class ProductSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
+class ProductSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, admin.ModelAdmin):
     list_display = ['name', 'category', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'is_active')}),
+        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductVariantInlineAdmin]

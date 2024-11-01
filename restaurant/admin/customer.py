@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, ProductVariant
-from .base import PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin
+from .base import PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin
 
 
 class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
@@ -14,8 +14,9 @@ class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline
     readonly_fields = ('create_at', 'update_at')
 
 
-class HeaderImageInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
+class HeaderImageInlineCustomerAdmin(PermissionsAllowAllAdminMixin, ImageDisplayAminMixin, admin.StackedInline):
     model = HeaderImage
+    readonly_image_fields = ['view_image']
 
 
 class SocialMediaLInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
@@ -38,12 +39,12 @@ class BaseRestaurantOwnerFilterCustomerAdmin(PermissionsAllowOwnerAdminMixin, ad
         return queryset.filter(restaurant__owner=request.user)
 
 
-class HeaderImageCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
+class HeaderImageCustomerAdmin(ImageDisplayAminMixin, BaseRestaurantOwnerFilterCustomerAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('alt', 'image', 'url', 'is_active')}),
+        (_('Main Info'), {'fields': ('restaurant', 'alt',  'url', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
@@ -85,13 +86,13 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin)
         super().save_model(request, obj, form, change)
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, admin.ModelAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'is_active')}),
+        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductVariantInlineCustomerAdmin]
