@@ -114,7 +114,7 @@ class ImageDisplayAminMixin:
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
         if isinstance(readonly_fields, (tuple, list)):
-            readonly_fields = [*readonly_fields, self.readonly_image_fields]
+            readonly_fields = [*readonly_fields, *self.readonly_image_fields]
         return readonly_fields
 
     def get_list_display(self, request):
