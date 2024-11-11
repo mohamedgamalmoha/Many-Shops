@@ -427,10 +427,10 @@ JAZZMIN_SETTINGS = {
     "site_icon": "images/logo.png",
 
     # Welcome text on the login screen
-    "welcome_sign": "Welcome To Menus",
+    "welcome_sign": _("Welcome To Menus"),
 
     # Copyright on the footer
-    "copyright": "Menus Development Team",
+    "copyright": _("Menus Development Team"),
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
@@ -447,8 +447,8 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"name": "API Docs", "url": 'swagger_docs_view'},
+        {"name": _("Home"),  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": _("API Docs"), "url": 'swagger_docs_view'},
         # model admin to link to (Permissions checked against model)
         {},
     ],
@@ -530,7 +530,7 @@ JAZZMIN_SETTINGS = {
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {},
     # Add a language dropdown into the admin
-    "language_chooser": False,
+    "language_chooser": True,
 }
 
 
