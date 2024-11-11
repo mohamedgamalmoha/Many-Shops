@@ -1,9 +1,18 @@
 from django.contrib.admin import AdminSite
 from django.contrib.admin.forms import AuthenticationForm
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomerAdminSite(AdminSite):
-    site_header = "Custom Admin Dashboard"
+    # Text to put at the end of each page's <title>.
+    site_title = _("Restaurant Management Admin")
+
+    # Text to put in each page's <h1>.
+    site_header = _("Restaurant Management Dashboard")
+
+    # Text to put at the top of the admin index page.
+    index_title = _("Restaurant Management System")
+
     login_form = AuthenticationForm
 
     def has_permission(self, request):
