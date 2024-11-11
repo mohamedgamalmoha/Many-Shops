@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
+
 from ..models import HeaderImage, SocialMediaLink, ProductVariant
 from .base import PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin
 
@@ -14,7 +16,7 @@ class BaseInlineAdmin(admin.StackedInline):
     readonly_fields = ('create_at', 'update_at')
 
 
-class ProductVariantInlineAdmin(BaseInlineAdmin):
+class ProductVariantInlineAdmin(TranslationInlineModelAdmin, BaseInlineAdmin):
     model = ProductVariant
 
 
@@ -22,12 +24,12 @@ class SocialMediaLinkInlineAdmin(BaseInlineAdmin):
     model = SocialMediaLink
 
 
-class HeaderImageInlineAdmin(ImageDisplayAminMixin, BaseInlineAdmin):
+class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
     model = HeaderImage
     readonly_image_fields = ['view_image']
 
 
-class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
+class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
     list_display = ['name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
@@ -40,7 +42,7 @@ class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
     inlines = [HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
 
 
-class HeaderImageSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, admin.ModelAdmin):
+class HeaderImageSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -60,7 +62,7 @@ class SocialMediaLinkSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAd
     )
 
 
-class CategorySuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
+class CategorySuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
     list_display = ['name', 'restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -70,7 +72,7 @@ class CategorySuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
     )
 
 
-class ProductSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, admin.ModelAdmin):
+class ProductSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'category', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -82,7 +84,7 @@ class ProductSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin
     inlines = [ProductVariantInlineAdmin]
 
 
-class ProductVariantSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
+class ProductVariantSuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
     list_display = ['name', 'product', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
