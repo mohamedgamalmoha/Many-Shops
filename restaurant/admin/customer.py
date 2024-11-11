@@ -1,33 +1,35 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
+
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, ProductVariant
 from .base import PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin
 
 
 class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
     extra = 1
-    min_num = 1
-    max_num = 5
+    min_num = 0
+    max_num = 10
     can_delete = True
     show_change_link = True
     readonly_fields = ('create_at', 'update_at')
 
 
-class HeaderImageInlineCustomerAdmin(PermissionsAllowAllAdminMixin, ImageDisplayAminMixin, admin.StackedInline):
+class HeaderImageInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
     model = HeaderImage
     readonly_image_fields = ['view_image']
 
 
-class SocialMediaLInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
+class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
 
 
-class ProductVariantInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
+class ProductVariantInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomerAdmin):
     model = ProductVariant
 
 
-class BaseRestaurantOwnerFilterCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin):
+class BaseRestaurantOwnerFilterCustomerAdmin(PermissionsAllowOwnerAdminMixin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "restaurant":
@@ -39,7 +41,7 @@ class BaseRestaurantOwnerFilterCustomerAdmin(PermissionsAllowOwnerAdminMixin, ad
         return queryset.filter(restaurant__owner=request.user)
 
 
-class HeaderImageCustomerAdmin(ImageDisplayAminMixin, BaseRestaurantOwnerFilterCustomerAdmin):
+class HeaderImageCustomerAdmin(ImageDisplayAminMixin, BaseRestaurantOwnerFilterCustomerAdmin, TranslationAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -49,7 +51,7 @@ class HeaderImageCustomerAdmin(ImageDisplayAminMixin, BaseRestaurantOwnerFilterC
     )
 
 
-class SocialMediaLinkCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
+class SocialMediaLinkCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, admin.ModelAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -59,7 +61,7 @@ class SocialMediaLinkCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
     )
 
 
-class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin):
+class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
@@ -86,7 +88,7 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, admin.ModelAdmin)
         super().save_model(request, obj, form, change)
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, admin.ModelAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -107,7 +109,7 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixi
         return queryset.filter(category__restaurant__owner=request.user)
 
 
-class CategoryCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin):
+class CategoryCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, TranslationAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']

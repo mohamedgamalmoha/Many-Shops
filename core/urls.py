@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.views.i18n import JavaScriptCatalog
 
 from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView,
                                    SpectacularJSONAPIView, SpectacularYAMLAPIView)
@@ -39,6 +40,9 @@ urlpatterns = [
     path('dashboard/', customer_admin_site.urls),
     path('admin/', admin.site.urls),
     path('api/restaurant/', include('restaurant.api.urls'), name='restaurant'),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+
     *docs_patterns
 ]
 

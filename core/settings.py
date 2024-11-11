@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'jazzmin',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,12 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_spectacular',
     'rest_flex_fields',
-    'restaurant'
+    'restaurant',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -107,14 +110,42 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('ar', _('Arabic')),
+    ('he', _('Hebrew')),
+]
+
+# Enable fallback to default language if a translation is missing
+MODELTRANSLATION_FALLBACK_LANGUAGES = {
+    'default': ('en',),  # Fallback language for all other languages
+    'ar': ('en',),       # Fallback for Arabic
+    'he': ('en',),       # Fallback for Hebrew
+}
+
+MODELTRANSLATION_AUTO_POPULATE = True  # Automatically populate untranslated fields with the default language value
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'  # Default language for the admin
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'en'  # Prepopulate translation fields from this language
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale'
+]
+
+IS_MONOLINGUAL = False
+
+TRANSLATABLE_MODEL_MODULES = [
+    'restaurant.models',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
