@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .enums import SocialMediaPlatform
+from .validators import validate_hex_color
 
 
 User = get_user_model()
@@ -26,6 +27,13 @@ class Restaurant(models.Model):
     email = models.EmailField(blank=True, null=True, verbose_name=_("Email"))
     contact_number = PhoneNumberField(blank=True, null=True, verbose_name=_("Contact Number"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+
+    primary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
+                                     verbose_name=_('Primary Color'),
+                                     help_text=_("Primary color for template (e.g., #RRGGBB or #RGB)."))
+    secondary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
+                                       verbose_name=_('Secondary Color'),
+                                       help_text=_("Secondary color for template (e.g., #RRGGBB or #RGB)."))
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
@@ -114,6 +122,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Product Name"))
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price"))
+    types = models.ManyToManyField('ProductType', related_name='types', verbose_name=_("Types"))
+    variants = models.ManyToManyField('ProductVariant', related_name='products', verbose_name=_("Variants"))
     image = models.ImageField(upload_to="products/", blank=True, null=True, verbose_name=_("Product Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -132,7 +142,8 @@ class Product(models.Model):
 
 
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants", verbose_name=_("Product"))
+    restaurant = models.ForeignKey(Restaurant, null=True, on_delete=models.CASCADE, related_name="product_variants",
+                                   verbose_name=_("Restaurant"))
     name = models.CharField(max_length=100, verbose_name=_("Variant Name"))
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Variant Price"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -144,7 +155,26 @@ class ProductVariant(models.Model):
         ordering = ('-create_at', '-update_at')
 
     def is_owner(self, user) -> bool:
-        return self.product.is_owner(user)
+        return self.restaurant.is_owner(user)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class ProductType(models.Model):
+    restaurant = models.ForeignKey(Restaurant, null=True, on_delete=models.CASCADE, related_name="product_types",
+                                   verbose_name=_("Restaurant"))
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Product Type")
+        verbose_name_plural = _("Product Types")
+        ordering = ('-create_at', '-update_at')
+
+    def is_owner(self, user) -> bool:
+        return self.restaurant.is_owner(user)
 
     def __str__(self):
         return str(self.name)

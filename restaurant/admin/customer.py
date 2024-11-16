@@ -3,8 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, ProductVariant
-from .base import PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin
+from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, ProductVariant, ProductType
+from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin,
+                   ColorFieldAdminMixin)
 
 
 class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
@@ -23,10 +24,6 @@ class HeaderImageInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAm
 
 class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
-
-
-class ProductVariantInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomerAdmin):
-    model = ProductVariant
 
 
 class BaseRestaurantOwnerFilterCustomerAdmin(PermissionsAllowOwnerAdminMixin):
@@ -61,7 +58,7 @@ class SocialMediaLinkCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, admin
     )
 
 
-class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
+class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ColorFieldAdminMixin, TranslationAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
@@ -69,6 +66,7 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin)
         (_('Main Info'), {'fields': ('name', 'description', 'email', 'contact_number')}),
         (_('Address'), {'fields': ('city', 'state', 'zip_code')}),
         (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
+        (_('Theme'), {'fields': ('primary_color', 'secondary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [HeaderImageInlineCustomerAdmin, SocialMediaLInlineCustomerAdmin]
@@ -95,13 +93,17 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixi
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description')}),
         (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
+        (_('Offered By'), {'fields': ('types', 'variants')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [ProductVariantInlineCustomerAdmin]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "category":
             kwargs["queryset"] = Category.objects.filter(restaurant__owner=request.user)
+        if db_field.name == "types":
+            kwargs["queryset"] = ProductType.objects.filter(restaurant__owner=request.user)
+        if db_field.name == "variants":
+            kwargs["queryset"] = ProductVariant.objects.filter(restaurant__owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_queryset(self, request):
@@ -115,5 +117,23 @@ class CategoryCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, TranslationA
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('restaurant', 'name', 'is_active')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
+class ProductVariantCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, TranslationAdmin):
+    list_display = ['name', 'restaurant', 'create_at', 'update_at']
+    readonly_fields = ['create_at', 'update_at']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('restaurant', 'name', 'price')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
+class ProductTypeCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, TranslationAdmin):
+    list_display = ['name', 'restaurant', 'create_at', 'update_at']
+    readonly_fields = ['create_at', 'update_at']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('restaurant', 'name')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )

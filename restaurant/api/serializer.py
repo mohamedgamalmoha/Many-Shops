@@ -2,7 +2,7 @@ from django.contrib.auth.backends import get_user_model
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant
+from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 from ..constants import DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
 
 
@@ -50,7 +50,7 @@ class RestaurantSerializers(FlexFieldsModelSerializer):
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
-            'owner': (User, {'many': False, "omit": ["restaurants"]}),
+            'owner': (UserSerializer, {'many': False, "omit": ["restaurants"]}),
             'header_images': (HeaderImageSerializers, {'many': True, "omit": ["restaurant"]}),
             'social_media_links': (SocialMediaLinkSerializers, {'many': True, "omit": ["restaurant"]}),
         }
@@ -60,11 +60,20 @@ class ProductVariantSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = ProductVariant
-        exclude = ('product', )
+        exclude = ('restaurant', )
+        read_only_fields = ('create_at', 'update_at')
+
+
+class ProductTypeSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductVariant
+        exclude = ('restaurant', )
         read_only_fields = ('create_at', 'update_at')
 
 
 class ProductSerializers(FlexFieldsModelSerializer):
+    types = ProductTypeSerializers(many=True)
     variants = ProductVariantSerializers(many=True)
 
     class Meta:
@@ -72,7 +81,8 @@ class ProductSerializers(FlexFieldsModelSerializer):
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
-            'variants': (ProductVariantSerializers, {'many': True, "omit": ["product"]}),
+            'types': (ProductTypeSerializers, {'many': True, "omit": ["restaurant"]}),
+            'variants': (ProductVariantSerializers, {'many': True, "omit": ["restaurant"]}),
         }
 
     def to_representation(self, instance):

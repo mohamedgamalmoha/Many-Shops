@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 
 from ..sites import customer_admin_site
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant
+from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 from .customer import (RestaurantCustomerAdmin, HeaderImageCustomerAdmin, SocialMediaLinkCustomerAdmin,
-                       CategoryCustomerAdmin, ProductCustomerAdmin)
+                       CategoryCustomerAdmin, ProductCustomerAdmin, ProductVariantCustomerAdmin,
+                       ProductTypeCustomerAdmin)
 from .superuser import (RestaurantSuperuserAdmin, HeaderImageSuperuserAdmin, SocialMediaLinkSuperuserAdmin,
-                        CategorySuperuserAdmin, ProductSuperuserAdmin, ProductVariantSuperuserAdmin)
+                        CategorySuperuserAdmin, ProductSuperuserAdmin, ProductVariantSuperuserAdmin,
+                        ProductTypeSuperuserAdmin)
 
 
 customer_admin_site.register(Restaurant, RestaurantCustomerAdmin)
@@ -14,6 +16,8 @@ customer_admin_site.register(HeaderImage, HeaderImageCustomerAdmin)
 customer_admin_site.register(SocialMediaLink, SocialMediaLinkCustomerAdmin)
 customer_admin_site.register(Category, CategoryCustomerAdmin)
 customer_admin_site.register(Product, ProductCustomerAdmin)
+customer_admin_site.register(ProductVariant, ProductVariantCustomerAdmin)
+customer_admin_site.register(ProductType, ProductTypeCustomerAdmin)
 
 
 admin.site.register(Restaurant, RestaurantSuperuserAdmin)
@@ -22,4 +26,5 @@ admin.site.register(SocialMediaLink, SocialMediaLinkSuperuserAdmin)
 admin.site.register(Category, CategorySuperuserAdmin)
 admin.site.register(Product, ProductSuperuserAdmin)
 admin.site.register(ProductVariant, ProductVariantSuperuserAdmin)
+admin.site.register(ProductType, ProductTypeSuperuserAdmin)
 admin.site.unregister(Group)

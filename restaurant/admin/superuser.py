@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
-from ..models import HeaderImage, SocialMediaLink, ProductVariant
-from .base import PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin
+from .base import ImageDisplayAminMixin, ColorFieldAdminMixin
+from ..models import HeaderImage, SocialMediaLink
 
 
 class BaseInlineAdmin(admin.StackedInline):
@@ -16,10 +16,6 @@ class BaseInlineAdmin(admin.StackedInline):
     readonly_fields = ('create_at', 'update_at')
 
 
-class ProductVariantInlineAdmin(TranslationInlineModelAdmin, BaseInlineAdmin):
-    model = ProductVariant
-
-
 class SocialMediaLinkInlineAdmin(BaseInlineAdmin):
     model = SocialMediaLink
 
@@ -29,7 +25,7 @@ class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin,
     readonly_image_fields = ['view_image']
 
 
-class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
+class RestaurantSuperuserAdmin(ColorFieldAdminMixin, TranslationAdmin):
     list_display = ['name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
@@ -37,12 +33,13 @@ class RestaurantSuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
         (_('Main Info'), {'fields': ('owner', 'name', 'description', 'email', 'contact_number')}),
         (_('Address'), {'fields': ('city', 'state', 'zip_code')}),
         (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
+        (_('Theme'), {'fields': ('primary_color', 'secondary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
 
 
-class HeaderImageSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
+class HeaderImageSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -52,7 +49,7 @@ class HeaderImageSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminM
     )
 
 
-class SocialMediaLinkSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAdmin):
+class SocialMediaLinkSuperuserAdmin(admin.ModelAdmin):
     list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -62,7 +59,7 @@ class SocialMediaLinkSuperuserAdmin(PermissionsReadOnlyAdminMixin, admin.ModelAd
     )
 
 
-class CategorySuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
+class CategorySuperuserAdmin(TranslationAdmin):
     list_display = ['name', 'restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -72,22 +69,31 @@ class CategorySuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
     )
 
 
-class ProductSuperuserAdmin(PermissionsReadOnlyAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
+class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'category', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description')}),
         (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
+        (_('Offered By'), {'fields': ('types', 'variants')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [ProductVariantInlineAdmin]
 
 
-class ProductVariantSuperuserAdmin(PermissionsReadOnlyAdminMixin, TranslationAdmin):
-    list_display = ['name', 'product', 'create_at', 'update_at']
+class ProductVariantSuperuserAdmin(TranslationAdmin):
+    list_display = ['name', 'restaurant', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('product', 'name', 'price', 'is_active')}),
+        (_('Main Info'), {'fields': ('restaurant', 'name', 'price')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
+class ProductTypeSuperuserAdmin(TranslationAdmin):
+    list_display = ['name', 'restaurant', 'create_at', 'update_at']
+    readonly_fields = ['create_at', 'update_at']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('restaurant', 'name')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )

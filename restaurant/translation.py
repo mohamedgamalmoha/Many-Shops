@@ -1,6 +1,6 @@
 from modeltranslation.translator import translator, TranslationOptions
 
-from .models import Restaurant, HeaderImage, Category, Product, ProductVariant
+from .models import Restaurant, HeaderImage, Category, Product, ProductVariant, ProductType
 
 
 class RestaurantTranslationOptions(TranslationOptions):
@@ -28,3 +28,4 @@ translator.register(HeaderImage, HeaderImageTranslationOptions)
 translator.register(Category, CategoryTranslationOptions)
 translator.register(Product, ProductTranslationOptions)
 translator.register(ProductVariant, ProductVariantTranslationOptions)
+translator.register(ProductType, ProductVariantTranslationOptions)

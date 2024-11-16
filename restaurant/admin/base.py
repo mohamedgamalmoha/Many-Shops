@@ -1,6 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django.contrib.admin.widgets import AdminTextInputWidget
 
 
 class DeactivateLogEntryMixin:
@@ -125,3 +126,14 @@ class ImageDisplayAminMixin:
 
     list_image.short_description = _('Thumbnail')
     view_image.short_description = _('Image')
+
+
+class ColorFieldAdminMixin:
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if 'primary_color' in form.base_fields:
+            form.base_fields['primary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
+        if 'secondary_color' in form.base_fields:
+            form.base_fields['secondary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
+        return form
