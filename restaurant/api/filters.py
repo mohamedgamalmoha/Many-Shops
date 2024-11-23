@@ -2,7 +2,7 @@ from django.db import models
 
 from django_filters import rest_framework as filters
 
-from ..models import Restaurant, Category
+from ..models import Restaurant, Category, Product
 
 
 class RestaurantFilterSet(filters.FilterSet):
@@ -26,3 +26,10 @@ class CategoryFilterSet(filters.FilterSet):
     class Meta:
         model = Category
         fields = ('name', 'is_active')
+
+
+class ProductFilterSet(filters.FilterSet):
+
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'is_active')
