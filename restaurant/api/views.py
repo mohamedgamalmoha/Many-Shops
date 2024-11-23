@@ -1,8 +1,8 @@
 from rest_framework.settings import api_settings
 from rest_framework.permissions import AllowAny
-from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_flex_fields.utils import is_expanded
 from rest_flex_fields.views import FlexFieldsMixin
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_flex_fields.filter_backends import FlexFieldsFilterBackend
 
 from ..models import Restaurant, Category

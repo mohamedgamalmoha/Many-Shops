@@ -34,7 +34,6 @@ class TranslatableFactoryMixin:
         Automatically generate unique translations for all translatable fields.
         """
         translations = {}
-        print(cls.get_translatable_fields())
         for field in cls.get_translatable_fields():
             for lang in get_translation_languages():
                 # Generate a unique value for each field-language combination

@@ -1,9 +1,10 @@
 from django.contrib.auth.backends import get_user_model
+
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 from ..constants import DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
+from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 
 
 User = get_user_model()
@@ -67,7 +68,7 @@ class ProductVariantSerializers(serializers.ModelSerializer):
 class ProductTypeSerializers(serializers.ModelSerializer):
 
     class Meta:
-        model = ProductVariant
+        model = ProductType
         exclude = ('restaurant', )
         read_only_fields = ('create_at', 'update_at')
 
