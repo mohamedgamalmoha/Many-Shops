@@ -12,12 +12,12 @@ from rest_flex_fields.filter_backends import FlexFieldsFilterBackend
 
 from ..models import Restaurant, Category, Product
 from .filters import RestaurantFilterSet, CategoryFilterSet, ProductFilterSet
-from .serializer import RestaurantSerializers, CategorySerializer, ProductSerializers
+from .serializer import RestaurantSerializer, CategorySerializer, ProductSerializer
 
 
 class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     queryset = Restaurant.objects.filter(is_active=True)
-    serializer_class = RestaurantSerializers
+    serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
     permit_list_expands = ['owner', 'header_images', 'social_media_links']
@@ -73,9 +73,9 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
             queryset = queryset.select_related('products')
         return queryset
 
-    @extend_schema(responses={200: ProductSerializers}, filters=True)
+    @extend_schema(responses={200: ProductSerializer}, filters=True)
     @action(["GET"], detail=True, url_path='products', queryset=Product.objects.none(),
-            serializer_class=ProductSerializers, filterset_class=ProductFilterSet)
+            serializer_class=ProductSerializer, filterset_class=ProductFilterSet)
     def products(self, request, *args, **kwargs):
         # Create a dictionary of filter arguments using the lookup field (e.g., 'id') and its value from the URL kwargs
         filter_kwargs = {self.lookup_field: self.kwargs[self.lookup_field]}
@@ -87,8 +87,8 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
         # Dynamically set the filterset class to be used for filtering products in the current request.
         self.filterset_class = ProductFilterSet
 
-        # Dynamically set the serializer class to ProductSerializers for serializing the response.
-        self.serializer_class = ProductSerializers
+        # Dynamically set the serializer class to ProductSerializer for serializing the response.
+        self.serializer_class = ProductSerializer
 
         # Set the queryset to be the products associated with the retrieved category.
         self.queryset = category.products.all()

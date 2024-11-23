@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ('password', 'is_superuser', 'is_staff', 'groups', 'user_permissions')
 
 
-class HeaderImageSerializers(serializers.ModelSerializer):
+class HeaderImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HeaderImage
@@ -33,7 +33,7 @@ class HeaderImageSerializers(serializers.ModelSerializer):
         return representation
 
 
-class SocialMediaLinkSerializers(serializers.ModelSerializer):
+class SocialMediaLinkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SocialMediaLink
@@ -41,10 +41,10 @@ class SocialMediaLinkSerializers(serializers.ModelSerializer):
         read_only_fields = ('create_at', 'update_at')
 
 
-class RestaurantSerializers(FlexFieldsModelSerializer):
+class RestaurantSerializer(FlexFieldsModelSerializer):
     owner = UserSerializer(many=False)
-    header_images = HeaderImageSerializers(many=True)
-    social_media_links = SocialMediaLinkSerializers(many=True)
+    header_images = HeaderImageSerializer(many=True)
+    social_media_links = SocialMediaLinkSerializer(many=True)
 
     class Meta:
         model = Restaurant
@@ -52,12 +52,12 @@ class RestaurantSerializers(FlexFieldsModelSerializer):
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
             'owner': (UserSerializer, {'many': False, "omit": ["restaurants"]}),
-            'header_images': (HeaderImageSerializers, {'many': True, "omit": ["restaurant"]}),
-            'social_media_links': (SocialMediaLinkSerializers, {'many': True, "omit": ["restaurant"]}),
+            'header_images': (HeaderImageSerializer, {'many': True, "omit": ["restaurant"]}),
+            'social_media_links': (SocialMediaLinkSerializer, {'many': True, "omit": ["restaurant"]}),
         }
 
 
-class ProductVariantSerializers(serializers.ModelSerializer):
+class ProductVariantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductVariant
@@ -65,7 +65,7 @@ class ProductVariantSerializers(serializers.ModelSerializer):
         read_only_fields = ('create_at', 'update_at')
 
 
-class ProductTypeSerializers(serializers.ModelSerializer):
+class ProductTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductType
@@ -73,17 +73,17 @@ class ProductTypeSerializers(serializers.ModelSerializer):
         read_only_fields = ('create_at', 'update_at')
 
 
-class ProductSerializers(FlexFieldsModelSerializer):
-    types = ProductTypeSerializers(many=True)
-    variants = ProductVariantSerializers(many=True)
+class ProductSerializer(FlexFieldsModelSerializer):
+    types = ProductTypeSerializer(many=True)
+    variants = ProductVariantSerializer(many=True)
 
     class Meta:
         model = Product
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
-            'types': (ProductTypeSerializers, {'many': True, "omit": ["restaurant"]}),
-            'variants': (ProductVariantSerializers, {'many': True, "omit": ["restaurant"]}),
+            'types': (ProductTypeSerializer, {'many': True, "omit": ["restaurant"]}),
+            'variants': (ProductVariantSerializer, {'many': True, "omit": ["restaurant"]}),
         }
 
     def to_representation(self, instance):
@@ -97,12 +97,12 @@ class ProductSerializers(FlexFieldsModelSerializer):
 
 
 class CategorySerializer(FlexFieldsModelSerializer):
-    products = ProductSerializers(many=True)
+    products = ProductSerializer(many=True)
 
     class Meta:
         model = Category
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
-            'products': (ProductSerializers, {'many': True, "omit": ["category"]}),
+            'products': (ProductSerializer, {'many': True, "omit": ["category"]}),
         }
