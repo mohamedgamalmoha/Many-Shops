@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .enums import SocialMediaPlatform
+from .enums import SocialMediaPlatform, ProductTypeChoice
 from .validators import validate_hex_color
 
 
@@ -27,6 +27,7 @@ class Restaurant(models.Model):
 
     email = models.EmailField(blank=True, null=True, verbose_name=_("Email"))
     contact_number = PhoneNumberField(blank=True, null=True, verbose_name=_("Contact Number"))
+    image = models.ImageField(null=True, upload_to='restaurants/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
 
     primary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
@@ -102,6 +103,7 @@ class Category(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="categories",
                                    verbose_name=_("Restaurant"))
     name = models.CharField(max_length=100, verbose_name=_("Category Name"))
+    image = models.ImageField(null=True, upload_to='categories/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
@@ -166,6 +168,7 @@ class ProductType(models.Model):
     restaurant = models.ForeignKey(Restaurant, null=True, on_delete=models.CASCADE, related_name="product_types",
                                    verbose_name=_("Restaurant"))
     name = models.CharField(max_length=100, verbose_name=_("Name"))
+    icon = models.CharField(max_length=20, null=True, choices=ProductTypeChoice.choices, verbose_name=_("Icon"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
 

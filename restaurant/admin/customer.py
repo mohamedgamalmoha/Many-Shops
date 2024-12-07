@@ -63,7 +63,7 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ColorFieldAdminMi
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'description', 'email', 'contact_number')}),
+        (_('Main Info'), {'fields': ('name', 'description', 'email', 'contact_number', 'image')}),
         (_('Address'), {'fields': ('city', 'state', 'zip_code')}),
         (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
         (_('Theme'), {'fields': ('primary_color', 'secondary_color')}),
@@ -116,7 +116,7 @@ class CategoryCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, TranslationA
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'is_active')}),
+        (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
@@ -134,6 +134,6 @@ class ProductTypeCustomerAdmin(BaseRestaurantOwnerFilterCustomerAdmin, Translati
     list_display = ['name', 'restaurant', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name')}),
+        (_('Main Info'), {'fields': ('restaurant', 'name', 'icon')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )

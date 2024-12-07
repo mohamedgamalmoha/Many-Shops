@@ -10,3 +10,8 @@ class SocialMediaPlatform(models.TextChoices):
     TIKTOK = 'tiktok', _("TikTok")
     YOUTUBE = 'youtube', _("YouTube")
     PINTEREST = 'pinterest', _("Pinterest")
+
+
+class ProductTypeChoice(models.TextChoices):
+    HOT = '🌶️', '🌶️'
+    VERY_HOT = '🔥', '🔥'
