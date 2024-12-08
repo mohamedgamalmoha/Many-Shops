@@ -14,7 +14,7 @@ User = get_user_model()
 
 
 class Restaurant(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="restaurants", verbose_name=_("Owner"))
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="restaurant", verbose_name=_("Owner"))
 
     name = models.CharField(max_length=255, verbose_name=_("Restaurant Name"))
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Address"))
