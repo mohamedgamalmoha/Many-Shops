@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .enums import SocialMediaPlatform, ProductTypeChoice
+from .enums import SocialMediaPlatform, ProductTypeChoice, RestaurantThemeChoice
 from .validators import validate_hex_color
 
 
@@ -30,12 +30,10 @@ class Restaurant(models.Model):
     image = models.ImageField(null=True, upload_to='restaurants/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
 
+    theme = models.CharField(max_length=20, null=True, choices=RestaurantThemeChoice.choices, verbose_name=_("Theme"))
     primary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
                                      verbose_name=_('Primary Color'),
                                      help_text=_("Primary color for template (e.g., #RRGGBB or #RGB)."))
-    secondary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
-                                       verbose_name=_('Secondary Color'),
-                                       help_text=_("Secondary color for template (e.g., #RRGGBB or #RGB)."))
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
@@ -125,8 +123,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Product Name"))
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price"))
-    types = models.ManyToManyField('ProductType', related_name='types', verbose_name=_("Types"))
-    variants = models.ManyToManyField('ProductVariant', related_name='products', verbose_name=_("Variants"))
+    types = models.ManyToManyField('ProductType', blank=True, related_name='types', verbose_name=_("Types"))
+    variants = models.ManyToManyField('ProductVariant', blank=True, related_name='products', verbose_name=_("Variants"))
     image = models.ImageField(upload_to="products/", blank=True, null=True, verbose_name=_("Product Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))

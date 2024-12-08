@@ -15,3 +15,9 @@ class SocialMediaPlatform(models.TextChoices):
 class ProductTypeChoice(models.TextChoices):
     HOT = '🌶️', '🌶️'
     VERY_HOT = '🔥', '🔥'
+
+
+class RestaurantThemeChoice(models.TextChoices):
+    THEME_1 = 'them_1', _('Theme 1')
+    THEME_2 = 'them_2', _('Theme 2')
+    THEME_3 = 'them_3', _('Theme 3')
