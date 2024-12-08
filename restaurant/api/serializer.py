@@ -3,7 +3,7 @@ from django.contrib.auth.backends import get_user_model
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
-from ..constants import DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL, DEFAULT_THEME_IMAGE_URL
+from ..constants import DEFAULT_RESTAURANT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 
 
@@ -62,7 +62,7 @@ class RestaurantSerializer(FlexFieldsModelSerializer):
 
         if not representation.get('image', None):
             request = self.context.get('request')
-            representation['image'] = request.build_absolute_uri(DEFAULT_THEME_IMAGE_URL)
+            representation['image'] = request.build_absolute_uri(DEFAULT_RESTAURANT_IMAGE_URL)
 
         return representation
 
