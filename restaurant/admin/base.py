@@ -3,6 +3,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin.widgets import AdminTextInputWidget
 
+from ..constants import DEFAULT_PRODUCT_IMAGE_URL
+
 
 class DeactivateLogEntryMixin:
 
@@ -97,10 +99,12 @@ class ImageDisplayAminMixin:
 
     def _show_image(self, obj, width=150, height=200):
         image = self.get_image_field(obj)
-        return mark_safe(f"<a href='{image.url}' ><img src='{image.url}' width={width} height={height}></a>")
+        if image and image.url:
+            return mark_safe(f"<a href='{image.url}' ><img src='{image.url}' width={width} height={height}></a>")
+        return mark_safe(f"<a href='#' ><img src='{DEFAULT_PRODUCT_IMAGE_URL}' width={width} height={height}></a>")
 
     def get_image_field(self, obj):
-        return getattr(obj, self.image_field_name)
+        return getattr(obj, self.image_field_name, None)
 
     def list_image(self, obj=None):
         if obj is None:
