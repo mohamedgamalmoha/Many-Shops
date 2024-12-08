@@ -3,7 +3,7 @@ from django.contrib.auth.backends import get_user_model
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
-from ..constants import DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
+from ..constants import DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL, DEFAULT_THEME_IMAGE_URL
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 
 
@@ -28,7 +28,8 @@ class HeaderImageSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
 
         if not representation.get('image', None):
-            representation['image'] = DEFAULT_HEADER_IMAGE_URL
+            request = self.context.get('request')
+            representation['image'] = request.build_absolute_uri(DEFAULT_HEADER_IMAGE_URL)
 
         return representation
 
@@ -55,6 +56,15 @@ class RestaurantSerializer(FlexFieldsModelSerializer):
             'header_images': (HeaderImageSerializer, {'many': True, "omit": ["restaurant"]}),
             'social_media_links': (SocialMediaLinkSerializer, {'many': True, "omit": ["restaurant"]}),
         }
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        if not representation.get('image', None):
+            request = self.context.get('request')
+            representation['image'] = request.build_absolute_uri(DEFAULT_THEME_IMAGE_URL)
+
+        return representation
 
 
 class ProductVariantSerializer(serializers.ModelSerializer):
@@ -91,7 +101,8 @@ class ProductSerializer(FlexFieldsModelSerializer):
         representation = super().to_representation(instance)
 
         if not representation.get('image', None):
-            representation['image'] = DEFAULT_PRODUCT_IMAGE_URL
+            request = self.context.get('request')
+            representation['image'] = request.build_absolute_uri(DEFAULT_PRODUCT_IMAGE_URL)
 
         return representation
 
@@ -106,3 +117,12 @@ class CategorySerializer(FlexFieldsModelSerializer):
         expandable_fields = {
             'products': (ProductSerializer, {'many': True, "omit": ["category"]}),
         }
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        if not representation.get('image', None):
+            request = self.context.get('request')
+            representation['image'] = request.build_absolute_uri(DEFAULT_PRODUCT_IMAGE_URL)
+
+        return representation
