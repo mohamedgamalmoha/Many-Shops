@@ -1,7 +1,6 @@
 from django.core.exceptions import PermissionDenied
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.contrib.admin.widgets import AdminTextInputWidget
 
 from ..constants import DEFAULT_PRODUCT_IMAGE_URL
 
@@ -132,12 +131,19 @@ class ImageDisplayAminMixin:
     view_image.short_description = _('Image')
 
 
-class ColorFieldAdminMixin:
+class RestaurantRelatedObjectAdminMixin:
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        if 'primary_color' in form.base_fields:
-            form.base_fields['primary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
-        if 'secondary_color' in form.base_fields:
-            form.base_fields['secondary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
-        return form
+    @staticmethod
+    def get_user_restaurant(request):
+        return request.user.restaurant
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        user_restaurant = self.get_user_restaurant(request)
+        return queryset.filter(restaurant=user_restaurant)
+
+    def save_model(self, request, obj, form, change):
+        if not change:  # Only set owner when adding a new object
+            user_restaurant = self.get_user_restaurant(request)
+            obj.restaurant = user_restaurant
+        super().save_model(request, obj, form, change)

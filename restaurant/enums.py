@@ -18,6 +18,6 @@ class ProductTypeChoice(models.TextChoices):
 
 
 class RestaurantThemeChoice(models.TextChoices):
-    THEME_1 = 'them_1', _('Theme 1')
-    THEME_2 = 'them_2', _('Theme 2')
-    THEME_3 = 'them_3', _('Theme 3')
+    THEME_1 = 'theme_1', _('Theme 1')
+    THEME_2 = 'theme_2', _('Theme 2')
+    THEME_3 = 'theme_3', _('Theme 3')

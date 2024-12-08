@@ -1,10 +1,36 @@
 from django.contrib import admin
+from django.contrib.admin.widgets import AdminTextInputWidget
 from django.utils.translation import gettext_lazy as _
 
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
-from .base import ImageDisplayAminMixin, ColorFieldAdminMixin
+from .base import ImageDisplayAminMixin
+from ..widgets import ImageRadioSelect
+from ..enums import RestaurantThemeChoice
 from ..models import HeaderImage, SocialMediaLink
+
+from django.contrib.auth.admin import UserAdmin
+
+
+class CustomUserAdmin(UserAdmin):
+    fieldsets = (
+        (None, {"fields": ("username", "password")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_superuser",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+
+    list_filter = ("is_staff", "is_superuser", "is_active")
+    ordering = ("-date_joined",)
+    filter_horizontal = ()
 
 
 class BaseInlineAdmin(admin.StackedInline):
@@ -25,18 +51,26 @@ class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin,
     readonly_image_fields = ['view_image']
 
 
-class RestaurantSuperuserAdmin(ColorFieldAdminMixin, TranslationAdmin):
+class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': ('owner', 'name', 'description', 'email', 'contact_number', 'image')}),
-        (_('Address'), {'fields': ('city', 'state', 'zip_code')}),
+        (_('Main Info'), {'fields': ('owner', 'name', 'description', 'email', 'contact_number', 'image', 'view_image')}),
+        (_('Address'), {'fields': ('address', 'city', 'state', 'zip_code')}),
         (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
-        (_('Theme'), {'fields': ('primary_color', 'secondary_color')}),
+        (_('Theme'), {'fields': ('theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if 'primary_color' in form.base_fields:
+            form.base_fields['primary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
+        if 'theme' in form.base_fields:
+            form.base_fields['theme'].widget = ImageRadioSelect(choices=RestaurantThemeChoice.choices)
+        return form
 
 
 class HeaderImageSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
@@ -59,12 +93,12 @@ class SocialMediaLinkSuperuserAdmin(admin.ModelAdmin):
     )
 
 
-class CategorySuperuserAdmin(TranslationAdmin):
+class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'is_active')}),
+        (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
