@@ -40,6 +40,7 @@ urlpatterns = [
     path('dashboard/', customer_admin_site.urls),
     path('admin/', admin.site.urls),
     path('api/menus/', include('restaurant.api.urls'), name='restaurant'),
+    path('api/info/', include('info.api.urls'), name='info'),
     path('i18n/', include('django.conf.urls.i18n')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
