@@ -26,8 +26,14 @@ SECRET_KEY = 'django-insecure-iv!&1p$8h!ldb=hozb2@t6pwh0(va#b$!s@b9%!nl^d+z95-ge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+BASE_DOMAIN = "localhost:8000"
 
+ALLOWED_HOSTS = [
+    "localhost",
+    ".localhost",
+]
+
+DEFAULT_HOST = 'default'
 
 # Application definition
 
@@ -41,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_hosts',
     'rest_framework',
     'django_filters',
     'drf_spectacular',
@@ -50,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
@@ -59,9 +67,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
+ROOT_HOSTCONF = 'core.hosts'
 
 TEMPLATES = [
     {
