@@ -24,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
                 ),
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (_("Important Dates"), {"fields": ("last_login", "date_joined")}),
     )
 
     list_filter = ("is_staff", "is_superuser", "is_active")
