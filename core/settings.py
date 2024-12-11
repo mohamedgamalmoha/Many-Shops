@@ -26,11 +26,12 @@ SECRET_KEY = 'django-insecure-iv!&1p$8h!ldb=hozb2@t6pwh0(va#b$!s@b9%!nl^d+z95-ge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-BASE_DOMAIN = "localhost:8000"
+# BASE_DOMAIN = "localhost:8000"
 
 ALLOWED_HOSTS = [
-    "localhost",
-    ".localhost",
+    # "localhost",
+    # ".localhost",
+    '*'
 ]
 
 DEFAULT_HOST = 'default'
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_hosts',
+    # 'django_hosts',
     'rest_framework',
     'django_filters',
     'drf_spectacular',
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
+    # 'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
@@ -67,18 +68,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware',
+    # 'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
-ROOT_HOSTCONF = 'core.hosts'
+# ROOT_HOSTCONF = 'core.hosts'
 
 REACT_JS_BUILD_DIR = BASE_DIR / 'frontend'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates', REACT_JS_BUILD_DIR],
+        'DIRS': [BASE_DIR / 'templates', ],  # REACT_JS_BUILD_DIR
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -172,7 +173,7 @@ STATIC_URL = '/assets/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    REACT_JS_BUILD_DIR / 'assets'
+    # REACT_JS_BUILD_DIR / 'assets'
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
