@@ -1,8 +1,8 @@
-from django.urls import path
+from django.urls import re_path
 
-from . import views
+from .views import HomeView
 
 
 urlpatterns = [
-    path('', views.restaurant_details, name='restaurant_details'),
+    re_path(r'^.*$',  HomeView.as_view(), name='home')
 ]
