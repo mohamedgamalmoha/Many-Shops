@@ -128,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'ar'
 
 TIME_ZONE = 'UTC'
 
@@ -139,21 +139,19 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en', _('English')),
     ('ar', _('Arabic')),
     ('he', _('Hebrew')),
 ]
 
 # Enable fallback to default language if a translation is missing
 MODELTRANSLATION_FALLBACK_LANGUAGES = {
-    'default': ('en',),  # Fallback language for all other languages
-    'ar': ('en',),       # Fallback for Arabic
-    'he': ('en',),       # Fallback for Hebrew
+    'default': ('ar',),  # Fallback language for all other languages
+    'he': ('ar',),       # Fallback for Hebrew
 }
 
 MODELTRANSLATION_AUTO_POPULATE = True  # Automatically populate untranslated fields with the default language value
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'  # Default language for the admin
-MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'en'  # Prepopulate translation fields from this language
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ar'  # Default language for the admin
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ar'  # Prepopulate translation fields from this language
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale'
