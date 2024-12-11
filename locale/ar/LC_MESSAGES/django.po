@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-11 13:32+0200\n"
+"POT-Creation-Date: 2024-12-11 20:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -19,71 +19,180 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: .\core\settings.py:124
-msgid "English"
-msgstr "الإنجليزية"
-
-#: .\core\settings.py:125
+#: .\core\settings.py:142
 msgid "Arabic"
 msgstr "العربية"
 
-#: .\core\settings.py:126
+#: .\core\settings.py:143
 msgid "Hebrew"
 msgstr "العبرية"
 
-#: .\core\settings.py:430
+#: .\core\settings.py:424 .\core\settings.py:427 .\core\settings.py:430
+msgid "Menus"
+msgstr "منيوز"
+
+#: .\core\settings.py:448
 msgid "Welcome To Menus"
 msgstr "مرحبًا بكم في المنيوز"
 
-#: .\core\settings.py:433
+#: .\core\settings.py:451
 msgid "Menus Development Team"
 msgstr "فريق تطوير المنيوز"
 
-#: .\core\settings.py:450
+#: .\core\settings.py:468
 msgid "Home"
 msgstr "الصفحة الرئيسية"
 
-#: .\core\settings.py:451
+#: .\core\settings.py:469
 msgid "API Docs"
 msgstr "وثائق واجهة برمجة التطبيقات"
 
-#: .\restaurant\admin\base.py:126
-msgid "Thumbnail"
-msgstr "صورة مصغرة"
-
-#: .\restaurant\admin\base.py:127 .\restaurant\models.py:51
-msgid "Image"
-msgstr "صورة"
-
-#: .\restaurant\admin\customer.py:49 .\restaurant\admin\customer.py:59
-#: .\restaurant\admin\customer.py:69 .\restaurant\admin\customer.py:96
-#: .\restaurant\admin\customer.py:117 .\restaurant\admin\superuser.py:35
-#: .\restaurant\admin\superuser.py:48 .\restaurant\admin\superuser.py:58
-#: .\restaurant\admin\superuser.py:68 .\restaurant\admin\superuser.py:78
-#: .\restaurant\admin\superuser.py:89
+#: .\info\admin.py:15 .\info\admin.py:34 .\info\admin.py:44
+#: .\restaurant\admin\customer.py:37 .\restaurant\admin\customer.py:47
+#: .\restaurant\admin\customer.py:57 .\restaurant\admin\customer.py:105
+#: .\restaurant\admin\customer.py:130 .\restaurant\admin\customer.py:139
+#: .\restaurant\admin\customer.py:148 .\restaurant\admin\superuser.py:58
+#: .\restaurant\admin\superuser.py:81 .\restaurant\admin\superuser.py:91
+#: .\restaurant\admin\superuser.py:101 .\restaurant\admin\superuser.py:111
+#: .\restaurant\admin\superuser.py:122 .\restaurant\admin\superuser.py:131
 msgid "Main Info"
 msgstr "المعلومات الرئيسية"
 
-#: .\restaurant\admin\customer.py:50 .\restaurant\admin\customer.py:60
-#: .\restaurant\admin\customer.py:72 .\restaurant\admin\customer.py:98
-#: .\restaurant\admin\customer.py:118 .\restaurant\admin\superuser.py:38
-#: .\restaurant\admin\superuser.py:49 .\restaurant\admin\superuser.py:59
-#: .\restaurant\admin\superuser.py:69 .\restaurant\admin\superuser.py:80
-#: .\restaurant\admin\superuser.py:90
+#: .\info\admin.py:16 .\info\admin.py:35 .\info\admin.py:46
+#: .\restaurant\admin\customer.py:38 .\restaurant\admin\customer.py:48
+#: .\restaurant\admin\customer.py:62 .\restaurant\admin\customer.py:108
+#: .\restaurant\admin\customer.py:131 .\restaurant\admin\customer.py:140
+#: .\restaurant\admin\customer.py:149 .\restaurant\admin\superuser.py:27
+#: .\restaurant\admin\superuser.py:63 .\restaurant\admin\superuser.py:82
+#: .\restaurant\admin\superuser.py:92 .\restaurant\admin\superuser.py:102
+#: .\restaurant\admin\superuser.py:114 .\restaurant\admin\superuser.py:123
+#: .\restaurant\admin\superuser.py:132
 msgid "Important Dates"
 msgstr "التواريخ الهامة"
 
-#: .\restaurant\admin\customer.py:70 .\restaurant\admin\superuser.py:36
-#: .\restaurant\models.py:18
+#: .\info\admin.py:45
+msgid "About"
+msgstr "نبذة"
+
+#: .\info\apps.py:8
+msgid "Info"
+msgstr "المعلومات"
+
+#: .\info\models.py:6 .\info\models.py:22 .\info\models.py:39
+#: .\info\models.py:56
+msgid "Title"
+msgstr "عنوان"
+
+#: .\info\models.py:7 .\info\models.py:23 .\info\models.py:40
+#: .\info\models.py:57 .\restaurant\models.py:29 .\restaurant\models.py:134
+msgid "Description"
+msgstr "الوصف"
+
+#: .\info\models.py:8 .\info\models.py:24 .\info\models.py:41
+#: .\info\models.py:58 .\restaurant\admin\base.py:131 .\restaurant\models.py:35
+#: .\restaurant\models.py:69 .\restaurant\models.py:114
+msgid "Image"
+msgstr "صورة"
+
+#: .\info\models.py:9 .\info\models.py:26 .\info\models.py:43
+#: .\info\models.py:60 .\info\models.py:78 .\restaurant\models.py:44
+#: .\restaurant\models.py:94 .\restaurant\models.py:116
+#: .\restaurant\models.py:140 .\restaurant\models.py:160
+#: .\restaurant\models.py:180
+msgid "Create At"
+msgstr "تاريخ الإنشاء"
+
+#: .\info\models.py:10 .\info\models.py:27 .\info\models.py:44
+#: .\info\models.py:61 .\info\models.py:79 .\restaurant\models.py:45
+#: .\restaurant\models.py:95 .\restaurant\models.py:117
+#: .\restaurant\models.py:141 .\restaurant\models.py:161
+#: .\restaurant\models.py:181
+msgid "Update At"
+msgstr "تاريخ التحديث"
+
+#: .\info\models.py:13 .\info\models.py:14
+msgid "Website Main Info"
+msgstr "المعلومات الرئيسية"
+
+#: .\info\models.py:25 .\info\models.py:42 .\info\models.py:59
+#: .\restaurant\models.py:36 .\restaurant\models.py:70
+#: .\restaurant\models.py:93 .\restaurant\models.py:115
+#: .\restaurant\models.py:139
+msgid "Active"
+msgstr "نشط"
+
+#: .\info\models.py:30
+msgid "Service"
+msgstr "خدمة"
+
+#: .\info\models.py:31
+msgid "Services"
+msgstr "خدمات"
+
+#: .\info\models.py:47 .\info\models.py:48
+msgid "About Us"
+msgstr "من نحن"
+
+#: .\info\models.py:64 .\restaurant\admin\customer.py:61
+#: .\restaurant\admin\superuser.py:62 .\restaurant\models.py:39
+msgid "Theme"
+msgstr "القالب"
+
+#: .\info\models.py:65
+msgid "Themes"
+msgstr "القوالب"
+
+#: .\info\models.py:73
+msgid "Full Name"
+msgstr "الاسم الكامل"
+
+#: .\info\models.py:74 .\restaurant\models.py:33
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: .\info\models.py:75
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+#: .\info\models.py:76
+msgid "Subject"
+msgstr "الموضوع"
+
+#: .\info\models.py:77
+msgid "Message"
+msgstr "المضمون"
+
+#: .\info\models.py:82 .\info\models.py:83
+msgid "Contact Us"
+msgstr "تواصل معنا"
+
+#: .\restaurant\admin\base.py:130
+msgid "Thumbnail"
+msgstr "صورة مصغرة"
+
+#: .\restaurant\admin\customer.py:59 .\restaurant\admin\superuser.py:60
+#: .\restaurant\models.py:25
 msgid "Address"
 msgstr "العنوان"
 
-#: .\restaurant\admin\customer.py:71 .\restaurant\admin\customer.py:97
-#: .\restaurant\admin\superuser.py:37 .\restaurant\admin\superuser.py:79
+#: .\restaurant\admin\customer.py:60 .\restaurant\admin\customer.py:106
+#: .\restaurant\admin\superuser.py:61 .\restaurant\admin\superuser.py:112
 msgid "More Info"
 msgstr "معلومات إضافية"
 
-#: .\restaurant\apps.py:8 .\restaurant\models.py:35
+#: .\restaurant\admin\customer.py:107 .\restaurant\admin\superuser.py:113
+msgid "Offered By"
+msgstr "كيفية التقديم"
+
+#: .\restaurant\admin\superuser.py:17
+msgid "Personal info"
+msgstr "المعلومات الشخصية"
+
+#: .\restaurant\admin\superuser.py:19
+msgid "Permissions"
+msgstr "الصالاحيات"
+
+#: .\restaurant\apps.py:8 .\restaurant\models.py:49
 msgid "Restaurants"
 msgstr "المطاعم"
 
@@ -115,167 +224,186 @@ msgstr "يوتيوب"
 msgid "Pinterest"
 msgstr "بينتريست"
 
-#: .\restaurant\models.py:15
+#: .\restaurant\models.py:19
 msgid "Owner"
 msgstr "المالك"
 
-#: .\restaurant\models.py:17
+#: .\restaurant\models.py:21
 msgid "Restaurant Name"
 msgstr "اسم المطعم"
 
-#: .\restaurant\models.py:19
+#: .\restaurant\models.py:22
+msgid "Slug"
+msgstr "اسم المطعم في الرابط"
+
+#: .\restaurant\models.py:23
+msgid ""
+"Unique identifier for the restaurant used in the URL. It will be auto-"
+"generated if left blank from name."
+msgstr ""
+"معرف فريد للمطعم يستخدم في رابط المطعم. سيتم إنشاؤه تلقائيًا إذا تُرك فارغًا من "
+"الاسم "
+
+#: .\restaurant\models.py:26
 msgid "City"
 msgstr "المدينة"
 
-#: .\restaurant\models.py:20
+#: .\restaurant\models.py:27
 msgid "State"
 msgstr "الولاية"
 
-#: .\restaurant\models.py:21
+#: .\restaurant\models.py:28
 msgid "ZIP Code"
 msgstr "الرمز البريدي"
 
-#: .\restaurant\models.py:22 .\restaurant\models.py:115
-msgid "Description"
-msgstr "الوصف"
-
-#: .\restaurant\models.py:23
+#: .\restaurant\models.py:30
 msgid "Opening Time"
 msgstr "وقت الفتح"
 
-#: .\restaurant\models.py:24
+#: .\restaurant\models.py:31
 msgid "Closing Time"
 msgstr "وقت الإغلاق"
 
-#: .\restaurant\models.py:26
-msgid "Email"
-msgstr "البريد الإلكتروني"
-
-#: .\restaurant\models.py:27
+#: .\restaurant\models.py:34
 msgid "Contact Number"
 msgstr "رقم الاتصال"
 
-#: .\restaurant\models.py:28 .\restaurant\models.py:52
-#: .\restaurant\models.py:75 .\restaurant\models.py:96
-#: .\restaurant\models.py:118
-msgid "Active"
-msgstr "نشط"
+#: .\restaurant\models.py:41
+msgid "Primary Color"
+msgstr "لون"
 
-#: .\restaurant\models.py:30 .\restaurant\models.py:76
-#: .\restaurant\models.py:97 .\restaurant\models.py:119
-#: .\restaurant\models.py:138
-msgid "Create At"
-msgstr "تاريخ الإنشاء"
+#: .\restaurant\models.py:42
+msgid "Primary color for template (e.g., #RRGGBB or #RGB)."
+msgstr "اللون الأساسي"
 
-#: .\restaurant\models.py:31 .\restaurant\models.py:77
-#: .\restaurant\models.py:98 .\restaurant\models.py:120
-#: .\restaurant\models.py:139
-msgid "Update At"
-msgstr "تاريخ التحديث"
-
-#: .\restaurant\models.py:34 .\restaurant\models.py:72
-#: .\restaurant\models.py:94
+#: .\restaurant\models.py:48 .\restaurant\models.py:90
+#: .\restaurant\models.py:112 .\restaurant\models.py:157
+#: .\restaurant\models.py:177
 msgid "Restaurant"
 msgstr "المطعم"
 
-#: .\restaurant\models.py:47
+#: .\restaurant\models.py:65
 msgid "Header Image"
-msgstr "صورة الرأس"
+msgstr "الصورة الأساسية للقالب"
 
-#: .\restaurant\models.py:48
+#: .\restaurant\models.py:66
 msgid "Alternative (Alt)"
-msgstr "النص البديل"
+msgstr "النص البديل للصورة"
 
-#: .\restaurant\models.py:49
+#: .\restaurant\models.py:67
 msgid ""
 "Text is meant to convey the “why” of the image as it relates to the content "
 "of a document or webpage"
 msgstr ""
 "النص يهدف إلى توضيح السبب وراء الصورة وعلاقتها بمحتوى المستند أو صفحة الويب"
 
-#: .\restaurant\models.py:53
+#: .\restaurant\models.py:71
 msgid "Setting it to false, makes the image disappear from the page"
 msgstr "ضبطه على غير صحيح يجعل الصورة تختفي من الصفحة"
 
-#: .\restaurant\models.py:54 .\restaurant\models.py:74
+#: .\restaurant\models.py:72 .\restaurant\models.py:92
 msgid "Link"
 msgstr "الرابط"
 
-#: .\restaurant\models.py:55
+#: .\restaurant\models.py:73
 msgid "Creation Date"
 msgstr "تاريخ الإنشاء"
 
-#: .\restaurant\models.py:56
+#: .\restaurant\models.py:74
 msgid "Update Date"
 msgstr "تاريخ التحديث"
 
-#: .\restaurant\models.py:59
+#: .\restaurant\models.py:77
 msgid "Home Page Image"
 msgstr "صورة الصفحة الرئيسية"
 
-#: .\restaurant\models.py:60
+#: .\restaurant\models.py:78
 msgid "Home Page Images"
 msgstr "صور الصفحة الرئيسية"
 
-#: .\restaurant\models.py:73
+#: .\restaurant\models.py:91
 msgid "Platform"
 msgstr "المنصة"
 
-#: .\restaurant\models.py:80
+#: .\restaurant\models.py:98
 msgid "Social Media Link"
 msgstr "رابط وسائل التواصل الاجتماعي"
 
-#: .\restaurant\models.py:81
+#: .\restaurant\models.py:99
 msgid "Social Media Links"
 msgstr "روابط وسائل التواصل الاجتماعي"
 
-#: .\restaurant\models.py:95
+#: .\restaurant\models.py:113
 msgid "Category Name"
 msgstr "اسم الفئة"
 
-#: .\restaurant\models.py:101 .\restaurant\models.py:113
+#: .\restaurant\models.py:120 .\restaurant\models.py:132
 msgid "Category"
 msgstr "الفئة"
 
-#: .\restaurant\models.py:102
+#: .\restaurant\models.py:121
 msgid "Categories"
 msgstr "الفئات"
 
-#: .\restaurant\models.py:114
+#: .\restaurant\models.py:133
 msgid "Product Name"
 msgstr "اسم المنتج"
 
-#: .\restaurant\models.py:116
+#: .\restaurant\models.py:135
 msgid "Price"
 msgstr "السعر"
 
-#: .\restaurant\models.py:117
+#: .\restaurant\models.py:136
+msgid "Types"
+msgstr "التصنيفات"
+
+#: .\restaurant\models.py:137
+msgid "Variants"
+msgstr "الإضافات"
+
+#: .\restaurant\models.py:138
 msgid "Product Image"
 msgstr "صورة المنتج"
 
-#: .\restaurant\models.py:123 .\restaurant\models.py:135
+#: .\restaurant\models.py:144
 msgid "Product"
 msgstr "المنتج"
 
-#: .\restaurant\models.py:124
+#: .\restaurant\models.py:145
 msgid "Products"
 msgstr "المنتجات"
 
-#: .\restaurant\models.py:136
+#: .\restaurant\models.py:158
 msgid "Variant Name"
-msgstr "اسم النسخة"
+msgstr "اسم الإضافة"
 
-#: .\restaurant\models.py:137
+#: .\restaurant\models.py:159
 msgid "Variant Price"
-msgstr "سعر النسخة"
+msgstr "سعر الإضافة"
 
-#: .\restaurant\models.py:142
+#: .\restaurant\models.py:164
 msgid "Product Variant"
-msgstr "نسخة المنتج"
+msgstr "إضافة المنتج"
 
-#: .\restaurant\models.py:143
+#: .\restaurant\models.py:165
 msgid "Product Variants"
-msgstr "نسخ المنتجات"
+msgstr "إضافات المنتجات"
+
+#: .\restaurant\models.py:178
+msgid "Name"
+msgstr "اسم"
+
+#: .\restaurant\models.py:179
+msgid "Icon"
+msgstr "رمز"
+
+#: .\restaurant\models.py:184
+msgid "Product Type"
+msgstr "تصنيف المنتج"
+
+#: .\restaurant\models.py:185
+msgid "Product Types"
+msgstr "تصنيف المنتجات"
 
 #: .\restaurant\sites.py:8
 msgid "Restaurant Management Admin"
@@ -288,3 +416,6 @@ msgstr "لوحة تحكم إدارة المطاعم"
 #: .\restaurant\sites.py:14
 msgid "Restaurant Management System"
 msgstr "نظام إدارة المطاعم"
+
+msgid "Dashboard"
+msgstr "لوحة تحكم"
