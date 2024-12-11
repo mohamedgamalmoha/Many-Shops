@@ -1,8 +1,8 @@
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import RetrieveAPIView, CreateAPIView, ListAPIView
 
-from ..models import MainInfo, Service
-from .serializer import MainInfoSerializer, ServiceSerializer, ContactUsSerializer
+from ..models import MainInfo, Service, AboutUs, Theme
+from .serializer import MainInfoSerializer, ServiceSerializer, AboutUsSerializer, ThemeSerializer, ContactUsSerializer
 
 
 class MainInfoAPIView(RetrieveAPIView):
@@ -17,6 +17,18 @@ class MainInfoAPIView(RetrieveAPIView):
 class ServiceAPIView(ListAPIView):
     queryset = Service.objects.filter(is_active=True)
     serializer_class = ServiceSerializer
+    permission_classes = [AllowAny]
+
+
+class AboutUsAPIView(ListAPIView):
+    queryset = AboutUs.objects.filter(is_active=True)
+    serializer_class = AboutUsSerializer
+    permission_classes = [AllowAny]
+
+
+class ThemeAPIView(ListAPIView):
+    queryset = Theme.objects.filter(is_active=True)
+    serializer_class = ThemeSerializer
     permission_classes = [AllowAny]
 
 

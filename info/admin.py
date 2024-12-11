@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
 from restaurant.admin.base import ImageDisplayAminMixin
-from .models import MainInfo, Service, ContactUs
+from .models import MainInfo, Service, AboutUs, Theme, ContactUs
 
 
 class MainInfoAdmin(ImageDisplayAminMixin, TranslationAdmin):
@@ -25,7 +25,7 @@ class MainInfoAdmin(ImageDisplayAminMixin, TranslationAdmin):
         return super().has_add_permission(request)
 
 
-class ServiceAdmin(ImageDisplayAminMixin, TranslationAdmin):
+class ActiveTitleWithDescriptionAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['__str__', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -47,5 +47,7 @@ class ContactUsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MainInfo, MainInfoAdmin)
-admin.site.register(Service, ServiceAdmin)
+admin.site.register(Service, ActiveTitleWithDescriptionAdmin)
+admin.site.register(AboutUs, ActiveTitleWithDescriptionAdmin)
+admin.site.register(Theme, ActiveTitleWithDescriptionAdmin)
 admin.site.register(ContactUs, ContactUsAdmin)

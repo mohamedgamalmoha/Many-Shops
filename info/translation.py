@@ -1,6 +1,6 @@
 from modeltranslation.translator import translator, TranslationOptions
 
-from .models import MainInfo, Service
+from .models import MainInfo, Service, AboutUs, Theme
 
 
 class TitleWithDescriptionTranslationOptions(TranslationOptions):
@@ -9,3 +9,5 @@ class TitleWithDescriptionTranslationOptions(TranslationOptions):
 
 translator.register(MainInfo, TitleWithDescriptionTranslationOptions)
 translator.register(Service, TitleWithDescriptionTranslationOptions)
+translator.register(AboutUs, TitleWithDescriptionTranslationOptions)
+translator.register(Theme, TitleWithDescriptionTranslationOptions)
