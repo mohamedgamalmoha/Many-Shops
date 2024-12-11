@@ -2,12 +2,14 @@ from datetime import time
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .enums import SocialMediaPlatform, ProductTypeChoice, RestaurantThemeChoice
+from info.models import Theme
 from .validators import validate_hex_color
+from .enums import SocialMediaPlatform, ProductTypeChoice
 
 
 User = get_user_model()
@@ -17,6 +19,9 @@ class Restaurant(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="restaurant", verbose_name=_("Owner"))
 
     name = models.CharField(max_length=255, verbose_name=_("Restaurant Name"))
+    slug = models.SlugField(max_length=255, blank=True, null=True, verbose_name=_("Slug"),
+                            help_text=_("Unique identifier for the restaurant used in the URL. "
+                                        "It will be auto-generated if left blank from name."))
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Address"))
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("City"))
     state = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("State"))
@@ -30,7 +35,8 @@ class Restaurant(models.Model):
     image = models.ImageField(null=True, upload_to='restaurants/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
 
-    theme = models.CharField(max_length=20, null=True, choices=RestaurantThemeChoice.choices, verbose_name=_("Theme"))
+    theme = models.ForeignKey(Theme, on_delete=models.SET_NULL, null=True, related_name='restaurants',
+                              verbose_name=_("Theme"))
     primary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
                                      verbose_name=_('Primary Color'),
                                      help_text=_("Primary color for template (e.g., #RRGGBB or #RGB)."))
@@ -42,6 +48,10 @@ class Restaurant(models.Model):
         verbose_name = _("Restaurant")
         verbose_name_plural = _("Restaurants")
         ordering = ('-create_at', '-update_at')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.name)

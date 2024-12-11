@@ -54,7 +54,8 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
     readonly_fields = ['show_theme', 'create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'description', 'email', 'contact_number', 'image', 'view_image')}),
+        (_('Main Info'), {'fields': (('name', 'slug'), 'description', 'email', 'contact_number', 'image',
+                                     'view_image')}),
         (_('Address'), {'fields': ('address', 'city', 'state', 'zip_code')}),
         (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
         (_('Theme'), {'fields': ('show_theme', 'primary_color')}),
@@ -79,11 +80,10 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
         return form
 
     def show_theme(self, obj):
-        from django.templatetags.static import static
         theme = obj.theme
-        if not theme:
-            theme_src = static(f'images/{theme}.png')
-            theme_alt = obj.get_theme_display()
+        if theme and theme.image:
+            theme_src = theme.image.url
+            theme_alt = theme.title
         else:
             theme_src = DEFAULT_THEME_IMAGE_URL
             theme_alt = None

@@ -22,6 +22,7 @@ class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
     permit_list_expands = ['owner', 'header_images', 'social_media_links']
     filterset_class = RestaurantFilterSet
+    lookup_field = 'slug'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -37,7 +38,7 @@ class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
 
     @extend_schema(responses={200: CategorySerializer(many=True)}, filters=True)
     @action(["GET"], detail=True, url_path='categories', queryset=Category.objects.none(),
-            serializer_class=CategorySerializer, filterset_class=CategoryFilterSet)
+            serializer_class=CategorySerializer, filterset_class=CategoryFilterSet, lookup_field='slug')
     def categories(self, request, *args, **kwargs):
         # Create a dictionary of filter arguments using the lookup field (e.g., 'id') and its value from the URL kwargs
         filter_kwargs = {self.lookup_field: self.kwargs[self.lookup_field]}

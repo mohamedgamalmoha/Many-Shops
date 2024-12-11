@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin.widgets import AdminTextInputWidget
 from django.utils.translation import gettext_lazy as _
 
@@ -6,10 +7,8 @@ from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from .base import ImageDisplayAminMixin
 from ..widgets import ImageRadioSelect
-from ..enums import RestaurantThemeChoice
 from ..models import HeaderImage, SocialMediaLink
-
-from django.contrib.auth.admin import UserAdmin
+from ..constants import DEFAULT_THEME_IMAGE_URL
 
 
 class CustomUserAdmin(UserAdmin):
@@ -56,7 +55,8 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': ('owner', 'name', 'description', 'email', 'contact_number', 'image', 'view_image')}),
+        (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'description', 'email', 'contact_number', 'image',
+                                     'view_image')}),
         (_('Address'), {'fields': ('address', 'city', 'state', 'zip_code')}),
         (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
         (_('Theme'), {'fields': ('theme', 'primary_color')}),
@@ -69,7 +69,7 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         if 'primary_color' in form.base_fields:
             form.base_fields['primary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
         if 'theme' in form.base_fields:
-            form.base_fields['theme'].widget = ImageRadioSelect(choices=RestaurantThemeChoice.choices)
+            form.base_fields['theme'].widget = ImageRadioSelect(default_image_url=DEFAULT_THEME_IMAGE_URL)
         return form
 
 

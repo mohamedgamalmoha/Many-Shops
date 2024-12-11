@@ -6,7 +6,7 @@
             <li style="margin: 5px 0;">
                 <label style="display: flex; align-items: center;">
                     <input type="radio" name="{{ widget.name }}" value="{{ option.value }}" {% if option.value in widget.value %}checked{% endif %} style="margin-right: 10px;">
-                    <img src="{% static 'images/' %}{{ option.value }}.png" alt="{{ option.label }}" style="width: 150px; height: 100px; border: 2px solid black; border-radius: 10px;">
+                    <img src="{{ option.image }}" alt="{{ option.label }}" title="{{ option.label }}" style="width: 150px; height: 100px; border: 2px solid black; border-radius: 10px;">
                 </label>
             </li>
         {% endfor %}
