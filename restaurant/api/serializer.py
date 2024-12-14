@@ -1,21 +1,10 @@
-from django.contrib.auth.backends import get_user_model
-
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
+from accounts.api.serializer import UserSerializer
 from .mixins import DefaultImageSerializerMixin
 from ..constants import DEFAULT_RESTAURANT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType, WorkTime
-
-
-User = get_user_model()
-
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        exclude = ('password', 'is_superuser', 'is_staff', 'groups', 'user_permissions')
+from ..models import Restaurant, HeaderImage, SocialMediaLink, WorkTime, Category, Product, ProductVariant, ProductType
 
 
 class HeaderImageSerializer(DefaultImageSerializerMixin, serializers.ModelSerializer):
@@ -65,7 +54,7 @@ class ProductVariantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductVariant
-        exclude = ('restaurant', )
+        exclude = ()
         read_only_fields = ('create_at', 'update_at')
 
 
@@ -75,7 +64,7 @@ class ProductTypeSerializer(DefaultImageSerializerMixin, serializers.ModelSerial
 
     class Meta:
         model = ProductType
-        exclude = ('restaurant', )
+        exclude = ()
         read_only_fields = ('create_at', 'update_at')
 
 

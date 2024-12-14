@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_spectacular',
     'rest_flex_fields',
+    'accounts',
     'restaurant',
     'info'
 ]
@@ -93,7 +94,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
+AUTH_USER_MODEL = 'accounts.User'
 
 # Database
 # https://docs.djangoproject.com/en/4CORS_ALLOWED_ORIGINS .2/ref/settings/#databases

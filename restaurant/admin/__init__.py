@@ -1,17 +1,12 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group
-from django.contrib.auth import get_user_model
 
 from ..sites import customer_admin_site
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 from .customer import (RestaurantCustomerAdmin, HeaderImageCustomerAdmin, SocialMediaLinkCustomerAdmin,
                        CategoryCustomerAdmin, ProductCustomerAdmin)
-from .superuser import (CustomUserAdmin, RestaurantSuperuserAdmin, HeaderImageSuperuserAdmin,
+from .superuser import (RestaurantSuperuserAdmin, HeaderImageSuperuserAdmin,
                         SocialMediaLinkSuperuserAdmin, CategorySuperuserAdmin, ProductSuperuserAdmin,
                         ProductVariantSuperuserAdmin, ProductTypeSuperuserAdmin)
-
-
-User = get_user_model()
 
 
 customer_admin_site.register(Restaurant, RestaurantCustomerAdmin)
@@ -28,6 +23,3 @@ admin.site.register(Category, CategorySuperuserAdmin)
 admin.site.register(Product, ProductSuperuserAdmin)
 admin.site.register(ProductVariant, ProductVariantSuperuserAdmin)
 admin.site.register(ProductType, ProductTypeSuperuserAdmin)
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
-admin.site.unregister(Group)
