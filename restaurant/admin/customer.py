@@ -136,21 +136,3 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedOb
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-
-
-class ProductVariantCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, TranslationAdmin):
-    list_display = ['name', 'create_at', 'update_at']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'price')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-
-
-class ProductTypeCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, TranslationAdmin):
-    list_display = ['name', 'create_at', 'update_at']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'icon')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )

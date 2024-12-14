@@ -123,18 +123,19 @@ class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
 
 
 class ProductVariantSuperuserAdmin(TranslationAdmin):
-    list_display = ['name', 'restaurant', 'create_at', 'update_at']
+    list_display = ['name', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'price')}),
+        (_('Main Info'), {'fields': ('name', 'price')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
 
-class ProductTypeSuperuserAdmin(TranslationAdmin):
-    list_display = ['name', 'restaurant', 'create_at', 'update_at']
+class ProductTypeSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
+    list_display = ['name', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'icon')}),
+        (_('Main Info'), {'fields': ('name', 'icon', 'view_image')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
+    image_field_name = 'icon'

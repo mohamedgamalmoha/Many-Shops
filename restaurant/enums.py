@@ -12,11 +12,6 @@ class SocialMediaPlatform(models.TextChoices):
     PINTEREST = 'pinterest', _("Pinterest")
 
 
-class ProductTypeChoice(models.TextChoices):
-    HOT = '🌶️', '🌶️'
-    VERY_HOT = '🔥', '🔥'
-
-
 class DaysOfWeekChoice(models.TextChoices):
     SATURDAY = 'SAT', _("Saturday")
     SUNDAY = 'SUN', _("Sunday")

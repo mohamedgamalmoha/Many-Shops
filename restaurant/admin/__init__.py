@@ -5,8 +5,7 @@ from django.contrib.auth import get_user_model
 from ..sites import customer_admin_site
 from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 from .customer import (RestaurantCustomerAdmin, HeaderImageCustomerAdmin, SocialMediaLinkCustomerAdmin,
-                       CategoryCustomerAdmin, ProductCustomerAdmin, ProductVariantCustomerAdmin,
-                       ProductTypeCustomerAdmin)
+                       CategoryCustomerAdmin, ProductCustomerAdmin)
 from .superuser import (CustomUserAdmin, RestaurantSuperuserAdmin, HeaderImageSuperuserAdmin,
                         SocialMediaLinkSuperuserAdmin, CategorySuperuserAdmin, ProductSuperuserAdmin,
                         ProductVariantSuperuserAdmin, ProductTypeSuperuserAdmin)
@@ -20,8 +19,6 @@ customer_admin_site.register(HeaderImage, HeaderImageCustomerAdmin)
 customer_admin_site.register(SocialMediaLink, SocialMediaLinkCustomerAdmin)
 customer_admin_site.register(Category, CategoryCustomerAdmin)
 customer_admin_site.register(Product, ProductCustomerAdmin)
-customer_admin_site.register(ProductVariant, ProductVariantCustomerAdmin)
-customer_admin_site.register(ProductType, ProductTypeCustomerAdmin)
 
 
 admin.site.register(Restaurant, RestaurantSuperuserAdmin)
