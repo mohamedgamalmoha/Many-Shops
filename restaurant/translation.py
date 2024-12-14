@@ -3,29 +3,21 @@ from modeltranslation.translator import translator, TranslationOptions
 from .models import Restaurant, HeaderImage, Category, Product, ProductVariant, ProductType
 
 
-class RestaurantTranslationOptions(TranslationOptions):
-    fields = ('name', 'address', 'city', 'state', 'zip_code', 'description')
-
-
 class HeaderImageTranslationOptions(TranslationOptions):
     fields = ('alt', )
-
-
-class CategoryTranslationOptions(TranslationOptions):
-    fields = ('name', )
 
 
 class ProductTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
 
 
-class ProductVariantTranslationOptions(TranslationOptions):
-    fields = ('name', )
+class NameTranslationOptions(TranslationOptions):
+    fields = ('name',)
 
 
-translator.register(Restaurant, RestaurantTranslationOptions)
+translator.register(Restaurant, NameTranslationOptions)
 translator.register(HeaderImage, HeaderImageTranslationOptions)
-translator.register(Category, CategoryTranslationOptions)
+translator.register(Category, NameTranslationOptions)
 translator.register(Product, ProductTranslationOptions)
-translator.register(ProductVariant, ProductVariantTranslationOptions)
-translator.register(ProductType, ProductVariantTranslationOptions)
+translator.register(ProductVariant, NameTranslationOptions)
+translator.register(ProductType, NameTranslationOptions)

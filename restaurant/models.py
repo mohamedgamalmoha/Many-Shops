@@ -8,8 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 from info.models import Theme
-from .enums import SocialMediaPlatform, ProductTypeChoice
 from .validators import validate_hex_color, validate_english_alphanum
+from .enums import SocialMediaPlatform, ProductTypeChoice, DaysOfWeekChoice
 
 
 User = get_user_model()
@@ -23,13 +23,6 @@ class Restaurant(models.Model):
                             verbose_name=_("Slug"),
                             help_text=_("Unique identifier for the restaurant used in the URL. "
                                         "It must contain only English letters, numerics, dashes (-), and underscores (_)"))
-    address = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Address"))
-    city = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("City"))
-    state = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("State"))
-    zip_code = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("ZIP Code"))
-    description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
-    opening_time = models.TimeField(blank=True, null=True, default=time(9, 0), verbose_name=_("Opening Time"))  # 9:00 AM default
-    closing_time = models.TimeField(blank=True, null=True, default=time(18, 0), verbose_name=_("Closing Time"))  # 6:00 PM default
 
     email = models.EmailField(blank=True, null=True, verbose_name=_("Email"))
     contact_number = PhoneNumberField(blank=True, null=True, verbose_name=_("Contact Number"))
@@ -59,6 +52,21 @@ class Restaurant(models.Model):
 
     def is_owner(self, user) -> bool:
         return self.owner == user
+
+
+class WorkTime(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='work_times',
+                                   verbose_name=_("Restaurant"))
+    day = models.CharField(max_length=3, choices=DaysOfWeekChoice.choices, verbose_name=_("Day"))
+    is_open = models.BooleanField(default=True, verbose_name=_("Open"),
+                                  help_text=_("Indicates whether the restaurant is open on this day"))
+    opening_time = models.TimeField(blank=True, null=True, default=time(9, 0), verbose_name=_("Opening Time"))  # 9:00 AM default
+    closing_time = models.TimeField(blank=True, null=True, default=time(18, 0), verbose_name=_("Closing Time"))  # 6:00 PM default
+
+    class Meta:
+        verbose_name = _("Work Time")
+        verbose_name_plural = _("Work Times")
+        unique_together = ('restaurant', 'day')
 
 
 class HeaderImage(models.Model):

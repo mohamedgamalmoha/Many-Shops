@@ -5,7 +5,7 @@ from rest_flex_fields import FlexFieldsModelSerializer
 
 from .mixins import DefaultImageSerializerMixin
 from ..constants import DEFAULT_RESTAURANT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
-from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
+from ..models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType, WorkTime
 
 
 User = get_user_model()
@@ -35,10 +35,18 @@ class SocialMediaLinkSerializer(serializers.ModelSerializer):
         read_only_fields = ('create_at', 'update_at')
 
 
+class WorkTimeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WorkTime
+        exclude = ('restaurant', )
+
+
 class RestaurantSerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer):
     owner = UserSerializer(many=False)
     header_images = HeaderImageSerializer(many=True)
     social_media_links = SocialMediaLinkSerializer(many=True)
+    work_times = WorkTimeSerializer(many=True)
     default_image_url = DEFAULT_RESTAURANT_IMAGE_URL
 
     class Meta:
@@ -49,6 +57,7 @@ class RestaurantSerializer(DefaultImageSerializerMixin, FlexFieldsModelSerialize
             'owner': (UserSerializer, {'many': False, "omit": ["restaurants"]}),
             'header_images': (HeaderImageSerializer, {'many': True, "omit": ["restaurant"]}),
             'social_media_links': (SocialMediaLinkSerializer, {'many': True, "omit": ["restaurant"]}),
+            'work_times': (WorkTimeSerializer, {'many': True, "omit": ["restaurant"]}),
         }
 
 
@@ -96,4 +105,3 @@ class CategorySerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer)
         expandable_fields = {
             'products': (ProductSerializer, {'many': True, "omit": ["category"]}),
         }
-

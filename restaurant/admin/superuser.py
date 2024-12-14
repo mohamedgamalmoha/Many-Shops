@@ -7,7 +7,7 @@ from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from .base import ImageDisplayAminMixin
 from ..widgets import ImageRadioSelect
-from ..models import HeaderImage, SocialMediaLink
+from ..models import HeaderImage, SocialMediaLink, WorkTime
 from ..constants import DEFAULT_THEME_IMAGE_URL
 
 
@@ -50,19 +50,26 @@ class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin,
     readonly_image_fields = ['view_image']
 
 
+class WorkTimeInlineAdmin(admin.StackedInline):
+    model = WorkTime
+    extra = 0
+    min_num = 1
+    max_num = 7
+    can_delete = False
+    show_change_link = False
+
+
 class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'description', 'email', 'contact_number', 'image',
-                                     'view_image')}),
-        (_('Address'), {'fields': ('address', 'city', 'state', 'zip_code')}),
-        (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
+        (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'email', 'contact_number', 'image', 'view_image',
+                                     'is_active')}),
         (_('Theme'), {'fields': ('theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
+    inlines = [WorkTimeInlineAdmin, HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)

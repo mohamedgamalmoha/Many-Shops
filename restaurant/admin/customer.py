@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
-from ..models import HeaderImage, SocialMediaLink, Category, ProductVariant, ProductType
+from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, ProductVariant, ProductType
 from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin,
                    RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin)
 
@@ -27,6 +27,15 @@ class HeaderImageInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAm
 
 class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
+
+
+class WorkTimeInlineAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
+    model = WorkTime
+    extra = 0
+    min_num = 1
+    max_num = 7
+    can_delete = False
+    show_change_link = False
 
 
 class HeaderImageCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
@@ -54,14 +63,11 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
     readonly_fields = ['show_theme', 'create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': (('name', 'slug'), 'description', 'email', 'contact_number', 'image',
-                                     'view_image')}),
-        (_('Address'), {'fields': ('address', 'city', 'state', 'zip_code')}),
-        (_('More Info'), {'fields': ('opening_time', 'closing_time', 'is_active')}),
+        (_('Main Info'), {'fields': (('name', 'slug'), 'email', 'contact_number', 'image', 'view_image', 'is_active')}),
         (_('Theme'), {'fields': ('show_theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [HeaderImageInlineCustomerAdmin, SocialMediaLInlineCustomerAdmin]
+    inlines = [WorkTimeInlineAdmin, HeaderImageInlineCustomerAdmin, SocialMediaLInlineCustomerAdmin]
 
     def has_add_permission(self, request):
         return False

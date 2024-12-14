@@ -10,15 +10,12 @@ class RestaurantFilterSet(filters.FilterSet):
 
     def custom_search(self, queryset, name, value):
         return queryset.filter(
-            models.Q(name__icontains=value) | models.Q(address__icontains=value) |
-            models.Q(city__icontains=value) | models.Q(state__icontains=value) |
-            models.Q(zip_code__icontains=value) | models.Q(description__icontains=value) |
-            models.Q(email__icontains=value)
+            models.Q(name__icontains=value) | models.Q(email__icontains=value)
         )
 
     class Meta:
         model = Restaurant
-        fields = ('search', 'name', 'address', 'city', 'state', 'zip_code', 'description', 'email', 'is_active')
+        fields = ('search', 'email', 'is_active')
 
 
 class CategoryFilterSet(filters.FilterSet):
