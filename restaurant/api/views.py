@@ -32,6 +32,8 @@ class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
             queryset = queryset.select_related('header_images')
         if is_expanded(self.request, 'social_media_links'):
             queryset = queryset.select_related('social_media_links')
+        if is_expanded(self.request, 'work_times'):
+            queryset = queryset.select_related('work_times')
         if self.action == 'categories':
             queryset = queryset.select_related('categories')
         return queryset
