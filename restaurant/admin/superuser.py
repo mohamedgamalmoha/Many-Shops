@@ -6,8 +6,8 @@ from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from .base import ImageDisplayAminMixin
 from ..widgets import ImageRadioSelect
-from ..models import HeaderImage, SocialMediaLink, WorkTime
 from ..constants import DEFAULT_THEME_IMAGE_URL
+from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, Product
 
 
 class BaseInlineAdmin(admin.StackedInline):
@@ -23,18 +23,35 @@ class SocialMediaLinkInlineAdmin(BaseInlineAdmin):
     model = SocialMediaLink
 
 
+class WorkTimeInlineAdmin(BaseInlineAdmin):
+    model = WorkTime
+    max_num = 7
+    readonly_fields = ()
+
+
 class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
     model = HeaderImage
     readonly_image_fields = ['view_image']
 
 
-class WorkTimeInlineAdmin(admin.StackedInline):
-    model = WorkTime
-    extra = 0
-    min_num = 1
-    max_num = 7
-    can_delete = False
+class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
+    readonly_fields = ['create_at', 'update_at']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('category', 'name', 'description')}),
+        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
+        (_('Offered By'), {'fields': ('types', 'variants')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+    model = Product
+    extra = 1
+    min_num = 0
+    max_num = None
+    can_delete = True
     show_change_link = False
+
+
+class CategoryInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
+    model = Category
 
 
 class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
@@ -47,7 +64,7 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         (_('Theme'), {'fields': ('theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [WorkTimeInlineAdmin, HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
+    inlines = [WorkTimeInlineAdmin, CategoryInlineAdmin, HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -58,26 +75,6 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         return form
 
 
-class HeaderImageSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'alt', 'url', 'image', 'view_image',  'is_active')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-
-
-class SocialMediaLinkSuperuserAdmin(admin.ModelAdmin):
-    list_display = ['restaurant', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'platform', 'url', 'is_active')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-
-
 class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
@@ -86,18 +83,7 @@ class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-
-
-class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['name', 'category', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
-        (_('Offered By'), {'fields': ('types', 'variants')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
+    inlines = [ProductInlineAdmin]
 
 
 class ProductVariantSuperuserAdmin(TranslationAdmin):

@@ -135,7 +135,7 @@ class RestaurantRelatedObjectAdminMixin:
 
     @staticmethod
     def get_user_restaurant(request):
-        return request.user.restaurant
+        return getattr(request.user, 'restaurant', None)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

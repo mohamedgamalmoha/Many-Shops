@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
-from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, ProductVariant, ProductType
-from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin,
-                   RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin)
+from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, Product
+from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin,
+                   ImageDisplayAminMixin)
 
 
 class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
@@ -16,7 +16,7 @@ class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline
     min_num = 0
     max_num = 10
     can_delete = True
-    show_change_link = True
+    show_change_link = False
     readonly_fields = ('create_at', 'update_at')
 
 
@@ -29,33 +29,14 @@ class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
 
 
-class WorkTimeInlineAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline):
+class WorkTimeInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = WorkTime
-    extra = 0
-    min_num = 1
     max_num = 7
-    can_delete = False
-    show_change_link = False
+    readonly_fields = ()
 
 
-class HeaderImageCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['__str__', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('alt',  'url', 'image', 'view_image', 'is_active')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-
-
-class SocialMediaLinkCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, admin.ModelAdmin):
-    list_display = ['platform', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('platform', 'url', 'is_active')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
+class CategoryInlineCustomerAdmin(BaseInlineCustomerAdmin):
+    model = Category
 
 
 class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
@@ -67,7 +48,8 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
         (_('Theme'), {'fields': ('show_theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [WorkTimeInlineAdmin, HeaderImageInlineCustomerAdmin, SocialMediaLInlineCustomerAdmin]
+    inlines = [WorkTimeInlineCustomerAdmin, CategoryInlineCustomerAdmin, HeaderImageInlineCustomerAdmin,
+               SocialMediaLInlineCustomerAdmin]
 
     def has_add_permission(self, request):
         return False
@@ -103,32 +85,24 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
         super().save_model(request, obj, form, change)
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['name', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active']
+class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description')}),
+        (_('Main Info'), {'fields': ('name', 'description')}),
         (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
         (_('Offered By'), {'fields': ('types', 'variants')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "category":
-            kwargs["queryset"] = Category.objects.filter(restaurant__owner=request.user)
-        if db_field.name == "types":
-            kwargs["queryset"] = ProductType.objects.filter(restaurant__owner=request.user)
-        if db_field.name == "variants":
-            kwargs["queryset"] = ProductVariant.objects.filter(restaurant__owner=request.user)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.filter(category__restaurant__owner=request.user)
+    model = Product
+    extra = 1
+    min_num = 0
+    max_num = None
+    can_delete = True
+    show_change_link = False
 
 
-class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
+class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin,
+                            TranslationAdmin):
     list_display = ['name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
@@ -136,3 +110,4 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedOb
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
+    inlines = [ProductInlineCustomerAdmin]
