@@ -427,11 +427,11 @@ msgstr "رمز"
 
 #: .\restaurant\models.py:189
 msgid "Product Type"
-msgstr "الصنف"
+msgstr "الأيقونة"
 
 #: .\restaurant\models.py:190
 msgid "Product Types"
-msgstr "الأصناف"
+msgstr "الأيقونات"
 
 #: .\restaurant\sites.py:48
 msgid "Restaurant Management Admin"
