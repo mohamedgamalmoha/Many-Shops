@@ -31,11 +31,11 @@ class WorkTimeInlineAdmin(BaseInlineAdmin):
 
 class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
     model = HeaderImage
-    readonly_image_fields = ['view_image']
+    readonly_fields = ['create_at', 'update_at', 'view_image']
 
 
 class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
-    readonly_fields = ['create_at', 'update_at']
+    readonly_fields = ['create_at', 'update_at', 'view_image']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description')}),
         (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
@@ -52,6 +52,7 @@ class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Bas
 
 class CategoryInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
     model = Category
+    readonly_fields = ['create_at', 'update_at', 'view_image']
 
 
 class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):

@@ -20,11 +20,6 @@ class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline
     readonly_fields = ('create_at', 'update_at')
 
 
-class HeaderImageInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
-    model = HeaderImage
-    readonly_image_fields = ['view_image']
-
-
 class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
 
@@ -35,8 +30,30 @@ class WorkTimeInlineCustomerAdmin(BaseInlineCustomerAdmin):
     readonly_fields = ()
 
 
-class CategoryInlineCustomerAdmin(BaseInlineCustomerAdmin):
+class HeaderImageInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
+    model = HeaderImage
+    readonly_fields = ['create_at', 'update_at', 'view_image']
+
+
+class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
+    readonly_fields = ['create_at', 'update_at', 'view_image']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('name', 'description')}),
+        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
+        (_('Offered By'), {'fields': ('types', 'variants')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+    model = Product
+    extra = 1
+    min_num = 0
+    max_num = None
+    can_delete = True
+    show_change_link = False
+
+
+class CategoryInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
     model = Category
+    readonly_fields = ['create_at', 'update_at', 'view_image']
 
 
 class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
@@ -83,22 +100,6 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
         if not change:  # Only set owner when adding a new object
             obj.owner = request.user
         super().save_model(request, obj, form, change)
-
-
-class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
-        (_('Offered By'), {'fields': ('types', 'variants')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-    model = Product
-    extra = 1
-    min_num = 0
-    max_num = None
-    can_delete = True
-    show_change_link = False
 
 
 class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin,
