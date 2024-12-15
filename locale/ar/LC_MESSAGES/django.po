@@ -363,15 +363,15 @@ msgstr "روابط وسائل التواصل الاجتماعي"
 
 #: .\restaurant\models.py:122
 msgid "Category Name"
-msgstr "اسم الفئة"
+msgstr "اسم الصنف"
 
 #: .\restaurant\models.py:129 .\restaurant\models.py:141
 msgid "Category"
-msgstr "الفئة"
+msgstr "الصتف"
 
 #: .\restaurant\models.py:130
 msgid "Categories"
-msgstr "الفئات"
+msgstr "الأصناف"
 
 #: .\restaurant\models.py:142
 msgid "Product Name"
@@ -383,7 +383,7 @@ msgstr "السعر"
 
 #: .\restaurant\models.py:145
 msgid "Types"
-msgstr "الأصناف"
+msgstr "الأيقونات"
 
 #: .\restaurant\models.py:146
 msgid "Variants"
