@@ -58,8 +58,8 @@ class WorkTime(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='work_times',
                                    verbose_name=_("Restaurant"))
     day = models.CharField(max_length=3, choices=DaysOfWeekChoice.choices, verbose_name=_("Day"))
-    is_open = models.BooleanField(default=True, verbose_name=_("Open"),
-                                  help_text=_("Indicates whether the restaurant is open on this day"))
+    is_close = models.BooleanField(default=True, verbose_name=_('Close'),
+                                   help_text=_("Indicates whether the restaurant is close on this day"))
     opening_time = models.TimeField(blank=True, null=True, default=time(9, 0), verbose_name=_("Opening Time"))  # 9:00 AM default
     closing_time = models.TimeField(blank=True, null=True, default=time(18, 0), verbose_name=_("Closing Time"))  # 6:00 PM default
 
