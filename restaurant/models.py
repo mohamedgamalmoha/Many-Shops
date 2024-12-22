@@ -98,7 +98,7 @@ class SocialMediaLink(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="social_media_links",
                                    verbose_name=_("Restaurant"))
     platform = models.CharField(max_length=20, choices=SocialMediaPlatform.choices, verbose_name=_("Platform"))
-    url = models.URLField(verbose_name=_("Link"))
+    url = models.CharField(max_length=250, null=True, verbose_name=_("Link / Phone Number"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
@@ -162,6 +162,8 @@ class Product(models.Model):
 
 
 class ProductVariant(models.Model):
+    restaurant = models.ForeignKey(Restaurant, null=True, blank=True, on_delete=models.CASCADE,
+                                   related_name="product_variants", verbose_name=_("Restaurant"))
     name = models.CharField(max_length=100, verbose_name=_("Variant Name"))
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Variant Price"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -176,7 +178,7 @@ class ProductVariant(models.Model):
         return self.restaurant.is_owner(user)
 
     def __str__(self):
-        return str(self.name)
+        return f'{self.name} | {self.price}'
 
 
 class ProductType(models.Model):

@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib import admin
 from django.contrib.admin.widgets import AdminTextInputWidget
 from django.utils.safestring import mark_safe
@@ -6,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
-from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, Product
+from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, Product, ProductVariant
 from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin,
                    ImageDisplayAminMixin)
 
@@ -49,6 +50,14 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMi
     max_num = None
     can_delete = True
     show_change_link = False
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "variants":
+            user_restaurant = getattr(request.user, 'restaurant', None)
+            kwargs["queryset"] = ProductVariant.objects.filter(
+                models.Q(restaurant=user_restaurant) | models.Q(restaurant=None)
+            )
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class CategoryInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
@@ -112,3 +121,12 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedOb
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductInlineCustomerAdmin]
+
+
+class ProductVariantsCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, TranslationAdmin):
+    list_display = ['name', 'price', 'create_at', 'update_at']
+    readonly_fields = ['create_at', 'update_at']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('name', 'price')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
