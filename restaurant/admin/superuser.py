@@ -38,7 +38,7 @@ class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Bas
     readonly_fields = ['create_at', 'update_at', 'view_image']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
+        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active', 'order')}),
         (_('Offered By'), {'fields': ('types', 'variants')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
@@ -56,12 +56,12 @@ class CategoryInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Ba
 
 
 class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['name', 'owner', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
         (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'email', 'contact_number', 'image', 'view_image',
-                                     'is_active')}),
+                                     'is_active', 'order')}),
         (_('Theme'), {'fields': ('theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
@@ -77,11 +77,11 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
 
 
 class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['name', 'restaurant', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'restaurant', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'view_image', 'is_active')}),
+        (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'view_image', 'is_active', 'order')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductInlineAdmin]

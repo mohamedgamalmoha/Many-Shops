@@ -28,6 +28,7 @@ class Restaurant(models.Model):
     contact_number = PhoneNumberField(blank=True, null=True, verbose_name=_("Contact Number"))
     image = models.ImageField(null=True, upload_to='restaurants/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
 
     theme = models.ForeignKey(Theme, on_delete=models.SET_NULL, null=True, related_name='restaurants',
                               verbose_name=_("Theme"))
@@ -41,7 +42,7 @@ class Restaurant(models.Model):
     class Meta:
         verbose_name = _("Restaurant")
         verbose_name_plural = _("Restaurants")
-        ordering = ('-create_at', '-update_at')
+        ordering = ('order', '-create_at', '-update_at')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.slug)
@@ -122,13 +123,14 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("Category Name"))
     image = models.ImageField(null=True, upload_to='categories/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
 
     class Meta:
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
-        ordering = ('-create_at', '-update_at')
+        ordering = ('order', '-create_at', '-update_at')
 
     def is_owner(self, user) -> bool:
         return self.restaurant.is_owner(user)
@@ -146,13 +148,14 @@ class Product(models.Model):
     variants = models.ManyToManyField('ProductVariant', blank=True, related_name='products', verbose_name=_("Variants"))
     image = models.ImageField(upload_to="products/", blank=True, null=True, verbose_name=_("Product Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
 
     class Meta:
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
-        ordering = ('-create_at', '-update_at')
+        ordering = ('order', '-create_at', '-update_at')
 
     def is_owner(self, user) -> bool:
         return self.category.is_owner(user)

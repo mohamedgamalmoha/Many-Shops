@@ -40,7 +40,7 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMi
     readonly_fields = ['create_at', 'update_at', 'view_image']
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active')}),
+        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active', 'order')}),
         (_('Offered By'), {'fields': ('types', 'variants')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
@@ -66,11 +66,12 @@ class CategoryInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminM
 
 
 class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['name', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['show_theme', 'create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': (('name', 'slug'), 'email', 'contact_number', 'image', 'view_image', 'is_active')}),
+        (_('Main Info'), {'fields': (('name', 'slug'), 'email', 'contact_number', 'image', 'view_image', 'is_active',
+                                     'order')}),
         (_('Theme'), {'fields': ('show_theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
@@ -113,11 +114,11 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
 
 class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin,
                             TranslationAdmin):
-    list_display = ['name', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active')}),
+        (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active', 'order')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductInlineCustomerAdmin]
