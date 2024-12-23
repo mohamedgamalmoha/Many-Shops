@@ -28,3 +28,6 @@ typing_extensions==4.12.2
 tzdata==2024.2
 uritemplate==4.1.1
 zipp==3.20.2
+django-resized==1.0.3
+django-cleanup==9.0.0
+
