@@ -16,7 +16,7 @@ from .serializer import RestaurantSerializer, CategorySerializer, ProductSeriali
 
 
 class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
-    queryset = Restaurant.objects.filter(is_active=True)
+    queryset = Restaurant.objects.filter(is_active=True).order_by('order', '-create_at', '-update_at')
     serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
@@ -35,7 +35,9 @@ class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
         if is_expanded(self.request, 'work_times'):
             queryset = queryset.select_related('work_times')
         if self.action == 'categories':
-            queryset = queryset.select_related('categories')
+            queryset = queryset.select_related('categories')\
+                .filter(is_active=True)\
+                .order_by('order', '-create_at', '-update_at')
         return queryset
 
     @extend_schema(responses={200: CategorySerializer(many=True)}, filters=True)
@@ -56,14 +58,14 @@ class RestaurantViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
         self.serializer_class = CategorySerializer
 
         # Set the queryset to be the categories associated with the retrieved restaurant.
-        self.queryset = restaurant.categories.all()
+        self.queryset = restaurant.categories.filter(is_active=True).order_by('order', '-create_at', '-update_at')
 
         # Delegate to the `list` method to handle filtering, pagination, and serialization of the queryset.
         return self.list(request, *args, **kwargs)
 
 
 class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
-    queryset = Category.objects.filter(is_active=True)
+    queryset = Category.objects.filter(is_active=True).order_by('order', '-create_at', '-update_at')
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
@@ -73,7 +75,9 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         if is_expanded(self.request, 'products') or self.action == 'products':
-            queryset = queryset.select_related('products')
+            queryset = queryset.select_related('products')\
+                .filter(is_active=True)\
+                .order_by('order', '-create_at', '-update_at')
         return queryset
 
     @extend_schema(responses={200: ProductSerializer}, filters=True)
@@ -94,7 +98,7 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
         self.serializer_class = ProductSerializer
 
         # Set the queryset to be the products associated with the retrieved category.
-        self.queryset = category.products.all()
+        self.queryset = category.products.filter(is_active=True).order_by('order', '-create_at', '-update_at')
 
         # Delegate to the `list` method to handle filtering, pagination, and serialization of the queryset.
         return self.list(request, *args, **kwargs)
