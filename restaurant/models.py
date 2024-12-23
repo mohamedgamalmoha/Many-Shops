@@ -5,9 +5,11 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from info.models import Theme
+from .constants import FORCED_IMAGE_FORMAT
 from .enums import SocialMediaPlatform, DaysOfWeekChoice
 from .validators import validate_hex_color, validate_english_alphanum
 
@@ -26,7 +28,8 @@ class Restaurant(models.Model):
 
     email = models.EmailField(blank=True, null=True, verbose_name=_("Email"))
     contact_number = PhoneNumberField(blank=True, null=True, verbose_name=_("Contact Number"))
-    image = models.ImageField(null=True, upload_to='restaurants/', verbose_name=_("Image"))
+    image = ResizedImageField(null=True, size=[150, 150], quality=80, force_format=FORCED_IMAGE_FORMAT,
+                              upload_to='restaurants/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
 
@@ -76,7 +79,8 @@ class HeaderImage(models.Model):
     alt = models.CharField(max_length=250, blank=True, null=True, verbose_name=_("Alternative (Alt)"),
                            help_text=_("Text is meant to convey the “why” of the image as it relates to the content of "
                                        "a document or webpage"))
-    image = models.ImageField(null=True, upload_to='headers/', verbose_name=_("Image"))
+    image = ResizedImageField(null=True, size=[1920, 1080], quality=90, force_format=FORCED_IMAGE_FORMAT,
+                              upload_to='headers/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"),
                                     help_text=_("Setting it to false, makes the image disappear from the page"))
     url = models.URLField(blank=True, null=True, verbose_name=_('Link'))
@@ -121,7 +125,8 @@ class Category(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="categories",
                                    verbose_name=_("Restaurant"))
     name = models.CharField(max_length=100, verbose_name=_("Category Name"))
-    image = models.ImageField(null=True, upload_to='categories/', verbose_name=_("Image"))
+    image = ResizedImageField(null=True, size=[300, 300], quality=80, force_format=FORCED_IMAGE_FORMAT,
+                              upload_to='categories/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -146,7 +151,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price"))
     types = models.ManyToManyField('ProductType', blank=True, related_name='types', verbose_name=_("Types"))
     variants = models.ManyToManyField('ProductVariant', blank=True, related_name='products', verbose_name=_("Variants"))
-    image = models.ImageField(upload_to="products/", blank=True, null=True, verbose_name=_("Product Image"))
+    image = ResizedImageField(blank=True, null=True, size=[600, 600], quality=85, force_format=FORCED_IMAGE_FORMAT,
+                              upload_to='products/', verbose_name=_("Product Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -186,7 +192,8 @@ class ProductVariant(models.Model):
 
 class ProductType(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("Name"))
-    icon = models.ImageField(upload_to="icons/", blank=True, null=True, verbose_name=_("Icon"))
+    icon = ResizedImageField(blank=True, null=True, size=[50, 50], quality=50, force_format=FORCED_IMAGE_FORMAT,
+                             upload_to='icons/', verbose_name=_("Icon"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
 
