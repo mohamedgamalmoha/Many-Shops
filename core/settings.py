@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_cleanup.apps.CleanupConfig',
+    # 'django_cleanup.apps.CleanupConfig',
     # 'django_hosts',
     'rest_framework',
     'django_filters',
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     # 'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     # 'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
@@ -188,21 +188,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Configure storage / caching for images
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': BASE_DIR / 'cache',
-    }
-}
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # Cache for 1 day (60 s * 60 m * 24 h)
-CACHE_MIDDLEWARE_KEY_PREFIX = 'images'
-
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#         'LOCATION': BASE_DIR / 'cache',
+#     }
+# }
+# CACHE_MIDDLEWARE_ALIAS = 'default'
+# CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # Cache for 1 day (60 s * 60 m * 24 h)
+# CACHE_MIDDLEWARE_KEY_PREFIX = 'images'
+#
+# DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 
 # Settings for Cleanup
-DJANGO_CLEANUP_ENABLED = True  # Enable/Disable Django Cleanup
+DJANGO_CLEANUP_ENABLED = False  # Enable/Disable Django Cleanup
 DJANGO_CLEANUP_IGNORE_DEFAULT = False  # Ignore default file storage
 DJANGO_CLEANUP_FILE_FIELD_CHECKS = True  # Perform additional checks on FileField
 
