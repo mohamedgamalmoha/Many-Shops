@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup.apps.CleanupConfig',
     # 'django_hosts',
     'rest_framework',
     'django_filters',
@@ -198,6 +199,12 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # Cache for 1 day (60 s * 60 m * 24 h)
 CACHE_MIDDLEWARE_KEY_PREFIX = 'images'
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+
+# Settings for Cleanup
+DJANGO_CLEANUP_ENABLED = True  # Enable/Disable Django Cleanup
+DJANGO_CLEANUP_IGNORE_DEFAULT = False  # Ignore default file storage
+DJANGO_CLEANUP_FILE_FIELD_CHECKS = True  # Perform additional checks on FileField
 
 
 #: Configures the Django Rest Framework (DRF) settings. This includes default permissions, authentication classes,
