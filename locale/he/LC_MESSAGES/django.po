@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 14:33+0200\n"
+"POT-Creation-Date: 2024-12-23 12:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hebrew <LL@li.org>\n"
@@ -32,11 +32,11 @@ msgid "Permissions"
 msgstr "הרשאות"
 
 #: .\accounts\admin.py:16 .\info\admin.py:16 .\info\admin.py:35
-#: .\info\admin.py:46 .\restaurant\admin\customer.py:49
-#: .\restaurant\admin\customer.py:94 .\restaurant\admin\customer.py:111
-#: .\restaurant\admin\superuser.py:43 .\restaurant\admin\superuser.py:65
-#: .\restaurant\admin\superuser.py:84 .\restaurant\admin\superuser.py:94
-#: .\restaurant\admin\superuser.py:103
+#: .\info\admin.py:46 .\restaurant\admin\customer.py:45
+#: .\restaurant\admin\customer.py:76 .\restaurant\admin\customer.py:122
+#: .\restaurant\admin\customer.py:132 .\restaurant\admin\superuser.py:43
+#: .\restaurant\admin\superuser.py:66 .\restaurant\admin\superuser.py:85
+#: .\restaurant\admin\superuser.py:95 .\restaurant\admin\superuser.py:104
 msgid "Important Dates"
 msgstr "תאריכים חשובים"
 
@@ -44,43 +44,44 @@ msgstr "תאריכים חשובים"
 msgid "Accounts"
 msgstr "חשבונות"
 
-#: .\accounts\models.py:7 .\info\models.py:73
+#: .\accounts\models.py:7 .\info\models.py:81
 msgid "Full Name"
 msgstr "שם מלא"
 
-#: .\accounts\models.py:8 .\info\models.py:75
+#: .\accounts\models.py:8 .\info\models.py:83 .\restaurant\enums.py:13
 msgid "Phone Number"
 msgstr "מספר טלפון"
 
-#: .\core\settings.py:143
+#: .\core\settings.py:146
 msgid "Arabic"
 msgstr "ערבית"
 
-#: .\core\settings.py:144
+#: .\core\settings.py:147
 msgid "Hebrew"
 msgstr "עברית"
 
-#: .\core\settings.py:426 .\core\settings.py:429 .\core\settings.py:432
+#: .\core\settings.py:449 .\core\settings.py:452 .\core\settings.py:455
 msgid "Menus"
 msgstr "תפריטים"
 
-#: .\core\settings.py:450
+#: .\core\settings.py:473
 msgid "Welcome To Menus"
 msgstr "ברוכים הבאים לתפריטים"
 
-#: .\core\settings.py:453
+#: .\core\settings.py:476
 msgid "Menus Development Team"
 msgstr "צוות הפיתוח של תפריטים"
 
-#: .\core\settings.py:470
+#: .\core\settings.py:493
 msgid "Home"
 msgstr "בית"
 
 #: .\info\admin.py:15 .\info\admin.py:34 .\info\admin.py:44
-#: .\restaurant\admin\customer.py:47 .\restaurant\admin\customer.py:91
-#: .\restaurant\admin\customer.py:110 .\restaurant\admin\superuser.py:40
-#: .\restaurant\admin\superuser.py:62 .\restaurant\admin\superuser.py:83
-#: .\restaurant\admin\superuser.py:93 .\restaurant\admin\superuser.py:102
+#: .\restaurant\admin\customer.py:42 .\restaurant\admin\customer.py:73
+#: .\restaurant\admin\customer.py:121 .\restaurant\admin\customer.py:131
+#: .\restaurant\admin\superuser.py:40 .\restaurant\admin\superuser.py:63
+#: .\restaurant\admin\superuser.py:84 .\restaurant\admin\superuser.py:94
+#: .\restaurant\admin\superuser.py:103
 msgid "Main Info"
 msgstr "מידע ראשי"
 
@@ -92,83 +93,83 @@ msgstr "אודות"
 msgid "Info"
 msgstr "מידע"
 
-#: .\info\models.py:6 .\info\models.py:22 .\info\models.py:39
-#: .\info\models.py:56
+#: .\info\models.py:10 .\info\models.py:27 .\info\models.py:45
+#: .\info\models.py:63
 msgid "Title"
 msgstr "כותרת"
 
-#: .\info\models.py:7 .\info\models.py:23 .\info\models.py:40
-#: .\info\models.py:57 .\restaurant\models.py:143
+#: .\info\models.py:11 .\info\models.py:28 .\info\models.py:46
+#: .\info\models.py:64 .\restaurant\models.py:150
 msgid "Description"
 msgstr "תיאור"
 
-#: .\info\models.py:8 .\info\models.py:24 .\info\models.py:41
-#: .\info\models.py:58 .\restaurant\admin\base.py:131 .\restaurant\models.py:29
-#: .\restaurant\models.py:78 .\restaurant\models.py:123
+#: .\info\models.py:13 .\info\models.py:30 .\info\models.py:48
+#: .\info\models.py:66 .\restaurant\admin\base.py:131 .\restaurant\models.py:32
+#: .\restaurant\models.py:83 .\restaurant\models.py:129
 msgid "Image"
 msgstr "תמונה"
 
-#: .\info\models.py:9 .\info\models.py:26 .\info\models.py:43
-#: .\info\models.py:60 .\info\models.py:78 .\restaurant\models.py:38
-#: .\restaurant\models.py:103 .\restaurant\models.py:125
-#: .\restaurant\models.py:149 .\restaurant\models.py:167
-#: .\restaurant\models.py:185
+#: .\info\models.py:14 .\info\models.py:32 .\info\models.py:50
+#: .\info\models.py:68 .\info\models.py:86 .\restaurant\models.py:42
+#: .\restaurant\models.py:108 .\restaurant\models.py:132
+#: .\restaurant\models.py:158 .\restaurant\models.py:178
+#: .\restaurant\models.py:197
 msgid "Create At"
 msgstr "נוצר בתאריך"
 
-#: .\info\models.py:10 .\info\models.py:27 .\info\models.py:44
-#: .\info\models.py:61 .\info\models.py:79 .\restaurant\models.py:39
-#: .\restaurant\models.py:104 .\restaurant\models.py:126
-#: .\restaurant\models.py:150 .\restaurant\models.py:168
-#: .\restaurant\models.py:186
+#: .\info\models.py:15 .\info\models.py:33 .\info\models.py:51
+#: .\info\models.py:69 .\info\models.py:87 .\restaurant\models.py:43
+#: .\restaurant\models.py:109 .\restaurant\models.py:133
+#: .\restaurant\models.py:159 .\restaurant\models.py:179
+#: .\restaurant\models.py:198
 msgid "Update At"
 msgstr "עודכן בתאריך"
 
-#: .\info\models.py:13 .\info\models.py:14
+#: .\info\models.py:18 .\info\models.py:19
 msgid "Website Main Info"
 msgstr "מידע ראשי של האתר"
 
-#: .\info\models.py:25 .\info\models.py:42 .\info\models.py:59
-#: .\restaurant\models.py:30 .\restaurant\models.py:79
-#: .\restaurant\models.py:102 .\restaurant\models.py:124
-#: .\restaurant\models.py:148
+#: .\info\models.py:31 .\info\models.py:49 .\info\models.py:67
+#: .\restaurant\models.py:33 .\restaurant\models.py:84
+#: .\restaurant\models.py:107 .\restaurant\models.py:130
+#: .\restaurant\models.py:156
 msgid "Active"
 msgstr "פעיל"
 
-#: .\info\models.py:30
+#: .\info\models.py:36
 msgid "Service"
 msgstr "שירות"
 
-#: .\info\models.py:31
+#: .\info\models.py:37
 msgid "Services"
 msgstr "שירותים"
 
-#: .\info\models.py:47 .\info\models.py:48
+#: .\info\models.py:54 .\info\models.py:55
 msgid "About Us"
 msgstr "אודותינו"
 
-#: .\info\models.py:64 .\restaurant\admin\customer.py:48
-#: .\restaurant\admin\superuser.py:64 .\restaurant\models.py:33
+#: .\info\models.py:72 .\restaurant\admin\customer.py:75
+#: .\restaurant\admin\superuser.py:65 .\restaurant\models.py:37
 msgid "Theme"
 msgstr "עיצוב"
 
-#: .\info\models.py:65
+#: .\info\models.py:73
 msgid "Themes"
 msgstr "עיצובים"
 
-#: .\info\models.py:74 .\restaurant\models.py:27
+#: .\info\models.py:82 .\restaurant\models.py:29
 msgid "Email"
 msgstr "אימייל"
 
-#: .\info\models.py:76
+#: .\info\models.py:84
 msgid "Subject"
 msgstr "נושא"
 
-#: .\info\models.py:77
+#: .\info\models.py:85
 msgid "Message"
 msgstr "הודעה"
 
-#: .\info\models.py:82 .\info\models.py:83
+#: .\info\models.py:90 .\info\models.py:91
 msgid "Contact Us"
 msgstr "צור קשר"
 
@@ -176,15 +177,15 @@ msgstr "צור קשר"
 msgid "Thumbnail"
 msgstr "תמונה ממוזערת"
 
-#: .\restaurant\admin\customer.py:92 .\restaurant\admin\superuser.py:41
+#: .\restaurant\admin\customer.py:43 .\restaurant\admin\superuser.py:41
 msgid "More Info"
 msgstr "מידע נוסף"
 
-#: .\restaurant\admin\customer.py:93 .\restaurant\admin\superuser.py:42
+#: .\restaurant\admin\customer.py:44 .\restaurant\admin\superuser.py:42
 msgid "Offered By"
 msgstr "מוצע על ידי"
 
-#: .\restaurant\apps.py:8 .\restaurant\models.py:43
+#: .\restaurant\apps.py:8 .\restaurant\models.py:47
 msgid "Restaurants"
 msgstr "מסעדות"
 
@@ -216,47 +217,47 @@ msgstr "יוטיוב"
 msgid "Pinterest"
 msgstr "פינטרסט"
 
-#: .\restaurant\enums.py:16
+#: .\restaurant\enums.py:17
 msgid "Saturday"
 msgstr "שבת"
 
-#: .\restaurant\enums.py:17
+#: .\restaurant\enums.py:18
 msgid "Sunday"
 msgstr "ראשון"
 
-#: .\restaurant\enums.py:18
+#: .\restaurant\enums.py:19
 msgid "Monday"
 msgstr "שני"
 
-#: .\restaurant\enums.py:19
+#: .\restaurant\enums.py:20
 msgid "Tuesday"
 msgstr "שלישי"
 
-#: .\restaurant\enums.py:20
+#: .\restaurant\enums.py:21
 msgid "Wednesday"
 msgstr "רביעי"
 
-#: .\restaurant\enums.py:21
+#: .\restaurant\enums.py:22
 msgid "Thursday"
 msgstr "חמישי"
 
-#: .\restaurant\enums.py:22
+#: .\restaurant\enums.py:23
 msgid "Friday"
 msgstr "שישי"
 
-#: .\restaurant\models.py:19
+#: .\restaurant\models.py:21
 msgid "Owner"
 msgstr "בעלים"
 
-#: .\restaurant\models.py:21
+#: .\restaurant\models.py:23
 msgid "Restaurant Name"
 msgstr "שם המסעדה"
 
-#: .\restaurant\models.py:23
+#: .\restaurant\models.py:25
 msgid "Slug"
 msgstr "שם המסעדה בקישור"
 
-#: .\restaurant\models.py:24
+#: .\restaurant\models.py:26
 msgid ""
 "Unique identifier for the restaurant used in the URL. It must contain only "
 "English letters, numerics, dashes (-), and underscores (_)"
@@ -264,170 +265,180 @@ msgstr ""
 "מזהה ייחודי למסעדה המשמשת בכתובת האתר. הוא חייב להכיל רק. אותיות באנגלית, "
 "מספרים, מקפים (-) וקווים תחתונים (_)"
 
-#: .\restaurant\models.py:28
+#: .\restaurant\models.py:30
 msgid "Contact Number"
 msgstr "מספר טלפון"
 
-#: .\restaurant\models.py:35
+#: .\restaurant\models.py:34 .\restaurant\models.py:131
+#: .\restaurant\models.py:157
+msgid "Order By"
+msgstr "הזמנה לפי"
+
+#: .\restaurant\models.py:39
 msgid "Primary Color"
 msgstr "צבע ראשי"
 
-#: .\restaurant\models.py:36
+#: .\restaurant\models.py:40
 msgid "Primary color for template (e.g., #RRGGBB or #RGB)."
 msgstr "צבע ראשי לתבנית (לדוגמה, #RRGGBB או #RGB)."
 
-#: .\restaurant\models.py:42 .\restaurant\models.py:59
-#: .\restaurant\models.py:99 .\restaurant\models.py:121
+#: .\restaurant\models.py:46 .\restaurant\models.py:63
+#: .\restaurant\models.py:104 .\restaurant\models.py:126
+#: .\restaurant\models.py:175
 msgid "Restaurant"
 msgstr "מסעדה"
 
-#: .\restaurant\models.py:60
+#: .\restaurant\models.py:64
 msgid "Day"
 msgstr "יום"
 
-#: .\restaurant\models.py:61
-msgid "Open"
-msgstr "פתוח"
+#: .\restaurant\models.py:65
+msgid "Close"
+msgstr "זמן סגור"
 
-#: .\restaurant\models.py:62
-msgid "Indicates whether the restaurant is open on this day"
+#: .\restaurant\models.py:66
+msgid "Indicates whether the restaurant is close on this day"
 msgstr "מציין אם המסעדה פתוחה ביום זה"
 
-#: .\restaurant\models.py:63
+#: .\restaurant\models.py:67
 msgid "Opening Time"
 msgstr "שעת פתיחה"
 
-#: .\restaurant\models.py:64
+#: .\restaurant\models.py:68
 msgid "Closing Time"
 msgstr "שעת סגירה"
 
-#: .\restaurant\models.py:67
+#: .\restaurant\models.py:71
 msgid "Work Time"
 msgstr "זמן עבודה"
 
-#: .\restaurant\models.py:68
+#: .\restaurant\models.py:72
 msgid "Work Times"
 msgstr "זמני עבודה"
 
-#: .\restaurant\models.py:74
+#: .\restaurant\models.py:78
 msgid "Header Image"
 msgstr "תמונת כותרת"
 
-#: .\restaurant\models.py:75
+#: .\restaurant\models.py:79
 msgid "Alternative (Alt)"
 msgstr "תמונה חלופית (Alt)"
 
-#: .\restaurant\models.py:76
+#: .\restaurant\models.py:80
 msgid ""
 "Text is meant to convey the “why” of the image as it relates to the content "
 "of a document or webpage"
 msgstr "הטקסט נועד להסביר את מטרת התמונה ביחס לתוכן המסמך או הדף."
 
-#: .\restaurant\models.py:80
+#: .\restaurant\models.py:85
 msgid "Setting it to false, makes the image disappear from the page"
 msgstr "הגדרה כלא נכון תגרום לתמונה להיעלם מהעמוד."
 
-#: .\restaurant\models.py:81 .\restaurant\models.py:101
+#: .\restaurant\models.py:86
 msgid "Link"
 msgstr "קישור"
 
-#: .\restaurant\models.py:82
+#: .\restaurant\models.py:87
 msgid "Creation Date"
 msgstr "תאריך יצירה"
 
-#: .\restaurant\models.py:83
+#: .\restaurant\models.py:88
 msgid "Update Date"
 msgstr "תאריך עדכון"
 
-#: .\restaurant\models.py:86
+#: .\restaurant\models.py:91
 msgid "Home Page Image"
 msgstr "תמונת דף הבית"
 
-#: .\restaurant\models.py:87
+#: .\restaurant\models.py:92
 msgid "Home Page Images"
 msgstr "תמונות דף הבית"
 
-#: .\restaurant\models.py:100
+#: .\restaurant\models.py:105
 msgid "Platform"
 msgstr "פלטפורמה"
 
-#: .\restaurant\models.py:107
+#: .\restaurant\models.py:106
+msgid "Link / Phone Number"
+msgstr "קישור / מספר טלפון"
+
+#: .\restaurant\models.py:112
 msgid "Social Media Link"
 msgstr "קישור לרשת חברתית"
 
-#: .\restaurant\models.py:108
+#: .\restaurant\models.py:113
 msgid "Social Media Links"
 msgstr "קישורים לרשתות חברתיות"
 
-#: .\restaurant\models.py:122
+#: .\restaurant\models.py:127
 msgid "Category Name"
 msgstr "שם קטגוריה"
 
-#: .\restaurant\models.py:129 .\restaurant\models.py:141
+#: .\restaurant\models.py:136 .\restaurant\models.py:148
 msgid "Category"
 msgstr "קטגוריה"
 
-#: .\restaurant\models.py:130
+#: .\restaurant\models.py:137
 msgid "Categories"
 msgstr "קטגוריות"
 
-#: .\restaurant\models.py:142
+#: .\restaurant\models.py:149
 msgid "Product Name"
 msgstr "שם המוצר"
 
-#: .\restaurant\models.py:144
+#: .\restaurant\models.py:151
 msgid "Price"
 msgstr "מחיר"
 
-#: .\restaurant\models.py:145
+#: .\restaurant\models.py:152
 msgid "Types"
 msgstr "סוגים"
 
-#: .\restaurant\models.py:146
+#: .\restaurant\models.py:153
 msgid "Variants"
 msgstr "גרסאות"
 
-#: .\restaurant\models.py:147
+#: .\restaurant\models.py:155
 msgid "Product Image"
 msgstr "תמונת מוצר"
 
-#: .\restaurant\models.py:153
+#: .\restaurant\models.py:162
 msgid "Product"
 msgstr "מוצר"
 
-#: .\restaurant\models.py:154
+#: .\restaurant\models.py:163
 msgid "Products"
 msgstr "מוצרים"
 
-#: .\restaurant\models.py:165
+#: .\restaurant\models.py:176
 msgid "Variant Name"
 msgstr "שם גרסה"
 
-#: .\restaurant\models.py:166
+#: .\restaurant\models.py:177
 msgid "Variant Price"
 msgstr "מחיר גרסה"
 
-#: .\restaurant\models.py:171
+#: .\restaurant\models.py:182
 msgid "Product Variant"
 msgstr "גרסת מוצר"
 
-#: .\restaurant\models.py:172
+#: .\restaurant\models.py:183
 msgid "Product Variants"
 msgstr "גרסאות מוצר"
 
-#: .\restaurant\models.py:183
+#: .\restaurant\models.py:194
 msgid "Name"
 msgstr "שם"
 
-#: .\restaurant\models.py:184
+#: .\restaurant\models.py:196
 msgid "Icon"
 msgstr "סמל"
 
-#: .\restaurant\models.py:189
+#: .\restaurant\models.py:201
 msgid "Product Type"
 msgstr "סוג מוצר"
 
-#: .\restaurant\models.py:190
+#: .\restaurant\models.py:202
 msgid "Product Types"
 msgstr "סוגי מוצרים"
 
@@ -456,6 +467,9 @@ msgid ""
 "underscores (_)."
 msgstr ""
 "קישור יכול להכיל רק אותיות באנגלית, מספרים, מקפים (-) וקווים תחתונים (_)."
+
+msgid "Open"
+msgstr "פתוח"
 
 msgid "Dashboard"
 msgstr "לוח בקרה"
