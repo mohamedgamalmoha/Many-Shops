@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
-from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, Product, ProductVariant
+from ..models import HeaderImage, SocialMediaLink, WorkTime, Product, ProductVariant
 from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin,
                    ImageDisplayAminMixin)
 
@@ -60,22 +60,16 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMi
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class CategoryInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
-    model = Category
-    readonly_fields = ['create_at', 'update_at', 'view_image']
-
-
 class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['order', 'name', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'is_active']
+    list_display_links = ('order', 'name')
     readonly_fields = ['show_theme', 'create_at', 'update_at']
     list_filter = ['is_active']
     fieldsets = (
         (_('Main Info'), {'fields': (('name', 'slug'), 'email', 'contact_number', 'image', 'view_image', 'is_active',
                                      'order')}),
-        (_('Theme'), {'fields': ('show_theme', 'primary_color')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [WorkTimeInlineCustomerAdmin, CategoryInlineCustomerAdmin, HeaderImageInlineCustomerAdmin,
+    inlines = [WorkTimeInlineCustomerAdmin, HeaderImageInlineCustomerAdmin,
                SocialMediaLInlineCustomerAdmin]
 
     def has_add_permission(self, request):
@@ -114,20 +108,20 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
 
 class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin,
                             TranslationAdmin):
-    list_display = ['order', 'name', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'is_active']
+    list_display_links = ('order', 'name')
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active', 'order')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductInlineCustomerAdmin]
 
 
-class ProductVariantsCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, TranslationAdmin):
-    list_display = ['name', 'price', 'create_at', 'update_at']
+class ProductVariantsCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin,
+                                   TranslationAdmin):
+    list_display = ['name', 'price']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'price')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
