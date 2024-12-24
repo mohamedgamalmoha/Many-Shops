@@ -226,7 +226,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
     "DATETIME_INPUT_FORMAT": "%Y-%m-%d %H:%M:%S",
-    "TIME_FORMAT": "%I:%M"
+    "TIME_FORMAT": "%H:%M"
 }
 
 
