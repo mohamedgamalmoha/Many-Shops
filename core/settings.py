@@ -9,9 +9,35 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, ''),
+    ALLOWED_HOSTS=(str, ''),
+    RDS_DB_ENGINE=(str, 'django.db.backends.sqlite3'),
+    RDS_DB_NAME=(str, ''),
+    RDS_USERNAME=(str, ''),
+    RDS_PASSWORD=(str, ''),
+    RDS_HOSTNAME=(str, ''),
+    RDS_PORT=(int, 0000),
+    DJANGO_CLEANUP_ENABLED=(bool, True),
+    DJANGO_CLEANUP_IGNORE_DEFAULT=(bool, False),
+    DJANGO_CLEANUP_FILE_FIELD_CHECKS=(bool, True),
+    CORS_ALLOW_ALL_ORIGINS=(bool, False),
+    CORS_ALLOW_CREDENTIALS=(bool, False),
+    SECURE_HSTS_SECONDS=(int, 31536000),
+    SECURE_HSTS_INCLUDE_SUBDOMAINS=(bool, True),
+    SECURE_HSTS_PRELOAD=(bool, True),
+    SECURE_SSL_REDIRECT=(bool, True),
+    SESSION_COOKIE_SECURE=(bool, True),
+    CSRF_COOKIE_SECURE=(bool, True)
+)
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,17 +47,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-iv!&1p$8h!ldb=hozb2@t6pwh0(va#b$!s@b9%!nl^d+z95-ge'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 # BASE_DOMAIN = "localhost:8000"
 
 ALLOWED_HOSTS = [
     # "localhost",
     # ".localhost",
-    '*'
+    *env('ALLOWED_HOSTS').split(',')
 ]
 
 DEFAULT_HOST = 'default'
@@ -48,7 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django_cleanup.apps.CleanupConfig',
+    'django_cleanup.apps.CleanupConfig',
     # 'django_hosts',
     'rest_framework',
     'django_filters',
@@ -83,7 +109,7 @@ REACT_JS_BUILD_DIR = BASE_DIR / 'frontend'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates', ],  # REACT_JS_BUILD_DIR
+        'DIRS': [BASE_DIR / 'templates', REACT_JS_BUILD_DIR],  # REACT_JS_BUILD_DIR
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,9 +130,13 @@ AUTH_USER_MODEL = 'accounts.User'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': env('RDS_DB_ENGINE'),
+        'NAME': env('RDS_DB_NAME'),
+        'USER': env('RDS_USERNAME'),
+        'PASSWORD': env('RDS_PASSWORD'),
+        'HOST': env('RDS_HOSTNAME'),
+        'PORT': env('RDS_PORT')
+    },
 }
 
 
@@ -175,7 +205,7 @@ STATIC_URL = '/assets/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    # REACT_JS_BUILD_DIR / 'assets'
+    REACT_JS_BUILD_DIR / 'assets'
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -202,9 +232,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Settings for Cleanup
-DJANGO_CLEANUP_ENABLED = False  # Enable/Disable Django Cleanup
-DJANGO_CLEANUP_IGNORE_DEFAULT = False  # Ignore default file storage
-DJANGO_CLEANUP_FILE_FIELD_CHECKS = True  # Perform additional checks on FileField
+DJANGO_CLEANUP_ENABLED = env('DJANGO_CLEANUP_ENABLED')  # Enable/Disable Django Cleanup
+DJANGO_CLEANUP_IGNORE_DEFAULT = env('DJANGO_CLEANUP_IGNORE_DEFAULT')  # Ignore default file storage
+DJANGO_CLEANUP_FILE_FIELD_CHECKS = env('DJANGO_CLEANUP_FILE_FIELD_CHECKS')  # Perform additional checks on FileField
 
 
 #: Configures the Django Rest Framework (DRF) settings. This includes default permissions, authentication classes,
@@ -446,13 +476,13 @@ SPECTACULAR_SETTINGS = {
 #: and other UI-related settings for Django Admin.
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": _("Menus"),
+    "site_title": _("My Smart Menu"),
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": _("Menus"),
+    "site_header": _("My Smart Menu"),
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": _("Menus"),
+    "site_brand": _("My Smart Menu"),
 
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "images/logo.png",
@@ -470,10 +500,10 @@ JAZZMIN_SETTINGS = {
     "site_icon": "images/logo.png",
 
     # Welcome text on the login screen
-    "welcome_sign": _("Welcome To Menus"),
+    "welcome_sign": _("Welcome To My Smart Menu"),
 
     # Copyright on the footer
-    "copyright": _("Menus Development Team"),
+    "copyright": _("My Smart Menu Development Team"),
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
@@ -530,6 +560,7 @@ JAZZMIN_SETTINGS = {
     "icons": {
         "accounts.User": "fa-solid fa-users",
         "restaurant.Restaurant": "fa-solid fa-utensils",
+        "restaurant.WorkTime": "fa-regular fa-calendar-days",
         "restaurant.HeaderImage": "fa-regular fa-image",
         "restaurant.SocialMediaLink": "fa-solid fa-link",
         "restaurant.Category": "fa-solid fa-table",
@@ -538,7 +569,9 @@ JAZZMIN_SETTINGS = {
         "restaurant.ProductType": "fa-solid fa-bowl-food",
         "info.MainInfo": "fa-solid fa-calendar-minus",
         "info.Service": "fa-solid fa-list",
-        "info.ContactUs": "fas fa-headset"
+        "info.ContactUs": "fas fa-headset",
+        "info.AboutUs": "fa-solid fa-address-card",
+        "info.Theme": "fa-solid fa-globe"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -579,8 +612,8 @@ JAZZMIN_SETTINGS = {
 
 
 # CORS Origin Settings
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = env('CORS_ALLOW_ALL_ORIGINS')
+CORS_ALLOW_CREDENTIALS = env('CORS_ALLOW_CREDENTIALS')
 CORS_ALLOW_HEADERS = [
     'origin',
     'x-csrftoken',
@@ -595,10 +628,16 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 CORS_ALLOW_METHODS = [
-    "DELETE",
     "GET",
     "OPTIONS",
-    "PATCH",
     "POST",
-    "PUT",
 ]
+
+
+# Security settings
+SECURE_HSTS_SECONDS = env('SECURE_HSTS_SECONDS')  # Enforce HTTPS for one year (measured in seconds).
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env('SECURE_HSTS_INCLUDE_SUBDOMAINS')   # Apply HSTS policy to all subdomains as well, ensuring all subdomains use HTTPS.
+SECURE_HSTS_PRELOAD = env('SECURE_HSTS_PRELOAD')  # Allow the domain to be included in browser preload lists for HSTS, making it more secure.
+SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')  # Redirect all HTTP traffic to HTTPS to enforce secure connections.
+SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')  # Ensure that session cookies are only sent over HTTPS, protecting them from being intercepted.
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')  # Ensure that CSRF cookies are only sent over HTTPS, adding an extra layer of security against CSRF attacks.
