@@ -473,3 +473,6 @@ msgstr "لوحة تحكم"
 
 msgid "Thanks for spending some quality time with the Web site today."
 msgstr "شكرًا لك على قضاء بعض الوقت الجيد مع موقعنا اليوم."
+
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr "من فضلك أدخل كلمة المرور القديمة لأسباب أمنية، ثم أدخل كلمة المرور الجديدة مرتين حتى نتمكن من التحقق من أنك كتبتها بشكل صحيح."

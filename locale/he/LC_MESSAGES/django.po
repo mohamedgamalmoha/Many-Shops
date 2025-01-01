@@ -470,3 +470,6 @@ msgstr "לוח בקרה"
 
 msgid "Thanks for spending some quality time with the Web site today."
 msgstr "תודה על שהקדשת זמן איכות עם אתר האינטרנט היום."
+
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr "אנא הזן את הסיסמה הישנה שלך, מטעמי אבטחה, ולאחר מכן הזן את הסיסמה החדשה שלך פעמיים כדי שנוכל לאמת שהקלדת אותה כהלכה."
