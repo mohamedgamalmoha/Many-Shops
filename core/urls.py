@@ -34,16 +34,17 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
-    path('api/docs/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/schema/yaml/', SpectacularJSONAPIView.as_view(), name='schema_yaml_view'),
-    path('api/docs/schema/json/', SpectacularYAMLAPIView.as_view(), name='schema_json_view'),
-    path('api/docs/redoc/', SpectacularRedocView.as_view(), name='redoc_docs_view'),
-    path('api/docs/swagger/', SpectacularSwaggerView.as_view(), name='swagger_docs_view'),
-
     path('', include('restaurant.urls'), name='home_page')
 ]
 
 
 if settings.DEBUG:
+    urlpatterns += [
+        path('api/docs/schema/', SpectacularAPIView.as_view(), name='schema'),
+        path('api/docs/schema/yaml/', SpectacularJSONAPIView.as_view(), name='schema_yaml_view'),
+        path('api/docs/schema/json/', SpectacularYAMLAPIView.as_view(), name='schema_json_view'),
+        path('api/docs/redoc/', SpectacularRedocView.as_view(), name='redoc_docs_view'),
+        path('api/docs/swagger/', SpectacularSwaggerView.as_view(), name='swagger_docs_view'),
+    ]
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
