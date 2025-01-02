@@ -3,13 +3,15 @@ from django.utils.translation import gettext_lazy as _
 
 from django_resized import ResizedImageField
 
-from restaurant.constants import FORCED_IMAGE_FORMAT
+from restaurant.validators import FileSizeValidator
+from restaurant.constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
 
 
 class MainInfo(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
     image = ResizedImageField(null=True, size=[600, 300], quality=85, force_format=FORCED_IMAGE_FORMAT,
+                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='home/', verbose_name=_("Image"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
@@ -27,6 +29,7 @@ class Service(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
     image = ResizedImageField(null=True, size=[300, 300], quality=80, force_format=FORCED_IMAGE_FORMAT,
+                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='services/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -45,6 +48,7 @@ class AboutUs(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
     image = ResizedImageField(null=True, size=[600, 600], quality=85, force_format=FORCED_IMAGE_FORMAT,
+                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='about_us/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -63,6 +67,7 @@ class Theme(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
     image = ResizedImageField(null=True, size=[600, 300], quality=85, force_format=FORCED_IMAGE_FORMAT,
+                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='themes/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))

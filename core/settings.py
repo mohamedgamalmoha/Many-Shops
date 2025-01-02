@@ -18,7 +18,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     SECRET_KEY=(str, ''),
     ALLOWED_HOSTS=(str, ''),
-    RDS_DB_ENGINE=(str, 'django.db.backends.sqlite3'),
+    RDS_DB_ENGINE=(str, ''),
     RDS_DB_NAME=(str, ''),
     RDS_USERNAME=(str, ''),
     RDS_PASSWORD=(str, ''),
@@ -641,3 +641,8 @@ SECURE_HSTS_PRELOAD = env('SECURE_HSTS_PRELOAD')  # Allow the domain to be inclu
 SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')  # Redirect all HTTP traffic to HTTPS to enforce secure connections.
 SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')  # Ensure that session cookies are only sent over HTTPS, protecting them from being intercepted.
 CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')  # Ensure that CSRF cookies are only sent over HTTPS, adding an extra layer of security against CSRF attacks.
+
+
+# Upload data settings
+DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 22 * 1024 * 1024  # 22 MB
