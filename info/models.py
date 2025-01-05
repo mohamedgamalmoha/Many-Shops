@@ -86,7 +86,6 @@ class ContactUs(models.Model):
     full_name = models.CharField(max_length=120, null=True, verbose_name=_("Full Name"))
     email = models.EmailField(verbose_name=_("Email"))
     phone_number = models.CharField(max_length=11, null=True, verbose_name=_("Phone Number"))
-    subject = models.CharField(max_length=250, verbose_name=_("Subject"))
     message = models.TextField(verbose_name=_("Message"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))

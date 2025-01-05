@@ -37,12 +37,11 @@ class ActiveTitleWithDescriptionAdmin(ImageDisplayAminMixin, TranslationAdmin):
 
 
 class ContactUsAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'subject', 'create_at', 'update_at')
-    search_fields = ('email', 'subject', 'full_name', 'message')
+    list_display = ('__str__', 'create_at', 'update_at')
+    search_fields = ('email', 'full_name', 'message')
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('full_name', 'email', 'phone_number')}),
-        (_('About'), {'fields': ('subject', 'message')}),
+        (_('Main Info'), {'fields': ('full_name', 'email', 'phone_number', 'message')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
 
