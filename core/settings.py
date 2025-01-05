@@ -482,7 +482,7 @@ JAZZMIN_SETTINGS = {
     "site_header": _("My Smart Menu"),
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": _("My Smart Menu"),
+    "site_brand": '_',
 
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "images/logo.png",
@@ -510,7 +510,7 @@ JAZZMIN_SETTINGS = {
     "search_model": [],
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": None,
+    "user_avatar": 'avatar',
 
     ############
     # Top Menu #

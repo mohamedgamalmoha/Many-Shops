@@ -12,3 +12,9 @@ class User(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         swappable = "AUTH_USER_MODEL"
+
+    def avatar(self):
+        if hasattr(self, 'restaurant'):
+            image = self.restaurant.image
+            if image:
+                return image.url
