@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.i18n import JavaScriptCatalog
+from django.views.generic.base import RedirectView
 
 from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView,
                                    SpectacularJSONAPIView, SpectacularYAMLAPIView)
@@ -27,7 +28,9 @@ from restaurant.sites import customer_admin_site
 
 
 urlpatterns = [
+    path('dashboard', RedirectView.as_view(url='/dashboard/', permanent=True)),
     path('dashboard/', customer_admin_site.urls),
+    path('admin', RedirectView.as_view(url='/admin/', permanent=True)),
     path('admin/', admin.site.urls),
     path('api/menus/', include('restaurant.api.urls'), name='restaurant'),
     path('api/info/', include('info.api.urls'), name='info'),
