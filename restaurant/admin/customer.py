@@ -31,9 +31,13 @@ class WorkTimeInlineCustomerAdmin(BaseInlineCustomerAdmin):
     readonly_fields = ()
 
 
-class HeaderImageInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
+class HeaderImageInlineCustomerAdmin(ImageDisplayAminMixin, BaseInlineCustomerAdmin):
     model = HeaderImage
-    readonly_fields = ['create_at', 'update_at', 'view_image']
+    readonly_image_fields = ['view_image']
+    exclude = ['create_at', 'update_at']
+    fieldsets = (
+        (None, {'fields': ('image', 'view_image', 'is_active')}),
+    )
 
 
 class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
@@ -44,6 +48,7 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMi
         (_('Offered By'), {'fields': ('types', 'variants')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
+    actions = None
     model = Product
     extra = 1
     min_num = 0
@@ -61,13 +66,10 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMi
 
 
 class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['order', 'name', 'is_active']
-    list_display_links = ('order', 'name')
+    list_display = ['name', 'is_active']
     readonly_fields = ['show_theme', 'create_at', 'update_at']
-    list_filter = ['is_active']
     fieldsets = (
-        (_('Main Info'), {'fields': (('name', 'slug'), 'email', 'contact_number', 'image', 'view_image', 'is_active',
-                                     'order')}),
+        (_('Main Info'), {'fields': ('email', 'contact_number', 'image', 'view_image')}),
     )
     inlines = [WorkTimeInlineCustomerAdmin, HeaderImageInlineCustomerAdmin,
                SocialMediaLInlineCustomerAdmin]
@@ -110,8 +112,8 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedOb
                             TranslationAdmin):
     list_display = ['order', 'name', 'is_active']
     list_display_links = ('order', 'name')
-    list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
+    actions = None
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active', 'order')}),
     )
@@ -125,3 +127,4 @@ class ProductVariantsCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRe
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'price')}),
     )
+    actions = None

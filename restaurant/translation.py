@@ -1,10 +1,6 @@
 from modeltranslation.translator import translator, TranslationOptions
 
-from .models import Restaurant, HeaderImage, Category, Product, ProductVariant, ProductType
-
-
-class HeaderImageTranslationOptions(TranslationOptions):
-    fields = ('alt', )
+from .models import Restaurant, Category, Product, ProductVariant, ProductType
 
 
 class ProductTranslationOptions(TranslationOptions):
@@ -16,7 +12,6 @@ class NameTranslationOptions(TranslationOptions):
 
 
 translator.register(Restaurant, NameTranslationOptions)
-translator.register(HeaderImage, HeaderImageTranslationOptions)
 translator.register(Category, NameTranslationOptions)
 translator.register(Product, ProductTranslationOptions)
 translator.register(ProductVariant, NameTranslationOptions)

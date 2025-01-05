@@ -29,7 +29,7 @@ class WorkTimeInlineAdmin(BaseInlineAdmin):
     readonly_fields = ()
 
 
-class HeaderImageInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
+class HeaderImageInlineAdmin(ImageDisplayAminMixin, BaseInlineAdmin):
     model = HeaderImage
     readonly_fields = ['create_at', 'update_at', 'view_image']
 

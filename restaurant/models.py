@@ -77,15 +77,11 @@ class WorkTime(models.Model):
 class HeaderImage(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="header_images",
                                    verbose_name=_("Header Image"))
-    alt = models.CharField(max_length=250, blank=True, null=True, verbose_name=_("Alternative (Alt)"),
-                           help_text=_("Text is meant to convey the “why” of the image as it relates to the content of "
-                                       "a document or webpage"))
     image = ResizedImageField(null=True, size=[1920, 1080], quality=90, force_format=FORCED_IMAGE_FORMAT,
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='headers/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"),
                                     help_text=_("Setting it to false, makes the image disappear from the page"))
-    url = models.URLField(blank=True, null=True, verbose_name=_('Link'))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Creation Date'))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_('Update Date'))
 
@@ -98,7 +94,8 @@ class HeaderImage(models.Model):
         return self.restaurant.is_owner(user)
 
     def __str__(self):
-        return str(self.alt)
+        return self.restaurant.name
+        # return str(self.restaurant) + 'Imgae'
 
 
 class SocialMediaLink(models.Model):
