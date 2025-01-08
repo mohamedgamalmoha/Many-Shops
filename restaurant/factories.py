@@ -1,53 +1,42 @@
-import random
+from django.utils.text import slugify
 
 import factory
-from django.db import models
-from django.contrib.auth import get_user_model
 
-from .enums import SocialMediaPlatform
-from .mixins import TranslatableFactoryMixin
-from .models import Restaurant, HeaderImage, SocialMediaLink, Category, Product, ProductVariant
+from .enums import DaysOfWeekChoice, SocialMediaPlatform
+from .models import Restaurant, WorkTime, HeaderImage, SocialMediaLink, Category, Product, ProductVariant, ProductType
 
 
-User = get_user_model()
-
-
-class UserFactory(factory.django.DjangoModelFactory):
-    email = factory.LazyAttribute(lambda obj: f'{obj.username}@example.com')
-    first_name = factory.Faker('first_name')
-    last_name = factory.Faker('last_name')
-    is_staff = False
-    is_active = True
-    password = factory.PostGenerationMethodCall('set_password', 'defaultpassword')
-
-    class Meta:
-        model = User
-
-    @factory.lazy_attribute_sequence
-    def username(self, n):
-        max_pk = User.objects.aggregate(max_pk=models.Max('pk'))['max_pk'] or 0
-        return f'user_{max(max_pk, n) + 1}'
-
-
-class RestaurantFactory(TranslatableFactoryMixin, factory.django.DjangoModelFactory):
-    owner = factory.SubFactory(UserFactory)
+class RestaurantFactory(factory.django.DjangoModelFactory):
+    owner = factory.SubFactory('account.factories.UserFactory')
     name = factory.Faker('company')
-    address = factory.Faker('address')
-    city = factory.Faker('city')
-    state = factory.Faker('state')
-    zip_code = factory.Faker('postcode')
-    description = factory.Faker('text', max_nb_chars=200)
+    slug = factory.LazyAttribute(lambda o: slugify(o.name))
+    email = factory.Faker('email')
+    contact_number = factory.Faker('phone_number')
+    image = factory.django.ImageField(width=150, height=150)
+    is_active = factory.Faker('boolean')
+    order = factory.Sequence(lambda n: n)
+    theme = factory.SubFactory('info.factories.ThemeFactory')
+    primary_color = factory.Faker('hex_color')
 
     class Meta:
         model = Restaurant
 
 
-class HeaderImageFactory(TranslatableFactoryMixin, factory.django.DjangoModelFactory):
+class WorkTimeFactory(factory.django.DjangoModelFactory):
     restaurant = factory.SubFactory(RestaurantFactory)
-    alt = factory.Faker('sentence', nb_words=10)
-    image = factory.Faker('image')
-    is_active = True
-    url = factory.Faker('url')
+    day = factory.Faker('random_element', elements=[choice[0] for choice in DaysOfWeekChoice.choices])
+    is_close = factory.Faker('boolean')
+    opening_time = factory.Faker('time_object')
+    closing_time = factory.Faker('time_object')
+
+    class Meta:
+        model = WorkTime
+
+
+class HeaderImageFactory(factory.django.DjangoModelFactory):
+    restaurant = factory.SubFactory(RestaurantFactory)
+    image = factory.django.ImageField(width=1920, height=1080)
+    is_active = factory.Faker('boolean')
 
     class Meta:
         model = HeaderImage
@@ -55,43 +44,52 @@ class HeaderImageFactory(TranslatableFactoryMixin, factory.django.DjangoModelFac
 
 class SocialMediaLinkFactory(factory.django.DjangoModelFactory):
     restaurant = factory.SubFactory(RestaurantFactory)
-    platform = factory.LazyFunction(lambda: random.choices(
-        SocialMediaPlatform.choices,
-        weights=[20, 20, 20, 10, 10, 10, 10],
-        k=1
-    )[0][0])
+    platform = factory.Faker('random_element', elements=[choice[0] for choice in SocialMediaPlatform.choices])
     url = factory.Faker('url')
-    is_active = True
+    is_active = factory.Faker('boolean')
 
     class Meta:
         model = SocialMediaLink
 
 
-class CategoryFactory(TranslatableFactoryMixin, factory.django.DjangoModelFactory):
+class CategoryFactory(factory.django.DjangoModelFactory):
     restaurant = factory.SubFactory(RestaurantFactory)
-    name = factory.Faker('name')
-    is_active = True
+    name = factory.Faker('word')
+    image = factory.django.ImageField(width=300, height=300)
+    is_active = factory.Faker('boolean')
+    order = factory.Sequence(lambda n: n)
 
     class Meta:
         model = Category
 
 
-class ProductFactory(TranslatableFactoryMixin, factory.django.DjangoModelFactory):
-    category = factory.SubFactory(CategoryFactory)
-    name = factory.Faker('name')
-    description = factory.Faker('text', max_nb_chars=200)
-    price = factory.Faker('pydecimal')
-    image = factory.Faker('image')
-    is_active = True
-
-    class Meta:
-        model = Product
-
-
-class ProductVariantFactory(TranslatableFactoryMixin, factory.django.DjangoModelFactory):
-    product = factory.SubFactory(ProductFactory)
-    name = factory.Faker('name')
-    price = factory.Faker('pydecimal')
+class ProductVariantFactory(factory.django.DjangoModelFactory):
+    restaurant = factory.SubFactory(RestaurantFactory)
+    name = factory.Faker('word')
+    price = factory.Faker('pydecimal', left_digits=3, right_digits=2, positive=True)
 
     class Meta:
         model = ProductVariant
+
+
+class ProductTypeFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker('word')
+    icon = factory.django.ImageField(width=50, height=50)
+
+    class Meta:
+        model = ProductType
+
+
+class ProductFactory(factory.django.DjangoModelFactory):
+    category = factory.SubFactory(CategoryFactory)
+    name = factory.Faker('word')
+    description = factory.Faker('text', max_nb_chars=200)
+    price = factory.Faker('pydecimal', left_digits=3, right_digits=2, positive=True)
+    types = factory.RelatedFactoryList(ProductTypeFactory, size=4)
+    variants = factory.RelatedFactoryList(ProductTypeFactory, size=4)
+    image = factory.django.ImageField(width=600, height=600)
+    is_active = factory.Faker('boolean')
+    order = factory.Sequence(lambda n: n)
+
+    class Meta:
+        model = Product
