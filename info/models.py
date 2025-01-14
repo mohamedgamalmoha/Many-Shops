@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django_resized import ResizedImageField
 
+from restaurant.enums import SocialMediaPlatform
 from restaurant.validators import FileSizeValidator
 from restaurant.constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
 
@@ -69,6 +70,7 @@ class Theme(models.Model):
     image = ResizedImageField(null=True, size=[600, 300], quality=85, force_format=FORCED_IMAGE_FORMAT,
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='themes/', verbose_name=_("Image"))
+    url = models.URLField(null=True, verbose_name=_('Url'))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
@@ -80,6 +82,22 @@ class Theme(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+class SocialMedia(models.Model):
+    platform = models.CharField(max_length=20, choices=SocialMediaPlatform.choices, verbose_name=_("Platform"))
+    url = models.CharField(max_length=250, null=True, verbose_name=_("Link / Phone Number"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Social Media")
+        verbose_name_plural = _("Social Media")
+        ordering = ('-create_at', '-update_at')
+
+    def __str__(self):
+        return str(self.url)
 
 
 class ContactUs(models.Model):

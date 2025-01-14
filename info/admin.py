@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
 from restaurant.admin.base import ImageDisplayAminMixin
-from .models import MainInfo, Service, AboutUs, Theme, ContactUs
+from .models import MainInfo, Service, AboutUs, Theme, SocialMedia, ContactUs
 
 
 class MainInfoAdmin(ImageDisplayAminMixin, TranslationAdmin):
@@ -36,6 +36,23 @@ class ActiveTitleWithDescriptionAdmin(ImageDisplayAminMixin, TranslationAdmin):
     )
 
 
+class ThemeAdmin(ActiveTitleWithDescriptionAdmin):
+    fieldsets = (
+        (_('Main Info'), {'fields': ('title', 'description', 'image', 'view_image', 'url', 'is_active')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
+class SocialMediaAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'create_at', 'update_at']
+    list_filter = ['platform', 'is_active']
+    readonly_fields = ['create_at', 'update_at']
+    fieldsets = (
+        (_('Main Info'), {'fields': ('platform', 'url', 'is_active')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
 class ContactUsAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'create_at', 'update_at')
     search_fields = ('email', 'full_name', 'message')
@@ -49,5 +66,6 @@ class ContactUsAdmin(admin.ModelAdmin):
 admin.site.register(MainInfo, MainInfoAdmin)
 admin.site.register(Service, ActiveTitleWithDescriptionAdmin)
 admin.site.register(AboutUs, ActiveTitleWithDescriptionAdmin)
-admin.site.register(Theme, ActiveTitleWithDescriptionAdmin)
+admin.site.register(Theme, ThemeAdmin)
+admin.site.register(SocialMedia, SocialMediaAdmin)
 admin.site.register(ContactUs, ContactUsAdmin)
