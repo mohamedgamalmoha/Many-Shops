@@ -218,12 +218,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Configure storage / caching for images
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         'LOCATION': BASE_DIR / 'cache',
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": env('CDB_BACKEND'),
+        "LOCATION": env('CDB_LOCATION'),
+        "OPTIONS": {
+            "CLIENT_CLASS": env('CDB_OPTIONS_CLIENT_CLASS'),
+        }
+    }
+}
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 # CACHE_MIDDLEWARE_ALIAS = 'default'
 # CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # Cache for 1 day (60 s * 60 m * 24 h)
 # CACHE_MIDDLEWARE_KEY_PREFIX = 'images'
