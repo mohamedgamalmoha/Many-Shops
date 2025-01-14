@@ -11,7 +11,7 @@ from restaurant.constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
 class MainInfo(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
-    image = ResizedImageField(null=True, size=[600, 300], quality=85, force_format=FORCED_IMAGE_FORMAT,
+    image = ResizedImageField(null=True, size=[1920, 1080], quality=100, force_format=FORCED_IMAGE_FORMAT,
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='home/', verbose_name=_("Image"))
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
@@ -67,7 +67,7 @@ class AboutUs(models.Model):
 class Theme(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
-    image = ResizedImageField(null=True, size=[600, 300], quality=85, force_format=FORCED_IMAGE_FORMAT,
+    image = ResizedImageField(null=True, size=[1080, 1920], quality=100, force_format=FORCED_IMAGE_FORMAT,
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='themes/', verbose_name=_("Image"))
     url = models.URLField(null=True, verbose_name=_('Url'))
