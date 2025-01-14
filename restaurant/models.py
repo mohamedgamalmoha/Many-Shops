@@ -110,7 +110,6 @@ class SocialMediaLink(models.Model):
     class Meta:
         verbose_name = _("Social Media Link")
         verbose_name_plural = _("Social Media Links")
-        unique_together = ('restaurant', 'platform')
         ordering = ('-create_at', '-update_at')
 
     def is_owner(self, user) -> bool:
