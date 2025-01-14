@@ -571,7 +571,8 @@ JAZZMIN_SETTINGS = {
         "info.Service": "fa-solid fa-list",
         "info.ContactUs": "fas fa-headset",
         "info.AboutUs": "fa-solid fa-address-card",
-        "info.Theme": "fa-solid fa-globe"
+        "info.Theme": "fa-solid fa-globe",
+        "info.SocialMedia": "fa-solid fa-share-nodes"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
