@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from modeltranslation.admin import TranslationAdmin
 
-from restaurant.admin.base import ImageDisplayAminMixin
+from shop.admin.base import ImageDisplayAminMixin
 from .models import MainInfo, Service, AboutUs, Theme, SocialMedia, ContactUs
 
 

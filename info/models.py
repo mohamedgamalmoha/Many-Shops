@@ -3,9 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 from django_resized import ResizedImageField
 
-from restaurant.enums import SocialMediaPlatform
-from restaurant.validators import FileSizeValidator
-from restaurant.constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
+from shop.enums import SocialMediaPlatform
+from shop.validators import FileSizeValidator
+from shop.constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
 
 
 class MainInfo(models.Model):

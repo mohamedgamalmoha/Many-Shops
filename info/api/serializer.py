@@ -2,7 +2,7 @@ from django.contrib.auth.backends import get_user_model
 
 from rest_framework import serializers
 
-from restaurant.api.mixins import DefaultImageSerializerMixin
+from shop.api.mixins import DefaultImageSerializerMixin
 from ..models import MainInfo, Service, AboutUs, Theme, ContactUs
 from ..constant import (DEFAULT_INFO_IMAGE_URL, DEFAULT_SERVICE_IMAGE_URL, DEFAULT_THEME_IMAGE_URL,
                         DEFAULT_MISSING_INFO_IMAGE_URL)

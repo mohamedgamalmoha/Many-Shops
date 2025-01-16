@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_flex_fields',
     'accounts',
-    'restaurant',
+    'shop',
     'info'
 ]
 
@@ -198,7 +198,7 @@ LOCALE_PATHS = [
 IS_MONOLINGUAL = False
 
 TRANSLATABLE_MODEL_MODULES = [
-    'restaurant.models',
+    'shop.models',
     'info.models',
 ]
 
@@ -443,8 +443,8 @@ SPECTACULAR_SETTINGS = {
 
     # General schema metadata. Refer to spec for valid inputs
     # https://spec.openapis.org/oas/v3.0.3#openapi-object
-    'TITLE': 'Menus',
-    'DESCRIPTION': 'Menus API Endpoints',
+    'TITLE': 'Shops',
+    'DESCRIPTION': 'Shops API Endpoints',
     'TOS': None,
     # Optional: MAY contain "name", "url", "email"
     'CONTACT': {},
@@ -485,10 +485,10 @@ SPECTACULAR_SETTINGS = {
 #: and other UI-related settings for Django Admin.
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": _("My Smart Menu"),
+    "site_title": _("My Shops"),
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": _("My Smart Menu"),
+    "site_header": _("My Shops"),
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_brand": '_',
@@ -509,10 +509,10 @@ JAZZMIN_SETTINGS = {
     "site_icon": "images/logo.png",
 
     # Welcome text on the login screen
-    "welcome_sign": _("Welcome To My Smart Menu"),
+    "welcome_sign": _("Welcome To My Shops"),
 
     # Copyright on the footer
-    "copyright": _("My Smart Menu Development Team"),
+    "copyright": _("My Shops Menu Development Team"),
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
@@ -568,14 +568,14 @@ JAZZMIN_SETTINGS = {
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "accounts.User": "fa-solid fa-users",
-        "restaurant.Restaurant": "fa-solid fa-utensils",
-        "restaurant.WorkTime": "fa-regular fa-calendar-days",
-        "restaurant.HeaderImage": "fa-regular fa-image",
-        "restaurant.SocialMediaLink": "fa-solid fa-link",
-        "restaurant.Category": "fa-solid fa-table",
-        "restaurant.Product": "fa-solid fa-burger",
-        "restaurant.ProductVariant": "fa-solid fa-plus",
-        "restaurant.ProductType": "fa-solid fa-bowl-food",
+        "shop.Shop": "fa-solid fa-utensils",
+        "shop.WorkTime": "fa-regular fa-calendar-days",
+        "shop.HeaderImage": "fa-regular fa-image",
+        "shop.SocialMediaLink": "fa-solid fa-link",
+        "shop.Category": "fa-solid fa-table",
+        "shop.Product": "fa-solid fa-burger",
+        "shop.ProductVariant": "fa-solid fa-plus",
+        "shop.ProductType": "fa-solid fa-bowl-food",
         "info.MainInfo": "fa-solid fa-calendar-minus",
         "info.Service": "fa-solid fa-list",
         "info.ContactUs": "fas fa-headset",
