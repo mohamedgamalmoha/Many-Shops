@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 APP_MODELS_ORDER = {
-    'restaurant': ['Shop', 'Category', 'Product', 'ProuctImage'],
+    'shop': ['Shop', 'Category', 'Product', 'ProuctImage'],
     'info': ['MainInfo', 'AboutUs', 'Theme', 'Service', 'ContactUs']
 }
 
