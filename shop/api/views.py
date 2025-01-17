@@ -1,13 +1,13 @@
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+# from django.utils.decorators import method_decorator
+# from django.views.decorators.cache import cache_page
 
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.settings import api_settings
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_flex_fields.utils import is_expanded
 from rest_flex_fields.views import FlexFieldsMixin
 from rest_flex_fields.filter_backends import FlexFieldsFilterBackend
@@ -51,7 +51,19 @@ class ShopViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     #     return super().retrieve(request, *args, **kwargs)
 
     # @method_decorator(cache_page(timeout=SHOP_CATEGORY_VIEW_TIMEOUT, key_prefix='shop_categories_api_list_view'))
-    @extend_schema(responses={200: CategorySerializer(many=True)}, filters=True)
+    @extend_schema(
+            responses={200: CategorySerializer(many=True)}, 
+            parameters=[
+                OpenApiParameter(
+                    name='slug',
+                    location=OpenApiParameter.PATH,
+                    required=True,
+                    description='Slug of the shop. Categories related to the shop.',
+                    type=str
+                )
+            ],
+            filters=True
+        )
     @action(["GET"], detail=True, url_path='categories', queryset=Category.objects.none(),
             serializer_class=CategorySerializer, filterset_class=CategoryFilterSet, lookup_field='slug')
     def categories(self, request, *args, **kwargs):

@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
@@ -51,6 +53,7 @@ class PorductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
+    price_after_seal = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -60,7 +63,13 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
             'product_images': (PorductImageSerializer, {'many': True, "omit": ["product"]}),
         }
 
+    def get_price_after_seal(self, obj) -> Decimal:
+        if not (obj and obj.price and obj.seal_percentage):
+            return 0.0
+        discount = (obj.price * obj.seal_percentage) / 100
+        return obj.price - discount
 
+ 
 class CategorySerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer):
     products = ProductSerializer(many=True)
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
