@@ -13,8 +13,8 @@ from rest_flex_fields.views import FlexFieldsMixin
 from rest_flex_fields.filter_backends import FlexFieldsFilterBackend
 
 from ..models import Shop, Category, Product
-from ..constants import(SHOP_LIST_VIEW_TIMEOUT, SHOP_DETAIL_VIEW_TIMEOUT, SHOP_CATEGORY_VIEW_TIMEOUT,
-                        CATEGORY_DETAIL_VIEW_TIMEOUT)
+# from ..constants import(SHOP_LIST_VIEW_TIMEOUT, SHOP_DETAIL_VIEW_TIMEOUT, SHOP_CATEGORY_VIEW_TIMEOUT,
+#                         CATEGORY_DETAIL_VIEW_TIMEOUT)
 from .filters import ShopFilterSet, CategoryFilterSet, ProductFilterSet
 from .serializer import ShopSerializer, CategorySerializer, ProductSerializer
 
@@ -42,15 +42,15 @@ class ShopViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
                 .order_by('order', '-create_at', '-update_at')
         return queryset
 
-    @method_decorator(cache_page(timeout=SHOP_LIST_VIEW_TIMEOUT, key_prefix='shop_api_list_view'))
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+    # @method_decorator(cache_page(timeout=SHOP_LIST_VIEW_TIMEOUT, key_prefix='shop_api_list_view'))
+    # def list(self, request, *args, **kwargs):
+    #     return super().list(request, *args, **kwargs)
 
-    @method_decorator(cache_page(timeout=SHOP_DETAIL_VIEW_TIMEOUT, key_prefix='shop_api_detail_view'))
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
+    # @method_decorator(cache_page(timeout=SHOP_DETAIL_VIEW_TIMEOUT, key_prefix='shop_api_detail_view'))
+    # def retrieve(self, request, *args, **kwargs):
+    #     return super().retrieve(request, *args, **kwargs)
 
-    @method_decorator(cache_page(timeout=SHOP_CATEGORY_VIEW_TIMEOUT, key_prefix='shop_categories_api_list_view'))
+    # @method_decorator(cache_page(timeout=SHOP_CATEGORY_VIEW_TIMEOUT, key_prefix='shop_categories_api_list_view'))
     @extend_schema(responses={200: CategorySerializer(many=True)}, filters=True)
     @action(["GET"], detail=True, url_path='categories', queryset=Category.objects.none(),
             serializer_class=CategorySerializer, filterset_class=CategoryFilterSet, lookup_field='slug')
@@ -90,9 +90,9 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
                 .order_by('order', '-create_at', '-update_at')
         return queryset
 
-    @method_decorator(cache_page(timeout=CATEGORY_DETAIL_VIEW_TIMEOUT, key_prefix='category_api_detail_view'))
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
+    # @method_decorator(cache_page(timeout=CATEGORY_DETAIL_VIEW_TIMEOUT, key_prefix='category_api_detail_view'))
+    # def retrieve(self, request, *args, **kwargs):
+    #     return super().retrieve(request, *args, **kwargs)
 
     @extend_schema(responses={200: ProductSerializer}, filters=True)
     @action(["GET"], detail=True, url_path='products', queryset=Product.objects.none(),
