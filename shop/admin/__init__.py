@@ -1,17 +1,15 @@
 from django.contrib import admin
 
-# from ..sites import customer_admin_site
-# from ..models import Restaurant, Category, ProductVariant, ProductType
-# from .customer import RestaurantCustomerAdmin, CategoryCustomerAdmin, ProductVariantsCustomerAdmin
-# from .superuser import (RestaurantSuperuserAdmin, CategorySuperuserAdmin, ProductVariantSuperuserAdmin,
-#                         ProductTypeSuperuserAdmin)
+from ..sites import customer_admin_site
+from ..models import Shop, Category, Product
+from .customer import ShopCustomerAdmin, CategoryCustomerAdmin, ProductCustomerAdmin
+from .superuser import ShopSuperuserAdmin, CategorySuperuserAdmin, ProductSuperuserAdmin
 
 
-# customer_admin_site.register(Restaurant, RestaurantCustomerAdmin)
-# customer_admin_site.register(Category, CategoryCustomerAdmin)
-# customer_admin_site.register(ProductVariant, ProductVariantsCustomerAdmin)
+customer_admin_site.register(Shop, ShopCustomerAdmin)
+customer_admin_site.register(Category, CategoryCustomerAdmin)
+customer_admin_site.register(Product, ProductCustomerAdmin)
 
-# admin.site.register(Restaurant, RestaurantSuperuserAdmin)
-# admin.site.register(Category, CategorySuperuserAdmin)
-# admin.site.register(ProductVariant, ProductVariantSuperuserAdmin)
-# admin.site.register(ProductType, ProductTypeSuperuserAdmin)
+admin.site.register(Shop, ShopSuperuserAdmin)
+admin.site.register(Category, CategorySuperuserAdmin)
+admin.site.register(Product, ProductSuperuserAdmin)

@@ -7,7 +7,7 @@ from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 from .base import ImageDisplayAminMixin
 from ..widgets import ImageRadioSelect
 from ..constants import DEFAULT_THEME_IMAGE_URL
-from ..models import HeaderImage, SocialMediaLink, WorkTime, Category, Product
+from ..models import HeaderImage, SocialMediaLink, Category, Product, ProductImage
 
 
 class BaseInlineAdmin(admin.StackedInline):
@@ -23,24 +23,18 @@ class SocialMediaLinkInlineAdmin(BaseInlineAdmin):
     model = SocialMediaLink
 
 
-class WorkTimeInlineAdmin(BaseInlineAdmin):
-    model = WorkTime
-    max_num = 7
-    readonly_fields = ()
-
-
 class HeaderImageInlineAdmin(ImageDisplayAminMixin, BaseInlineAdmin):
     model = HeaderImage
     readonly_fields = ['create_at', 'update_at']
     readonly_image_fields = ['view_image']
 
 
-class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
-    readonly_fields = ['create_at', 'update_at', 'view_image']
+class ProductInlineAdmin(TranslationInlineModelAdmin, BaseInlineAdmin):
+    readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active', 'order')}),
-        (_('Offered By'), {'fields': ('types', 'variants')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     model = Product
@@ -49,6 +43,10 @@ class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Bas
     max_num = None
     can_delete = True
     show_change_link = False
+    
+
+class ProductIamgeInlineAdmin(BaseInlineAdmin):
+    model = ProductImage
 
 
 class CategoryInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
@@ -56,7 +54,7 @@ class CategoryInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Ba
     readonly_fields = ['create_at', 'update_at', 'view_image']
 
 
-class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
+class ShopSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
     list_filter = ['is_active']
@@ -66,7 +64,7 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         (_('Theme'), {'fields': ('theme', 'primary_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [WorkTimeInlineAdmin, CategoryInlineAdmin, HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
+    inlines = [CategoryInlineAdmin, HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -78,30 +76,25 @@ class RestaurantSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
 
 
 class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['order', 'name', 'restaurant', 'is_active', 'create_at', 'update_at']
+    list_display = ['order', 'name', 'shop', 'is_active', 'create_at', 'update_at']
     list_filter = ['is_active']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'image', 'view_image', 'is_active', 'order')}),
+        (_('Main Info'), {'fields': ('shop', 'name', 'image', 'view_image', 'is_active', 'order')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [ProductInlineAdmin]
+    # inlines = [ProductInlineAdmin]
 
 
-class ProductVariantSuperuserAdmin(TranslationAdmin):
-    list_display = ['name', 'restaurant', 'create_at', 'update_at']
-    readonly_fields = ['create_at', 'update_at']
+class ProductSuperuserAdmin(TranslationAdmin):
+    list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
+    list_display_links = ['order', 'name']
+    list_filter = ['is_active', 'ready_to_ship']
+    readonly_fields = ['create_at', 'update_at'] 
     fieldsets = (
-        (_('Main Info'), {'fields': ('restaurant', 'name', 'price')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-
-
-class ProductTypeSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
-    list_display = ['name', 'create_at', 'update_at']
-    readonly_fields = ['create_at', 'update_at']
-    fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'icon', 'view_image')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
-    )
-    image_field_name = 'icon'
+    inlines = [ProductIamgeInlineAdmin]

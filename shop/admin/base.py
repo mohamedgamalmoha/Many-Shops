@@ -131,19 +131,19 @@ class ImageDisplayAminMixin:
     view_image.short_description = _('Image')
 
 
-class RestaurantRelatedObjectAdminMixin:
+class ShopRelatedObjectAdminMixin:
 
     @staticmethod
-    def get_user_restaurant(request):
-        return getattr(request.user, 'restaurant', None)
+    def get_user_shop(request):
+        return getattr(request.user, 'shop', None)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        user_restaurant = self.get_user_restaurant(request)
-        return queryset.filter(restaurant=user_restaurant)
+        user_shop = self.get_user_shop(request)
+        return queryset.filter(shop=user_shop)
 
     def save_model(self, request, obj, form, change):
         if not change:  # Only set owner when adding a new object
-            user_restaurant = self.get_user_restaurant(request)
-            obj.restaurant = user_restaurant
+            user_shop = self.get_user_shop(request)
+            obj.shop = user_shop
         super().save_model(request, obj, form, change)

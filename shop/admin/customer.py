@@ -7,8 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
-from ..models import HeaderImage, SocialMediaLink, WorkTime, Product, ProductImage
-from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin,
+from ..models import HeaderImage, SocialMediaLink, Product, ProductImage
+from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin,
                    ImageDisplayAminMixin)
 
 
@@ -25,10 +25,8 @@ class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
 
 
-class WorkTimeInlineCustomerAdmin(BaseInlineCustomerAdmin):
-    model = WorkTime
-    max_num = 7
-    readonly_fields = ()
+class ProductImageInlineCustomerAdmin(BaseInlineCustomerAdmin):
+    model = ProductImage
 
 
 class HeaderImageInlineCustomerAdmin(ImageDisplayAminMixin, BaseInlineCustomerAdmin):
@@ -40,12 +38,12 @@ class HeaderImageInlineCustomerAdmin(ImageDisplayAminMixin, BaseInlineCustomerAd
     )
 
 
-class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
-    readonly_fields = ['create_at', 'update_at', 'view_image']
+class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomerAdmin):
+    readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'description')}),
-        (_('More Info'), {'fields': ('price', 'image', 'view_image', 'is_active', 'order')}),
-        (_('Offered By'), {'fields': ('types', 'variants')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     actions = None
@@ -57,14 +55,13 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMi
     show_change_link = False
 
 
-class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
+class ShopCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'is_active']
     readonly_fields = ['show_theme', 'create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('email', 'contact_number', 'image', 'view_image')}),
     )
-    inlines = [WorkTimeInlineCustomerAdmin, HeaderImageInlineCustomerAdmin,
-               SocialMediaLInlineCustomerAdmin]
+    inlines = [HeaderImageInlineCustomerAdmin, SocialMediaLInlineCustomerAdmin]
 
     def has_add_permission(self, request):
         return False
@@ -100,8 +97,7 @@ class RestaurantCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminM
         super().save_model(request, obj, form, change)
 
 
-class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin, ImageDisplayAminMixin,
-                            TranslationAdmin):
+class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'is_active']
     list_display_links = ('order', 'name')
     readonly_fields = ['create_at', 'update_at']
@@ -109,14 +105,18 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedOb
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active', 'order')}),
     )
-    inlines = [ProductInlineCustomerAdmin]
+    # inlines = [ProductInlineCustomerAdmin]
 
 
-class ProductVariantsCustomerAdmin(PermissionsAllowOwnerAdminMixin, RestaurantRelatedObjectAdminMixin,
-                                   TranslationAdmin):
-    list_display = ['name', 'price']
-    readonly_fields = ['create_at', 'update_at']
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
+    list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
+    list_display_links = ['order', 'name']
+    list_filter = ['is_active', 'ready_to_ship']
+    readonly_fields = ['create_at', 'update_at'] 
     fieldsets = (
-        (_('Main Info'), {'fields': ('name', 'price')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    actions = None
+    inlines = [ProductImageInlineCustomerAdmin]
