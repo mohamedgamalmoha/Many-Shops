@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 APP_MODELS_ORDER = {
-    'shop': ['Shop', 'Category', 'Product', 'ProuctImage'],
+    'shop': ['Shop', 'Category', 'Product', 'ProductImage'],
     'info': ['MainInfo', 'AboutUs', 'Theme', 'Service', 'ContactUs']
 }
 
@@ -45,13 +45,13 @@ admin.AdminSite.get_app_list = get_app_list
 
 class CustomerAdminSite(AdminSite):
     # Text to put at the end of each page's <title>.
-    site_title = _("Restaurant Management Admin")
+    site_title = _("Shop Management Admin")
 
     # Text to put in each page's <h1>.
-    site_header = _("Restaurant Management Dashboard")
+    site_header = _("Shop Management Dashboard")
 
     # Text to put at the top of the admin index page.
-    index_title = _("Restaurant Management System")
+    index_title = _("Shop Management System")
 
     login_form = AuthenticationForm
 
