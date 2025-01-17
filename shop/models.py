@@ -23,7 +23,7 @@ class Shop(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Shop Name"))
     slug = models.SlugField(max_length=255, unique=True, validators=[validate_english_alphanum],
                             verbose_name=_("Slug"),
-                            help_text=_("Unique identifier for the restaurant used in the URL. "
+                            help_text=_("Unique identifier for the shop used in the URL. "
                                         "It must contain only English letters, numerics, dashes (-), and underscores (_)"))
 
     email = models.EmailField(blank=True, null=True, verbose_name=_("Email"))
@@ -170,7 +170,7 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_images", verbose_name=_("Prouct Image"))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_images", verbose_name=_("Product Image"))
     image = ResizedImageField(blank=True, null=True, size=[600, 600], quality=100, force_format=FORCED_IMAGE_FORMAT, 
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)], upload_to='products/', 
                               verbose_name=_("Product Image"))

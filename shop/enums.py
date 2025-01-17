@@ -14,14 +14,14 @@ class SocialMediaPlatform(models.TextChoices):
 
 
 class LetterSize(models.TextChoices):
-    SMALL = 'S', _('Small')
-    MEDIUM = 'M', _('Medium')
-    LARGE = 'L', _('Large')
-    XLARGE = 'XL', _('Extra Large')
-    XXLARGE = 'XXL', _('Double Extra Large')
-    XXXLARGE = '3XL', _('Triple Extra Large')
-    XXXXLARGE = '4XL', _('Quadruple Extra Large')
-    XXXXXLARGE = '5XL', _('Quintuple Extra Large')
+    SMALL = 'S', _('S')
+    MEDIUM = 'M', _('M')
+    LARGE = 'L', _('L')
+    XLARGE = 'XL', _('XL')
+    XXLARGE = 'XXL', _('XXL')
+    XXXLARGE = '3XL', _('3XL')
+    XXXXLARGE = '4XL', _('4XL')
+    XXXXXLARGE = '5XL', _('5XL')
 
 
 class NumberSize(models.IntegerChoices):
