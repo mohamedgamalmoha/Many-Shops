@@ -69,7 +69,14 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
         discount = (obj.price * obj.seal_percentage) / 100
         return obj.price - discount
 
- 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['price'] = int(data['price'])
+        data['seal_percentage'] = int(data['seal_percentage'])
+        data['price_after_seal'] = int(data['price_after_seal'])
+        return data
+
+
 class CategorySerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer):
     products = ProductSerializer(many=True)
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
