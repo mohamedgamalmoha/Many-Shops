@@ -49,6 +49,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
+    image_field_name = 'tag'
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
     price_after_seal = serializers.SerializerMethodField()
 
