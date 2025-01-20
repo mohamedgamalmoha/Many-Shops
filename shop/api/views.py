@@ -24,7 +24,8 @@ class ShopViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     serializer_class = ShopSerializer
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
-    permit_list_expands = ['owner', 'header_images', 'social_media_links']
+    permitted_expands = ['owner', 'header_images', 'social_media_links', 'categories']
+    permit_list_expands = permitted_expands
     filterset_class = ShopFilterSet
     lookup_field = 'slug'
 
@@ -33,13 +34,9 @@ class ShopViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
         if is_expanded(self.request, 'owner'):
             queryset = queryset.select_related('owner')
         if is_expanded(self.request, 'header_images'):
-            queryset = queryset.select_related('header_images')
+            queryset = queryset.prefetch_related('header_images')
         if is_expanded(self.request, 'social_media_links'):
-            queryset = queryset.select_related('social_media_links')
-        if self.action == 'categories':
-            queryset = queryset.select_related('categories')\
-                .filter(is_active=True)\
-                .order_by('order', '-create_at', '-update_at')
+            queryset = queryset.prefetch_related('social_media_links')
         return queryset
 
     # @method_decorator(cache_page(timeout=SHOP_LIST_VIEW_TIMEOUT, key_prefix='shop_api_list_view'))
@@ -93,11 +90,15 @@ class CategoryViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
     filterset_class = CategoryFilterSet
+    permitted_expands = ['shop', 'products']
+    permit_list_expands = permitted_expands
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if is_expanded(self.request, 'products') or self.action == 'products':
-            queryset = queryset.select_related('products')\
+        if is_expanded(self.request, 'shop'):
+            queryset = queryset.select_related('shop')
+        if is_expanded(self.request, 'products'):
+            queryset = queryset.prefetch_related('products')\
                 .filter(is_active=True)\
                 .order_by('order', '-create_at', '-update_at')
         return queryset
@@ -136,3 +137,16 @@ class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [FlexFieldsFilterBackend] + api_settings.DEFAULT_FILTER_BACKENDS
     filterset_class = ProductFilterSet
+    pagination_class = None
+    permitted_expands = ['shop', 'category', 'product_images']
+    permit_list_expands = permitted_expands
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if is_expanded(self.request, 'shop'):
+            queryset = queryset.select_related('category__shop')
+        if is_expanded(self.request, 'category'):
+            queryset = queryset.select_related('category')
+        if is_expanded(self.request, 'product_images'):
+            queryset = queryset.prefetch_related('product_images')
+        return queryset

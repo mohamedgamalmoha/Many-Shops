@@ -27,9 +27,6 @@ class SocialMediaLinkSerializer(serializers.ModelSerializer):
 
 
 class ShopSerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer):
-    owner = UserSerializer(many=False)
-    header_images = HeaderImageSerializer(many=True)
-    social_media_links = SocialMediaLinkSerializer(many=True)
     default_image_url = DEFAULT_SHOP_IMAGE_URL
 
     class Meta:
@@ -37,13 +34,13 @@ class ShopSerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer):
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
-            'owner': (UserSerializer, {'many': False, "omit": ["restaurants"]}),
-            'header_images': (HeaderImageSerializer, {'many': True, "omit": ["restaurant"]}),
-            'social_media_links': (SocialMediaLinkSerializer, {'many': True, "omit": ["restaurant"]}),
+            'owner': (UserSerializer, {'many': False}),
+            'header_images': (HeaderImageSerializer, {'many': True}),
+            'social_media_links': (SocialMediaLinkSerializer, {'many': True}),
         }
 
 
-class PorductImageSerializer(serializers.ModelSerializer):
+class ProductImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductImage
@@ -62,7 +59,7 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
         expandable_fields = {
             'shop': (ShopSerializer, {'many': False, 'source': 'category.shop'}),
             'category': ('shop.api.serializer.CategorySerializer', {'many': False, "omit": ['products']}),
-            'product_images': (PorductImageSerializer, {'many': True, "omit": ["product"]}),
+            'product_images': (ProductImageSerializer, {'many': True}),
         }
 
     def get_price_after_seal(self, obj) -> Decimal:
@@ -87,5 +84,6 @@ class CategorySerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer)
         exclude = ()
         read_only_fields = ('create_at', 'update_at')
         expandable_fields = {
+            'shop': (ShopSerializer, {'many': False}),
             'products': (ProductSerializer, {'many': True, "omit": ["category"]}),
         }
