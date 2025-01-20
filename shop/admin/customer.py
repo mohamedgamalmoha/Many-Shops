@@ -109,11 +109,12 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAd
     # inlines = [ProductInlineCustomerAdmin]
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
-    readonly_fields = ['create_at', 'update_at'] 
+    readonly_fields = ['create_at', 'update_at']
+    image_field_name = 'tag'
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
         (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
@@ -121,3 +122,15 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductImageInlineCustomerAdmin]
+
+    def list_image(self, obj=None):
+        if obj is None:
+            return ''
+        image_field_name = self.image_field_name
+        self.image_field_name = 'image'
+        obj = obj.product_images.first()
+        if not obj:
+            return ''
+        results = self._show_image(obj, width=75, height=50)
+        self.image_field_name = image_field_name
+        return results

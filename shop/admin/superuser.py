@@ -100,3 +100,15 @@ class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductIamgeInlineAdmin]
+
+    def list_image(self, obj=None):
+        if obj is None:
+            return ''
+        image_field_name = self.image_field_name
+        self.image_field_name = 'image'
+        obj = obj.product_images.first()
+        if not obj:
+            return ''
+        results = self._show_image(obj, width=75, height=50)
+        self.image_field_name = image_field_name
+        return results
