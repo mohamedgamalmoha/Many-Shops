@@ -29,10 +29,11 @@ class HeaderImageInlineAdmin(ImageDisplayAminMixin, BaseInlineAdmin):
     readonly_image_fields = ['view_image']
 
 
-class ProductInlineAdmin(TranslationInlineModelAdmin, BaseInlineAdmin):
+class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineAdmin):
     readonly_fields = ['create_at', 'update_at']
+    image_field_name = 'tag'
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order', 'tag', 'view_image')}),
         (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
@@ -86,13 +87,14 @@ class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     # inlines = [ProductInlineAdmin]
 
 
-class ProductSuperuserAdmin(TranslationAdmin):
+class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
-    readonly_fields = ['create_at', 'update_at'] 
+    readonly_fields = ['create_at', 'update_at']
+    image_field_name = 'tag'
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order', 'tag', 'view_image')}),
         (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),

@@ -38,10 +38,11 @@ class HeaderImageInlineCustomerAdmin(ImageDisplayAminMixin, BaseInlineCustomerAd
     )
 
 
-class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomerAdmin):
+class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
     readonly_fields = ['create_at', 'update_at']
+    image_field_name = 'tag'
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order', 'tag', 'view_image')}),
         (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
