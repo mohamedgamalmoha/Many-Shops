@@ -142,7 +142,7 @@ class Product(models.Model):
         blank=True, null=True, verbose_name=_('Letter Size')
     )
     number_sizes = CustomArrayField(
-        base_field=models.IntegerField(choices=NumberSize.choices, blank=True, null=True, verbose_name=_('Number Size Option')),
+        base_field=models.CharField(choices=NumberSize.choices, max_length=5, blank=True, null=True, verbose_name=_('Number Size Option')),
         blank=True, null=True, verbose_name=_('Number Size')
     )
     color = CustomArrayField(
