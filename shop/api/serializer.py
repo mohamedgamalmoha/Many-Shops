@@ -73,7 +73,7 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
 
     def get_is_new(self, obj) -> bool:
         days_ago = datetime.now() - timedelta(days=NEW_PRODUCT_DAYS)
-        return obj.created_at > days_ago
+        return obj.create_at > days_ago
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
