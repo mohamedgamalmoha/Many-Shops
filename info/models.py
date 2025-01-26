@@ -26,6 +26,41 @@ class MainInfo(models.Model):
         return str(self.title)
 
 
+class SocialMedia(models.Model):
+    info = models.ForeignKey(MainInfo, null=True, on_delete=models.CASCADE, related_name="social_media_links",
+                                   verbose_name=_("Website Main Info"))
+    platform = models.CharField(max_length=20, choices=SocialMediaPlatform.choices, verbose_name=_("Platform"))
+    url = models.CharField(max_length=250, null=True, verbose_name=_("Link / Phone Number"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Social Media")
+        verbose_name_plural = _("Social Media")
+        ordering = ('-create_at', '-update_at')
+
+    def __str__(self):
+        return str(self.url)
+
+
+class HeaderImage(models.Model):
+    info = models.ForeignKey(MainInfo, default=None, on_delete=models.CASCADE, related_name="header_images",
+                                   verbose_name=_("Website Main Info"))
+    image = ResizedImageField(null=True, size=[1920, 1080], quality=100, force_format=FORCED_IMAGE_FORMAT,
+                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
+                              upload_to='headers/', verbose_name=_("Image"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"),
+                                    help_text=_("Setting it to false, makes the image disappear from the page"))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Creation Date'))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_('Update Date'))
+
+    class Meta:
+        verbose_name = _('Home Page Image')
+        verbose_name_plural = _('Home Page Images')
+        ordering = ('-create_at', '-update_at')
+
+
 class Service(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
@@ -82,22 +117,6 @@ class Theme(models.Model):
 
     def __str__(self):
         return str(self.title)
-
-
-class SocialMedia(models.Model):
-    platform = models.CharField(max_length=20, choices=SocialMediaPlatform.choices, verbose_name=_("Platform"))
-    url = models.CharField(max_length=250, null=True, verbose_name=_("Link / Phone Number"))
-    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
-
-    class Meta:
-        verbose_name = _("Social Media")
-        verbose_name_plural = _("Social Media")
-        ordering = ('-create_at', '-update_at')
-
-    def __str__(self):
-        return str(self.url)
 
 
 class ContactUs(models.Model):

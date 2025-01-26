@@ -4,7 +4,18 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
 from shop.admin.base import ImageDisplayAminMixin
-from .models import MainInfo, Service, AboutUs, Theme, SocialMedia, ContactUs
+from .models import MainInfo, SocialMedia, HeaderImage, Service, AboutUs, Theme, ContactUs
+
+
+class HeaderImageInlineAdmin(ImageDisplayAminMixin, admin.TabularInline):
+    model = HeaderImage
+    readonly_fields = ('create_at', 'update_at')
+    readonly_image_fields = ['view_image']
+
+
+class SocialMediaInlineAdmin(admin.TabularInline):
+    model = SocialMedia
+    readonly_fields = ('create_at', 'update_at')
 
 
 class MainInfoAdmin(ImageDisplayAminMixin, TranslationAdmin):
@@ -15,6 +26,7 @@ class MainInfoAdmin(ImageDisplayAminMixin, TranslationAdmin):
         (_('Main Info'), {'fields': ('title', 'description', 'image', 'view_image')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
+    inlines = [SocialMediaInlineAdmin, HeaderImageInlineAdmin]
 
     def has_delete_permission(self, request, obj=None):
         return False
@@ -67,5 +79,5 @@ admin.site.register(MainInfo, MainInfoAdmin)
 admin.site.register(Service, ActiveTitleWithDescriptionAdmin)
 admin.site.register(AboutUs, ActiveTitleWithDescriptionAdmin)
 admin.site.register(Theme, ThemeAdmin)
-admin.site.register(SocialMedia, SocialMediaAdmin)
+# admin.site.register(SocialMedia, SocialMediaAdmin)
 admin.site.register(ContactUs, ContactUsAdmin)
