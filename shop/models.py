@@ -39,6 +39,9 @@ class Shop(models.Model):
     primary_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
                                      verbose_name=_('Primary Color'),
                                      help_text=_("Primary color for template (e.g., #RRGGBB or #RGB)."))
+    border_color = models.CharField(max_length=7, null=True, validators=[validate_hex_color],
+                                     verbose_name=_('Border Color'),
+                                     help_text=_("Border color for template (e.g., #RRGGBB or #RGB)."))
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))

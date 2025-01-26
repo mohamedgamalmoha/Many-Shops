@@ -62,7 +62,7 @@ class ShopSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     fieldsets = (
         (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'email', 'contact_number', 'image', 'view_image',
                                      'is_active', 'order')}),
-        (_('Theme'), {'fields': ('theme', 'primary_color')}),
+        (_('Theme'), {'fields': ('theme', 'primary_color', 'border_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [CategoryInlineAdmin, HeaderImageInlineAdmin, SocialMediaLinkInlineAdmin]
@@ -71,6 +71,8 @@ class ShopSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         form = super().get_form(request, obj, **kwargs)
         if 'primary_color' in form.base_fields:
             form.base_fields['primary_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
+        if 'border_color' in form.base_fields:
+            form.base_fields['border_color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
         if 'theme' in form.base_fields:
             form.base_fields['theme'].widget = ImageRadioSelect(default_image_url=DEFAULT_THEME_IMAGE_URL)
         return form
