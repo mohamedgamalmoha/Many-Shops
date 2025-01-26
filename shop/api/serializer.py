@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import datetime, timedelta
 
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
@@ -6,7 +7,7 @@ from rest_flex_fields import FlexFieldsModelSerializer
 from accounts.api.serializer import UserSerializer
 from .mixins import DefaultImageSerializerMixin
 from ..models import Shop, HeaderImage, SocialMediaLink, Category, Product, ProductImage
-from ..constants import DEFAULT_SHOP_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL
+from ..constants import DEFAULT_SHOP_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL, NEW_PRODUCT_DAYS
 
 
 class HeaderImageSerializer(DefaultImageSerializerMixin, serializers.ModelSerializer):
@@ -52,6 +53,7 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
     image_field_name = 'tag'
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
     price_after_seal = serializers.SerializerMethodField()
+    is_new = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -68,6 +70,10 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
             return 0.0
         discount = (obj.price * obj.seal_percentage) / 100
         return obj.price - discount
+
+    def get_is_new(self, obj) -> bool:
+        days_ago = datetime.now() - timedelta(days=NEW_PRODUCT_DAYS)
+        return obj.created_at > days_ago
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
