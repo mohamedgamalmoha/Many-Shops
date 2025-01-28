@@ -1,6 +1,7 @@
 from decimal import Decimal
-from datetime import datetime, timedelta
+from datetime import timedelta
 
+from django.utils import timezone
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
 
@@ -72,7 +73,7 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
         return obj.price - discount
 
     def get_is_new(self, obj) -> bool:
-        days_ago = datetime.now() - timedelta(days=NEW_PRODUCT_DAYS)
+        days_ago = timezone.now() - timedelta(days=NEW_PRODUCT_DAYS)
         return obj.create_at > days_ago
 
     def to_representation(self, instance):
