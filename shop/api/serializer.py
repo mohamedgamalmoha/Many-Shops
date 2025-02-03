@@ -53,7 +53,6 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
     image_field_name = 'tag'
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
-    price_after_seal = serializers.SerializerMethodField()
     is_new = serializers.SerializerMethodField()
 
     class Meta:
@@ -66,21 +65,16 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
             'product_images': (ProductImageSerializer, {'many': True}),
         }
 
-    def get_price_after_seal(self, obj) -> Decimal:
-        if not (obj and obj.price and obj.seal_percentage):
-            return 0.0
-        discount = (obj.price * obj.seal_percentage) / 100
-        return obj.price - discount
-
     def get_is_new(self, obj) -> bool:
         days_ago = timezone.now() - timedelta(days=NEW_PRODUCT_DAYS)
         return obj.create_at > days_ago
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['price'] = int(float(data['price']))
-        data['seal_percentage'] = int(float(data['seal_percentage']))
-        data['price_after_seal'] = int(float(data['price_after_seal']))
+        if data['price']:
+            data['price'] = int(float(data['price']))
+        if data['after_sale_price']:
+            data['after_sale_price'] = int(float(data['after_sale_price']))
         return data
 
 
