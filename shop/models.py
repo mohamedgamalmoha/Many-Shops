@@ -2,15 +2,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from info.models import Theme
-from .fields import CustomArrayField
 from .constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
-from .enums import SocialMediaPlatform, LetterSize, NumberSize, Color
+from .enums import SocialMediaPlatform
 from .validators import FileSizeValidator, validate_hex_color, validate_english_alphanum
 
 
@@ -130,6 +128,54 @@ class Category(models.Model):
         return str(self.name)
 
 
+class LetterSize(models.Model):
+    size = models.CharField(max_length=50, verbose_name=_('Letter Size'))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Letter Size")
+        verbose_name_plural = _("Letter Sizes")
+        ordering = ('order', '-create_at', '-update_at')
+
+    def __str__(self):
+        return self.size
+
+
+class NumberSize(models.Model):
+    size = models.PositiveIntegerField(verbose_name=_('Number Size'))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Number Size")
+        verbose_name_plural = _("Number Sizes")
+        ordering = ('order', '-create_at', '-update_at')
+
+    def __str__(self):
+        return str(self.size)
+
+
+class Color(models.Model):
+    color = models.CharField(max_length=10, validators=[validate_hex_color], verbose_name=_('Color'))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Color")
+        verbose_name_plural = _("Colors")
+        ordering = ('order', '-create_at', '-update_at')
+
+    def __str__(self):
+        return self.color
+
+
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products", verbose_name=_("Category"))
     
@@ -140,21 +186,12 @@ class Product(models.Model):
                               upload_to='tags/', verbose_name=_("Tag"))
 
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price"))
-    seal_percentage = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
-                                          verbose_name=_("Seal Percentage"), help_text=_("Percentage value between 0 and 100."))
-    
-    letter_sizes = CustomArrayField(
-        base_field=models.CharField(choices=LetterSize.choices, max_length=5, blank=True, null=True, verbose_name=_('Letter Size Option')),
-        blank=True, null=True, verbose_name=_('Letter Size')
-    )
-    number_sizes = CustomArrayField(
-        base_field=models.CharField(choices=NumberSize.choices, max_length=5, blank=True, null=True, verbose_name=_('Number Size Option')),
-        blank=True, null=True, verbose_name=_('Number Size')
-    )
-    color = CustomArrayField(
-        base_field=models.CharField(choices=Color.choices, max_length=10, blank=True, null=True, verbose_name=_('Color Option')),
-        blank=True, null=True, verbose_name=_('Color')
-    )
+    after_sale_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True,
+                                           verbose_name=_("Sale Price"))
+
+    letter_sizes = models.ManyToManyField(LetterSize, blank=True, verbose_name=_('Letter Size'))
+    number_sizes = models.ManyToManyField(NumberSize, blank=True, verbose_name=_('Number Size'))
+    colors = models.ManyToManyField(Color, blank=True, verbose_name=_('Color'))
 
     ready_to_ship = models.BooleanField(default=True, verbose_name=_("Ready To Ship"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))

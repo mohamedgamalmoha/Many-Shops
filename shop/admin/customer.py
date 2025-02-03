@@ -1,4 +1,3 @@
-from django.db import models
 from django.contrib import admin
 from django.contrib.admin.widgets import AdminTextInputWidget
 from django.utils.safestring import mark_safe
@@ -7,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
+from ..widgets import ColorCheckboxSelectMultiple
 from ..models import HeaderImage, SocialMediaLink, Product, ProductImage
 from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin,
                    ImageDisplayAminMixin)
@@ -117,8 +117,8 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixi
     image_field_name = 'tag'
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
-        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
-        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
+        (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'colors')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductImageInlineCustomerAdmin]
@@ -134,3 +134,9 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixi
         results = self._show_image(obj, width=75, height=50)
         self.image_field_name = image_field_name
         return results
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if 'colors' in form.base_fields:
+            form.base_fields['colors'].widget = ColorCheckboxSelectMultiple()
+        return form

@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from .base import ImageDisplayAminMixin
-from ..widgets import ImageRadioSelect
 from ..constants import DEFAULT_THEME_IMAGE_URL
+from ..widgets import ImageRadioSelect, ColorCheckboxSelectMultiple
 from ..models import HeaderImage, SocialMediaLink, Category, Product, ProductImage
 
 
@@ -46,7 +46,7 @@ class ProductInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Bas
     show_change_link = False
     
 
-class ProductIamgeInlineAdmin(BaseInlineAdmin):
+class ProductImageInlineAdmin(BaseInlineAdmin):
     model = ProductImage
 
 
@@ -89,6 +89,44 @@ class CategorySuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     # inlines = [ProductInlineAdmin]
 
 
+class LetterSizeSuperuserAdmin(TranslationAdmin):
+    list_display = ('order', 'size', 'is_active', 'create_at', 'update_at')
+    list_display_links = ('order', 'size')
+    list_filter = ('is_active', )
+    readonly_fields = ('create_at', 'update_at')
+    fieldsets = (
+        (_('Main Info'), {'fields': ('size', 'is_active', 'order')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
+class NumberSizeSuperUserAdmin(admin.ModelAdmin):
+    list_display = ('order', 'size', 'is_active', 'create_at', 'update_at')
+    list_display_links = ('order', 'size')
+    list_filter = ('is_active', )
+    readonly_fields = ('create_at', 'update_at')
+    fieldsets = (
+        (_('Main Info'), {'fields': ('size', 'is_active', 'order')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+
+
+class ColorSuperUserAdmin(admin.ModelAdmin):
+    list_display = ('order', 'color', 'is_active', 'create_at', 'update_at')
+    list_display_links = ('order', 'color')
+    list_filter = ('is_active', )
+    readonly_fields = ('create_at', 'update_at')
+    fieldsets = (
+        (_('Main Info'), {'fields': ('color', 'is_active', 'order')}),
+        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
+    )
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if 'color' in form.base_fields:
+            form.base_fields['color'].widget = AdminTextInputWidget(attrs={'type': 'color'})
+        return form
+
+
 class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
@@ -97,11 +135,11 @@ class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     image_field_name = 'tag'
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order', 'tag', 'view_image')}),
-        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
-        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
+        (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'colors')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
-    inlines = [ProductIamgeInlineAdmin]
+    inlines = [ProductImageInlineAdmin]
 
     def list_image(self, obj=None):
         if obj is None:
@@ -114,3 +152,9 @@ class ProductSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
         results = self._show_image(obj, width=75, height=50)
         self.image_field_name = image_field_name
         return results
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if 'colors' in form.base_fields:
+            form.base_fields['colors'].widget = ColorCheckboxSelectMultiple()
+        return form

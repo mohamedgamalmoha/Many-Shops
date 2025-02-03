@@ -26,3 +26,7 @@ class ImageRadioSelect(forms.RadioSelect):
             image = getattr(instance, self.image_field_name)
             return image.url
         return self.default_image_url
+
+
+class ColorCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    option_template_name = 'widgets/color_option.html'
