@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+# Translation for the platform where traders can show their products.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-26 10:21+0000\n"
+"POT-Creation-Date: 2025-03-01 22:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hebrew <LL@li.org>\n"
@@ -35,7 +35,8 @@ msgstr "הרשאות"
 #: info/admin.py:64 info/admin.py:74 shop/admin/customer.py:48
 #: shop/admin/customer.py:122 shop/admin/superuser.py:39
 #: shop/admin/superuser.py:66 shop/admin/superuser.py:87
-#: shop/admin/superuser.py:102
+#: shop/admin/superuser.py:99 shop/admin/superuser.py:110
+#: shop/admin/superuser.py:121 shop/admin/superuser.py:140
 msgid "Important Dates"
 msgstr "תאריכים חשובים"
 
@@ -61,15 +62,15 @@ msgstr "עברית"
 
 #: core/settings.py:488 core/settings.py:491
 msgid "My Shops"
-msgstr "החנות שלי"
+msgstr "החנויות שלי"
 
 #: core/settings.py:512
 msgid "Welcome To My Shops"
-msgstr "ברוכים הבאים לחנות שלי"
+msgstr "ברוכים הבאים לחנויות שלי"
 
 #: core/settings.py:515
 msgid "My Shops Menu Development Team"
-msgstr "צוות הפיתוח של תפריט החנות שלי"
+msgstr "צוות הפיתוח של תפריט החנויות שלי"
 
 #: core/settings.py:532
 msgid "Home"
@@ -79,7 +80,9 @@ msgstr "בית"
 #: info/admin.py:73 shop/admin/customer.py:45 shop/admin/customer.py:63
 #: shop/admin/customer.py:107 shop/admin/customer.py:119
 #: shop/admin/superuser.py:36 shop/admin/superuser.py:63
-#: shop/admin/superuser.py:86 shop/admin/superuser.py:99
+#: shop/admin/superuser.py:86 shop/admin/superuser.py:98
+#: shop/admin/superuser.py:109 shop/admin/superuser.py:120
+#: shop/admin/superuser.py:137
 msgid "Main Info"
 msgstr "מידע עיקרי"
 
@@ -92,25 +95,27 @@ msgid "Title"
 msgstr "כותרת"
 
 #: info/models.py:13 info/models.py:66 info/models.py:85 info/models.py:104
-#: shop/models.py:137
+#: shop/models.py:183
 msgid "Description"
 msgstr "תיאור"
 
 #: info/models.py:16 info/models.py:52 info/models.py:69 info/models.py:88
-#: info/models.py:107 shop/admin/base.py:131 shop/models.py:33
-#: shop/models.py:70 shop/models.py:115
+#: info/models.py:107 shop/admin/base.py:131 shop/models.py:31
+#: shop/models.py:68 shop/models.py:113
 msgid "Image"
 msgstr "תמונה"
 
 #: info/models.py:17 info/models.py:35 info/models.py:71 info/models.py:90
-#: info/models.py:110 info/models.py:127 shop/models.py:46 shop/models.py:94
-#: shop/models.py:118 shop/models.py:163 shop/models.py:184
+#: info/models.py:110 info/models.py:127 shop/models.py:44 shop/models.py:92
+#: shop/models.py:116 shop/models.py:135 shop/models.py:151 shop/models.py:167
+#: shop/models.py:200 shop/models.py:221
 msgid "Create At"
 msgstr "תאריך יצירה"
 
 #: info/models.py:18 info/models.py:36 info/models.py:72 info/models.py:91
-#: info/models.py:111 info/models.py:128 shop/models.py:47 shop/models.py:95
-#: shop/models.py:119 shop/models.py:164 shop/models.py:185
+#: info/models.py:111 info/models.py:128 shop/models.py:45 shop/models.py:93
+#: shop/models.py:117 shop/models.py:136 shop/models.py:152 shop/models.py:168
+#: shop/models.py:201 shop/models.py:222
 msgid "Update At"
 msgstr "תאריך עדכון"
 
@@ -118,17 +123,18 @@ msgstr "תאריך עדכון"
 msgid "Website Main Info"
 msgstr "מידע עיקרי על האתר"
 
-#: info/models.py:32 shop/models.py:91
+#: info/models.py:32 shop/models.py:89
 msgid "Platform"
 msgstr "פלטפורמה"
 
-#: info/models.py:33 shop/models.py:92
+#: info/models.py:33 shop/models.py:90
 msgid "Link / Phone Number"
 msgstr "קישור / מספר טלפון"
 
 #: info/models.py:34 info/models.py:53 info/models.py:70 info/models.py:89
-#: info/models.py:109 shop/models.py:34 shop/models.py:71 shop/models.py:93
-#: shop/models.py:116 shop/models.py:160
+#: info/models.py:109 shop/models.py:32 shop/models.py:69 shop/models.py:91
+#: shop/models.py:114 shop/models.py:133 shop/models.py:149 shop/models.py:165
+#: shop/models.py:197
 msgid "Active"
 msgstr "פעיל"
 
@@ -136,23 +142,23 @@ msgstr "פעיל"
 msgid "Social Media"
 msgstr "קישורים לרשתות חברתיות"
 
-#: info/models.py:54 shop/models.py:72
+#: info/models.py:54 shop/models.py:70
 msgid "Setting it to false, makes the image disappear from the page"
 msgstr "אם מוגדר לא נכון, התמונה לא תופיע בדף"
 
-#: info/models.py:55 shop/models.py:73
+#: info/models.py:55 shop/models.py:71
 msgid "Creation Date"
 msgstr "תאריך יצירה"
 
-#: info/models.py:56 shop/models.py:74
+#: info/models.py:56 shop/models.py:72
 msgid "Update Date"
 msgstr "תאריך עדכון"
 
-#: info/models.py:59 shop/models.py:77
+#: info/models.py:59 shop/models.py:75
 msgid "Home Page Image"
 msgstr "תמונת דף הבית"
 
-#: info/models.py:60 shop/models.py:78
+#: info/models.py:60 shop/models.py:76
 msgid "Home Page Images"
 msgstr "תמונות דף הבית"
 
@@ -172,7 +178,7 @@ msgstr "עלינו"
 msgid "Url"
 msgstr "כתובת URL"
 
-#: info/models.py:114 shop/admin/superuser.py:65 shop/models.py:38
+#: info/models.py:114 shop/admin/superuser.py:65 shop/models.py:36
 msgid "Theme"
 msgstr "תבנית"
 
@@ -180,7 +186,7 @@ msgstr "תבנית"
 msgid "Themes"
 msgstr "תבניות"
 
-#: info/models.py:124 shop/models.py:29
+#: info/models.py:124 shop/models.py:27
 msgid "Email"
 msgstr "דוא\"ל"
 
@@ -197,16 +203,16 @@ msgid "Thumbnail"
 msgstr "תמונה מוקטנת"
 
 #: shop/admin/customer.py:46 shop/admin/customer.py:120
-#: shop/admin/superuser.py:37 shop/admin/superuser.py:100
+#: shop/admin/superuser.py:37 shop/admin/superuser.py:138
 msgid "More Info"
 msgstr "מידע נוסף"
 
 #: shop/admin/customer.py:47 shop/admin/customer.py:121
-#: shop/admin/superuser.py:38 shop/admin/superuser.py:101
+#: shop/admin/superuser.py:38 shop/admin/superuser.py:139
 msgid "Specs"
 msgstr "מפרטים"
 
-#: shop/apps.py:8 shop/models.py:51
+#: shop/apps.py:8 shop/models.py:49
 msgid "Shops"
 msgstr "חנויות"
 
@@ -242,155 +248,19 @@ msgstr "מספר טלפון 1"
 msgid "Phone Number 2"
 msgstr "מספר טלפון 2"
 
-#: shop/enums.py:17
-msgid "S"
-msgstr "קטן"
-
-#: shop/enums.py:18
-msgid "M"
-msgstr "בינוני"
-
-#: shop/enums.py:19
-msgid "L"
-msgstr "גדול"
-
-#: shop/enums.py:20
-msgid "XL"
-msgstr "אקסטרה גדול"
-
-#: shop/enums.py:21
-msgid "XXL"
-msgstr "שניים אקסטרה גדול"
-
-#: shop/enums.py:22
-msgid "3XL"
-msgstr "שלושה אקסטרה גדול"
-
-#: shop/enums.py:23
-msgid "4XL"
-msgstr "ארבעה אקסטרה גדול"
-
-#: shop/enums.py:24
-msgid "5XL"
-msgstr "חמישה אקסטרה גדול"
-
-#: shop/enums.py:28
-msgid "35"
-msgstr "35"
-
-#: shop/enums.py:29
-msgid "36"
-msgstr "36"
-
-#: shop/enums.py:30
-msgid "37"
-msgstr "37"
-
-#: shop/enums.py:31
-msgid "38"
-msgstr "38"
-
-#: shop/enums.py:32
-msgid "39"
-msgstr "39"
-
-#: shop/enums.py:33
-msgid "40"
-msgstr "40"
-
-#: shop/enums.py:34
-msgid "41"
-msgstr "41"
-
-#: shop/enums.py:35
-msgid "42"
-msgstr "42"
-
-#: shop/enums.py:36
-msgid "43"
-msgstr "43"
-
-#: shop/enums.py:37
-msgid "44"
-msgstr "44"
-
-#: shop/enums.py:38
-msgid "45"
-msgstr "45"
-
-#: shop/enums.py:39
-msgid "46"
-msgstr "46"
-
-#: shop/enums.py:40
-msgid "47"
-msgstr "47"
-
-#: shop/enums.py:41
-msgid "48"
-msgstr "48"
-
-#: shop/enums.py:45
-msgid "Red"
-msgstr "אדום"
-
-#: shop/enums.py:46
-msgid "Yellow"
-msgstr "צהוב"
-
-#: shop/enums.py:47
-msgid "Blue"
-msgstr "כחול"
-
-#: shop/enums.py:48
-msgid "Green"
-msgstr "ירוק"
-
-#: shop/enums.py:49
-msgid "Black"
-msgstr "שחור"
-
-#: shop/enums.py:50
-msgid "White"
-msgstr "לבן"
-
-#: shop/enums.py:51
-msgid "Orange"
-msgstr "כתום"
-
-#: shop/enums.py:52
-msgid "Purple"
-msgstr "סגול"
-
-#: shop/enums.py:53
-msgid "Pink"
-msgstr "ורוד"
-
-#: shop/enums.py:54
-msgid "Grey"
-msgstr "אפור"
-
-#: shop/enums.py:55
-msgid "Brown"
-msgstr "חום"
-
-#: shop/enums.py:56
-msgid "Navy"
-msgstr "כחול כהה"
-
-#: shop/models.py:21
+#: shop/models.py:19
 msgid "Owner"
 msgstr "בעלים"
 
-#: shop/models.py:23
+#: shop/models.py:21
 msgid "Shop Name"
-msgstr "שם חנות"
+msgstr "שם החנות"
 
-#: shop/models.py:25
+#: shop/models.py:23
 msgid "Slug"
 msgstr "קישור לחנות"
 
-#: shop/models.py:26
+#: shop/models.py:24
 msgid ""
 "Unique identifier for the shop used in the URL. It must contain only English "
 "letters, numerics, dashes (-), and underscores (_)"
@@ -398,119 +268,116 @@ msgstr ""
 "מזהה ייחודי עבור החנות המשמש בכתובת ה-URL. הוא חייב להכיל רק אותיות אנגליות, "
 "מספרים, מקפים (-), וקווים תחתונים (_)"
 
-#: shop/models.py:30
+#: shop/models.py:28
 msgid "Contact Number"
 msgstr "מספר קשר"
 
-#: shop/models.py:35 shop/models.py:117 shop/models.py:161 shop/models.py:183
+#: shop/models.py:33 shop/models.py:115 shop/models.py:134 shop/models.py:150
+#: shop/models.py:166 shop/models.py:198 shop/models.py:220
 msgid "Order By"
 msgstr "סדר לפי"
 
-#: shop/models.py:40
+#: shop/models.py:38
 msgid "Primary Color"
 msgstr "צבע ראשי"
 
-#: shop/models.py:41
+#: shop/models.py:39
 msgid "Primary color for template (e.g., #RRGGBB or #RGB)."
 msgstr "צבע ראשי לתבנית (לדוגמה, #RRGGBB או #RGB)."
 
-#: shop/models.py:43
+#: shop/models.py:41
 msgid "Border Color"
 msgstr "צבע מסגרת"
 
-#: shop/models.py:44
+#: shop/models.py:42
 msgid "Border color for template (e.g., #RRGGBB or #RGB)."
 msgstr "צבע מסגרת לתבנית (לדוגמה, #RRGGBB או #RGB)."
 
-#: shop/models.py:50 shop/models.py:90 shop/models.py:111
+#: shop/models.py:48 shop/models.py:88 shop/models.py:109
 msgid "Shop"
 msgstr "חנות"
 
-#: shop/models.py:67
+#: shop/models.py:65
 msgid "Header Image"
 msgstr "תמונת כותרת"
 
-#: shop/models.py:98
+#: shop/models.py:96
 msgid "Social Media Link"
 msgstr "קישור לרשת חברתית"
 
-#: shop/models.py:99
+#: shop/models.py:97
 msgid "Social Media Links"
 msgstr "קישורים לרשתות חברתיות"
 
-#: shop/models.py:112
+#: shop/models.py:110
 msgid "Category Name"
 msgstr "שם קטגוריה"
 
-#: shop/models.py:122 shop/models.py:134
+#: shop/models.py:120 shop/models.py:180
 msgid "Category"
 msgstr "קטגוריה"
 
-#: shop/models.py:123
+#: shop/models.py:121
 msgid "Categories"
 msgstr "קטגוריות"
 
-#: shop/models.py:136
-msgid "Product Name"
-msgstr "שם מוצר"
-
-#: shop/models.py:140
-msgid "Tag"
-msgstr ""
-
-#: shop/models.py:142
-msgid "Price"
-msgstr "מחיר"
-
-#: shop/models.py:144
-msgid "Seal Percentage"
-msgstr "אחוז הנחה"
-
-#: shop/models.py:144
-msgid "Percentage value between 0 and 100."
-msgstr "אחוז ההנחה צריך להיות בין 0 ל-100."
-
-#: shop/models.py:147
-msgid "Letter Size Option"
-msgstr "אפשרות לפי אותיות"
-
-#: shop/models.py:148
+#: shop/models.py:132 shop/models.py:139 shop/models.py:192
 msgid "Letter Size"
 msgstr "גודל לפי אותיות"
 
-#: shop/models.py:151
-msgid "Number Size Option"
-msgstr "אפשרות לפי מספרים"
+#: shop/models.py:140
+msgid "Letter Sizes"
+msgstr "גודל לפי אותיות"
 
-#: shop/models.py:152
+#: shop/models.py:148 shop/models.py:155 shop/models.py:193
 msgid "Number Size"
 msgstr "גודל לפי מספרים"
 
-#: shop/models.py:155
-msgid "Color Option"
-msgstr "אפשרות צבע"
-
 #: shop/models.py:156
+msgid "Number Sizes"
+msgstr "גודל לפי מספרים"
+
+#: shop/models.py:164 shop/models.py:171 shop/models.py:194
 msgid "Color"
 msgstr "צבע"
 
-#: shop/models.py:159
+#: shop/models.py:172
+msgid "Colors"
+msgstr "צבעים"
+
+#: shop/models.py:182
+msgid "Product Name"
+msgstr "שם מוצר"
+
+#: shop/models.py:186
+msgid "Tag"
+msgstr "תג"
+
+#: shop/models.py:188
+msgid "Price"
+msgstr "מחיר"
+
+#: shop/models.py:190
+msgid "Sale Price"
+msgstr "מחיר מבצע"
+
+#: shop/models.py:196
 msgid "Ready To Ship"
 msgstr "מוכן למשלוח"
 
-#: shop/models.py:167
+#: shop/models.py:204
 msgid "Product"
 msgstr "מוצר"
 
-#: shop/models.py:168
+#: shop/models.py:205
 msgid "Products"
 msgstr "מוצרים"
 
-#: shop/models.py:179 shop/models.py:182 shop/models.py:188
+#: shop/models.py:216 shop/models.py:219 shop/models.py:225
 msgid "Product Image"
 msgstr "תמונת מוצר"
 
-#: shop/models.py:189
+#: shop/models.py:226
 msgid "Product Images"
 msgstr "תמונות מוצר"
 

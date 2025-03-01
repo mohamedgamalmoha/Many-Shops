@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-26 10:21+0000\n"
+"POT-Creation-Date: 2025-03-01 22:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -29,13 +29,14 @@ msgstr "المعلومات الشخصية"
 
 #: accounts/admin.py:30
 msgid "Permissions"
-msgstr "الصالاحيات"
+msgstr "الصلاحيات"
 
 #: accounts/admin.py:31 info/admin.py:27 info/admin.py:47 info/admin.py:54
 #: info/admin.py:64 info/admin.py:74 shop/admin/customer.py:48
 #: shop/admin/customer.py:122 shop/admin/superuser.py:39
 #: shop/admin/superuser.py:66 shop/admin/superuser.py:87
-#: shop/admin/superuser.py:102
+#: shop/admin/superuser.py:99 shop/admin/superuser.py:110
+#: shop/admin/superuser.py:121 shop/admin/superuser.py:140
 msgid "Important Dates"
 msgstr "التواريخ الهامة"
 
@@ -61,15 +62,15 @@ msgstr "العبرية"
 
 #: core/settings.py:488 core/settings.py:491
 msgid "My Shops"
-msgstr "ماي شوب"
+msgstr "متاجري"
 
 #: core/settings.py:512
 msgid "Welcome To My Shops"
-msgstr "مرحبًا بكم في ماي شوب"
+msgstr "مرحبًا بكم في متاجري"
 
 #: core/settings.py:515
 msgid "My Shops Menu Development Team"
-msgstr "فريق تطوير ماي شوب"
+msgstr "فريق تطوير قائمة متاجري"
 
 #: core/settings.py:532
 msgid "Home"
@@ -79,7 +80,9 @@ msgstr "الصفحة الرئيسية"
 #: info/admin.py:73 shop/admin/customer.py:45 shop/admin/customer.py:63
 #: shop/admin/customer.py:107 shop/admin/customer.py:119
 #: shop/admin/superuser.py:36 shop/admin/superuser.py:63
-#: shop/admin/superuser.py:86 shop/admin/superuser.py:99
+#: shop/admin/superuser.py:86 shop/admin/superuser.py:98
+#: shop/admin/superuser.py:109 shop/admin/superuser.py:120
+#: shop/admin/superuser.py:137
 msgid "Main Info"
 msgstr "المعلومات الرئيسية"
 
@@ -89,46 +92,49 @@ msgstr "المعلومات"
 
 #: info/models.py:12 info/models.py:65 info/models.py:84 info/models.py:103
 msgid "Title"
-msgstr "عنوان"
+msgstr "العنوان"
 
 #: info/models.py:13 info/models.py:66 info/models.py:85 info/models.py:104
-#: shop/models.py:137
+#: shop/models.py:183
 msgid "Description"
 msgstr "الوصف"
 
 #: info/models.py:16 info/models.py:52 info/models.py:69 info/models.py:88
-#: info/models.py:107 shop/admin/base.py:131 shop/models.py:33
-#: shop/models.py:70 shop/models.py:115
+#: info/models.py:107 shop/admin/base.py:131 shop/models.py:31
+#: shop/models.py:68 shop/models.py:113
 msgid "Image"
 msgstr "صورة"
 
 #: info/models.py:17 info/models.py:35 info/models.py:71 info/models.py:90
-#: info/models.py:110 info/models.py:127 shop/models.py:46 shop/models.py:94
-#: shop/models.py:118 shop/models.py:163 shop/models.py:184
+#: info/models.py:110 info/models.py:127 shop/models.py:44 shop/models.py:92
+#: shop/models.py:116 shop/models.py:135 shop/models.py:151 shop/models.py:167
+#: shop/models.py:200 shop/models.py:221
 msgid "Create At"
 msgstr "تاريخ الإنشاء"
 
 #: info/models.py:18 info/models.py:36 info/models.py:72 info/models.py:91
-#: info/models.py:111 info/models.py:128 shop/models.py:47 shop/models.py:95
-#: shop/models.py:119 shop/models.py:164 shop/models.py:185
+#: info/models.py:111 info/models.py:128 shop/models.py:45 shop/models.py:93
+#: shop/models.py:117 shop/models.py:136 shop/models.py:152 shop/models.py:168
+#: shop/models.py:201 shop/models.py:222
 msgid "Update At"
 msgstr "تاريخ التحديث"
 
 #: info/models.py:21 info/models.py:22 info/models.py:31 info/models.py:49
 msgid "Website Main Info"
-msgstr "المعلومات الرئيسية"
+msgstr "المعلومات الرئيسية للموقع"
 
-#: info/models.py:32 shop/models.py:91
+#: info/models.py:32 shop/models.py:89
 msgid "Platform"
 msgstr "المنصة"
 
-#: info/models.py:33 shop/models.py:92
+#: info/models.py:33 shop/models.py:90
 msgid "Link / Phone Number"
 msgstr "الرابط / رقم الهاتف"
 
 #: info/models.py:34 info/models.py:53 info/models.py:70 info/models.py:89
-#: info/models.py:109 shop/models.py:34 shop/models.py:71 shop/models.py:93
-#: shop/models.py:116 shop/models.py:160
+#: info/models.py:109 shop/models.py:32 shop/models.py:69 shop/models.py:91
+#: shop/models.py:114 shop/models.py:133 shop/models.py:149 shop/models.py:165
+#: shop/models.py:197
 msgid "Active"
 msgstr "نشط"
 
@@ -136,23 +142,23 @@ msgstr "نشط"
 msgid "Social Media"
 msgstr "روابط وسائل التواصل الاجتماعي"
 
-#: info/models.py:54 shop/models.py:72
+#: info/models.py:54 shop/models.py:70
 msgid "Setting it to false, makes the image disappear from the page"
 msgstr "ضبطه على غير صحيح يجعل الصورة تختفي من الصفحة"
 
-#: info/models.py:55 shop/models.py:73
+#: info/models.py:55 shop/models.py:71
 msgid "Creation Date"
 msgstr "تاريخ الإنشاء"
 
-#: info/models.py:56 shop/models.py:74
+#: info/models.py:56 shop/models.py:72
 msgid "Update Date"
 msgstr "تاريخ التحديث"
 
-#: info/models.py:59 shop/models.py:77
+#: info/models.py:59 shop/models.py:75
 msgid "Home Page Image"
 msgstr "صورة الصفحة الرئيسية"
 
-#: info/models.py:60 shop/models.py:78
+#: info/models.py:60 shop/models.py:76
 msgid "Home Page Images"
 msgstr "صور الصفحة الرئيسية"
 
@@ -172,7 +178,7 @@ msgstr "نبذة عنا"
 msgid "Url"
 msgstr "الرابط"
 
-#: info/models.py:114 shop/admin/superuser.py:65 shop/models.py:38
+#: info/models.py:114 shop/admin/superuser.py:65 shop/models.py:36
 msgid "Theme"
 msgstr "القالب"
 
@@ -180,33 +186,33 @@ msgstr "القالب"
 msgid "Themes"
 msgstr "القوالب"
 
-#: info/models.py:124 shop/models.py:29
+#: info/models.py:124 shop/models.py:27
 msgid "Email"
 msgstr "البريد الإلكتروني"
 
 #: info/models.py:126
 msgid "Message"
-msgstr "المضمون"
+msgstr "الرسالة"
 
 #: info/models.py:131 info/models.py:132
 msgid "Contact Us"
-msgstr "تواصل معنا"
+msgstr "اتصل بنا"
 
 #: shop/admin/base.py:130
 msgid "Thumbnail"
 msgstr "صورة مصغرة"
 
 #: shop/admin/customer.py:46 shop/admin/customer.py:120
-#: shop/admin/superuser.py:37 shop/admin/superuser.py:100
+#: shop/admin/superuser.py:37 shop/admin/superuser.py:138
 msgid "More Info"
 msgstr "معلومات إضافية"
 
 #: shop/admin/customer.py:47 shop/admin/customer.py:121
-#: shop/admin/superuser.py:38 shop/admin/superuser.py:101
+#: shop/admin/superuser.py:38 shop/admin/superuser.py:139
 msgid "Specs"
-msgstr "المواصافات"
+msgstr "المواصفات"
 
-#: shop/apps.py:8 shop/models.py:51
+#: shop/apps.py:8 shop/models.py:49
 msgid "Shops"
 msgstr "المتاجر"
 
@@ -242,285 +248,146 @@ msgstr "رقم الهاتف الأول"
 msgid "Phone Number 2"
 msgstr "رقم الهاتف الثاني"
 
-#: shop/enums.py:17
-msgid "S"
-msgstr "صغير"
-
-#: shop/enums.py:18
-msgid "M"
-msgstr "متوسط"
-
-#: shop/enums.py:19
-msgid "L"
-msgstr "لارج"
-
-#: shop/enums.py:20
-msgid "XL"
-msgstr "اكس لارج"
-
-#: shop/enums.py:21
-msgid "XXL"
-msgstr "اثنين اكس لارج"
-
-#: shop/enums.py:22
-msgid "3XL"
-msgstr "ثلاثة اكس لارج"
-
-#: shop/enums.py:23
-msgid "4XL"
-msgstr "أربعة اكس لارج"
-
-#: shop/enums.py:24
-msgid "5XL"
-msgstr "خمسة اكس لارح"
-
-#: shop/enums.py:28
-msgid "35"
-msgstr "35"
-
-#: shop/enums.py:29
-msgid "36"
-msgstr "36"
-
-#: shop/enums.py:30
-msgid "37"
-msgstr "37"
-
-#: shop/enums.py:31
-msgid "38"
-msgstr "38"
-
-#: shop/enums.py:32
-msgid "39"
-msgstr "39"
-
-#: shop/enums.py:33
-msgid "40"
-msgstr "40"
-
-#: shop/enums.py:34
-msgid "41"
-msgstr "41"
-
-#: shop/enums.py:35
-msgid "42"
-msgstr "42"
-
-#: shop/enums.py:36
-msgid "43"
-msgstr "43"
-
-#: shop/enums.py:37
-msgid "44"
-msgstr "44"
-
-#: shop/enums.py:38
-msgid "45"
-msgstr "45"
-
-#: shop/enums.py:39
-msgid "46"
-msgstr "46"
-
-#: shop/enums.py:40
-msgid "47"
-msgstr "47"
-
-#: shop/enums.py:41
-msgid "48"
-msgstr "48"
-
-#: shop/enums.py:45
-msgid "Red"
-msgstr "أحمر"
-
-#: shop/enums.py:46
-msgid "Yellow"
-msgstr "أصفر"
-
-#: shop/enums.py:47
-msgid "Blue"
-msgstr "أزرق"
-
-#: shop/enums.py:48
-msgid "Green"
-msgstr "أخضر"
-
-#: shop/enums.py:49
-msgid "Black"
-msgstr "أسود"
-
-#: shop/enums.py:50
-msgid "White"
-msgstr "أبيض"
-
-#: shop/enums.py:51
-msgid "Orange"
-msgstr "برتقالي"
-
-#: shop/enums.py:52
-msgid "Purple"
-msgstr "أرجواني"
-
-#: shop/enums.py:53
-msgid "Pink"
-msgstr "وردي"
-
-#: shop/enums.py:54
-msgid "Grey"
-msgstr "رمادي"
-
-#: shop/enums.py:55
-msgid "Brown"
-msgstr "بني"
-
-#: shop/enums.py:56
-msgid "Navy"
-msgstr "كحلي"
-
-#: shop/models.py:21
+#: shop/models.py:19
 msgid "Owner"
 msgstr "المالك"
 
-#: shop/models.py:23
+#: shop/models.py:21
 msgid "Shop Name"
 msgstr "اسم المتجر"
 
-#: shop/models.py:25
+#: shop/models.py:23
 msgid "Slug"
 msgstr "اسم المتجر في الرابط"
 
-#: shop/models.py:26
+#: shop/models.py:24
 msgid ""
 "Unique identifier for the shop used in the URL. It must contain only English "
 "letters, numerics, dashes (-), and underscores (_)"
 msgstr ""
-"معرف فريد للمتجر المستخدم في رابط المتجر. يجب أن يحتوي فقط على أحرف إنجليزية "
+"معرف فريد للمتجر المستخدم في الرابط. يجب أن يحتوي فقط على أحرف إنجليزية "
 "وأرقام وشرطات (-) وشرطات سفلية (_)"
 
-#: shop/models.py:30
+#: shop/models.py:28
 msgid "Contact Number"
 msgstr "رقم الاتصال"
 
-#: shop/models.py:35 shop/models.py:117 shop/models.py:161 shop/models.py:183
+#: shop/models.py:33 shop/models.py:115 shop/models.py:134 shop/models.py:150
+#: shop/models.py:166 shop/models.py:198 shop/models.py:220
 msgid "Order By"
-msgstr "الترتيب"
+msgstr "ترتيب"
 
-#: shop/models.py:40
+#: shop/models.py:38
 msgid "Primary Color"
-msgstr "لون"
-
-#: shop/models.py:41
-msgid "Primary color for template (e.g., #RRGGBB or #RGB)."
 msgstr "اللون الأساسي"
 
-#: shop/models.py:43
+#: shop/models.py:39
+msgid "Primary color for template (e.g., #RRGGBB or #RGB)."
+msgstr "اللون الأساسي للقالب"
+
+#: shop/models.py:41
 msgid "Border Color"
 msgstr "لون الإطار"
 
-#: shop/models.py:44
+#: shop/models.py:42
 msgid "Border color for template (e.g., #RRGGBB or #RGB)."
-msgstr "اللون الأساسي  للإطار"
+msgstr "لون الإطار للقالب"
 
-#: shop/models.py:50 shop/models.py:90 shop/models.py:111
+#: shop/models.py:48 shop/models.py:88 shop/models.py:109
 msgid "Shop"
 msgstr "المتجر"
 
-#: shop/models.py:67
+#: shop/models.py:65
 msgid "Header Image"
-msgstr "الصورة الأساسية للقالب"
+msgstr "صورة رأس القالب"
 
-#: shop/models.py:98
+#: shop/models.py:96
 msgid "Social Media Link"
 msgstr "رابط وسائل التواصل الاجتماعي"
 
-#: shop/models.py:99
+#: shop/models.py:97
 msgid "Social Media Links"
 msgstr "روابط وسائل التواصل الاجتماعي"
 
-#: shop/models.py:112
+#: shop/models.py:110
 msgid "Category Name"
-msgstr "اسم الصنف"
+msgstr "اسم الفئة"
 
-#: shop/models.py:122 shop/models.py:134
+#: shop/models.py:120 shop/models.py:180
 msgid "Category"
-msgstr "الصتف"
+msgstr "الفئة"
 
-#: shop/models.py:123
+#: shop/models.py:121
 msgid "Categories"
-msgstr "الأصناف"
+msgstr "الفئات"
 
-#: shop/models.py:136
-msgid "Product Name"
-msgstr "اسم المنتج"
+#: shop/models.py:132 shop/models.py:139 shop/models.py:192
+msgid "Letter Size"
+msgstr "حجم الخط"
 
 #: shop/models.py:140
-msgid "Tag"
-msgstr ""
+msgid "Letter Sizes"
+msgstr "أحجام الخطوط"
 
-#: shop/models.py:142
-msgid "Price"
-msgstr "السعر"
-
-#: shop/models.py:144
-msgid "Seal Percentage"
-msgstr "نسبة الخصم"
-
-#: shop/models.py:144
-msgid "Percentage value between 0 and 100."
-msgstr "نسبة الخصم تكون من 0 الي 100"
-
-#: shop/models.py:147
-msgid "Letter Size Option"
-msgstr "المقاس بالحرف"
-
-#: shop/models.py:148
-msgid "Letter Size"
-msgstr "المقاس بالاحرف"
-
-#: shop/models.py:151
-msgid "Number Size Option"
-msgstr "المقاس يالرقم"
-
-#: shop/models.py:152
+#: shop/models.py:148 shop/models.py:155 shop/models.py:193
 msgid "Number Size"
-msgstr "المقاس بالارقام"
-
-#: shop/models.py:155
-msgid "Color Option"
-msgstr "اللون"
+msgstr "حجم الأرقام"
 
 #: shop/models.py:156
+msgid "Number Sizes"
+msgstr "أحجام الأرقام"
+
+#: shop/models.py:164 shop/models.py:171 shop/models.py:194
 msgid "Color"
 msgstr "اللون"
 
-#: shop/models.py:159
+#: shop/models.py:172
+msgid "Colors"
+msgstr "الألوان"
+
+#: shop/models.py:182
+msgid "Product Name"
+msgstr "اسم المنتج"
+
+#: shop/models.py:186
+msgid "Tag"
+msgstr "العلامة"
+
+#: shop/models.py:188
+msgid "Price"
+msgstr "السعر"
+
+#: shop/models.py:190
+msgid "Sale Price"
+msgstr "السعر المخفض"
+
+#: shop/models.py:196
 msgid "Ready To Ship"
 msgstr "جاهز للشحن"
 
-#: shop/models.py:167
+#: shop/models.py:204
 msgid "Product"
 msgstr "المنتج"
 
-#: shop/models.py:168
+#: shop/models.py:205
 msgid "Products"
-msgstr "المنتحات"
+msgstr "المنتجات"
 
-#: shop/models.py:179 shop/models.py:182 shop/models.py:188
+#: shop/models.py:216 shop/models.py:219 shop/models.py:225
 msgid "Product Image"
 msgstr "صورة المنتج"
 
-#: shop/models.py:189
+#: shop/models.py:226
 msgid "Product Images"
 msgstr "صور المنتج"
 
 #: shop/sites.py:48
 msgid "Shop Management Admin"
-msgstr "إدارة المتحر (المسؤول)"
+msgstr "إدارة المتاجر (المسؤول)"
 
 #: shop/sites.py:51
 msgid "Shop Management Dashboard"
-msgstr "لوحة تحكم إدارة المتاحر"
+msgstr "لوحة تحكم إدارة المتاجر"
 
 #: shop/sites.py:54
 msgid "Shop Management System"
@@ -551,11 +418,11 @@ msgid "Dashboard"
 msgstr "لوحة تحكم"
 
 msgid "Thanks for spending some quality time with the Web site today."
-msgstr "شكرًا لك على قضاء بعض الوقت الجيد مع موقعنا اليوم."
+msgstr "شكرًا لك على قضاء بعض الوقت الممتع على موقعنا اليوم."
 
 msgid ""
 "Please enter your old password, for security's sake, and then enter your "
 "new password twice so we can verify you typed it in correctly."
 msgstr ""
 "من فضلك أدخل كلمة المرور القديمة لأسباب أمنية، ثم أدخل كلمة المرور "
-"الجديدة مرتين حتى نتمكن من التحقق من أنك كتبتها بشكل صحيح."
+"الجديدة مرتين للتحقق من أنك كتبتها بشكل صحيح."
