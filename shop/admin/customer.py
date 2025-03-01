@@ -106,7 +106,7 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAd
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active', 'order')}),
     )
-    # inlines = [ProductInlineCustomerAdmin]
+    inlines = [ProductInlineCustomerAdmin]
 
 
 class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
