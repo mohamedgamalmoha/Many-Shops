@@ -150,3 +150,11 @@ class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
         if is_expanded(self.request, 'product_images'):
             queryset = queryset.prefetch_related('product_images')
         return queryset
+
+    @extend_schema(responses={200: ProductSerializer(many=True)}, filters=True)
+    @action(["GET"], detail=False, url_path='random')
+    def random(self, request, *args, **kwargs):
+        self.ordering = ['?']
+        response = self.list(request, *args, **kwargs)
+        self.ordering = None
+        return response
