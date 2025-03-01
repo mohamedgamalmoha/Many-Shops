@@ -64,7 +64,7 @@ class HeaderImage(models.Model):
 class Service(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
-    image = ResizedImageField(null=True, size=[300, 300], quality=80, force_format=FORCED_IMAGE_FORMAT,
+    image = ResizedImageField(null=True, size=[300, 300], quality=100, force_format=FORCED_IMAGE_FORMAT,
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='services/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
@@ -83,7 +83,7 @@ class Service(models.Model):
 class AboutUs(models.Model):
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
-    image = ResizedImageField(null=True, size=[600, 600], quality=85, force_format=FORCED_IMAGE_FORMAT,
+    image = ResizedImageField(null=True, size=[600, 600], quality=100, force_format=FORCED_IMAGE_FORMAT,
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='about_us/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
