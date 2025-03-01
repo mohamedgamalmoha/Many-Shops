@@ -123,6 +123,10 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixi
     )
     inlines = [ProductImageInlineCustomerAdmin]
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(category__shop__id=request.user.shop.id)
+
     def list_image(self, obj=None):
         if obj is None:
             return ''
