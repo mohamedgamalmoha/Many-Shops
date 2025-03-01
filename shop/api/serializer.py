@@ -54,6 +54,9 @@ class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
     image_field_name = 'tag'
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
     is_new = serializers.SerializerMethodField()
+    letter_sizes = serializers.StringRelatedField(many=True)
+    number_sizes = serializers.StringRelatedField(many=True)
+    colors = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Product
