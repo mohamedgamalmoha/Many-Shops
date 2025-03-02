@@ -1,4 +1,3 @@
-from decimal import Decimal
 from datetime import timedelta
 
 from django.utils import timezone
@@ -50,9 +49,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         read_only_fields = ('create_at', 'update_at')
 
 
-class ProductSerializer(HeaderImageSerializer, FlexFieldsModelSerializer):
-    image_field_name = 'tag'
-    default_image_url = DEFAULT_PRODUCT_IMAGE_URL
+class ProductSerializer(FlexFieldsModelSerializer):
     is_new = serializers.SerializerMethodField()
     letter_sizes = serializers.StringRelatedField(many=True)
     number_sizes = serializers.StringRelatedField(many=True)
