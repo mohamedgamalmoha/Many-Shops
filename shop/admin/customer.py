@@ -38,11 +38,10 @@ class HeaderImageInlineCustomerAdmin(ImageDisplayAminMixin, BaseInlineCustomerAd
     )
 
 
-class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, BaseInlineCustomerAdmin):
+class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomerAdmin):
     readonly_fields = ['create_at', 'update_at']
-    image_field_name = 'tag'
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order', 'tag', 'view_image')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'tag', 'order')}),
         (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
@@ -109,14 +108,13 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAd
     inlines = [ProductInlineCustomerAdmin]
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
     readonly_fields = ['create_at', 'update_at']
-    image_field_name = 'tag'
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'tag', 'order')}),
         (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'colors')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
@@ -126,18 +124,6 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixi
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         return queryset.filter(category__shop__id=request.user.shop.id)
-
-    def list_image(self, obj=None):
-        if obj is None:
-            return ''
-        image_field_name = self.image_field_name
-        self.image_field_name = 'image'
-        obj = obj.product_images.first()
-        if not obj:
-            return ''
-        results = self._show_image(obj, width=75, height=50)
-        self.image_field_name = image_field_name
-        return results
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
