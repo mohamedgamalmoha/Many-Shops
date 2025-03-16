@@ -176,19 +176,36 @@ class Color(models.Model):
         return self.color
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=150, verbose_name=_('Name'))
+    icon = ResizedImageField(null=True, size=[300, 300], quality=100, force_format=FORCED_IMAGE_FORMAT,
+                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
+                              upload_to='tags/', verbose_name=_("Icon"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
+        ordering = ('order', '-create_at', '-update_at')
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products", verbose_name=_("Category"))
     
     name = models.CharField(max_length=255, verbose_name=_("Product Name"))
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
-    tag = ResizedImageField(null=True, size=[300, 300], quality=100, force_format=FORCED_IMAGE_FORMAT,
-                              validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
-                              upload_to='tags/', verbose_name=_("Tag"))
 
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price"))
     after_sale_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True,
                                            verbose_name=_("Sale Price"))
 
+    tag = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL, related_name="products", verbose_name=_("Tag"))
     letter_sizes = models.ManyToManyField(LetterSize, blank=True, verbose_name=_('Letter Size'))
     number_sizes = models.ManyToManyField(NumberSize, blank=True, verbose_name=_('Number Size'))
     colors = models.ManyToManyField(Color, blank=True, verbose_name=_('Color'))
