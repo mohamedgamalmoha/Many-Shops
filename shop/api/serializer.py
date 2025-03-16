@@ -6,7 +6,7 @@ from rest_flex_fields import FlexFieldsModelSerializer
 
 from accounts.api.serializer import UserSerializer
 from .mixins import DefaultImageSerializerMixin
-from ..models import Shop, HeaderImage, SocialMediaLink, Category, Product, ProductImage
+from ..models import Shop, HeaderImage, SocialMediaLink, Category, Tag, Product, ProductImage
 from ..constants import DEFAULT_SHOP_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL, DEFAULT_PRODUCT_IMAGE_URL, NEW_PRODUCT_DAYS
 
 
@@ -49,11 +49,20 @@ class ProductImageSerializer(serializers.ModelSerializer):
         read_only_fields = ('create_at', 'update_at')
 
 
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        exclude = ()
+        read_only_fields = ('create_at', 'update_at')
+
+
 class ProductSerializer(FlexFieldsModelSerializer):
     is_new = serializers.SerializerMethodField()
     letter_sizes = serializers.StringRelatedField(many=True)
     number_sizes = serializers.StringRelatedField(many=True)
     colors = serializers.StringRelatedField(many=True)
+    tag = TagSerializer(many=False)
 
     class Meta:
         model = Product
