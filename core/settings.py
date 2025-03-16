@@ -568,7 +568,7 @@ JAZZMIN_SETTINGS = {
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "accounts.User": "fa-solid fa-users",
-        "shop.Shop": "fa-solid fa-utensils",
+        "shop.Shop": "fa-solid fa-store",
         "shop.WorkTime": "fa-regular fa-calendar-days",
         "shop.HeaderImage": "fa-regular fa-image",
         "shop.SocialMediaLink": "fa-solid fa-link",
@@ -576,7 +576,7 @@ JAZZMIN_SETTINGS = {
         "shop.LetterSize": "fa-solid fa-shirt",
         "shop.NumberSize": "fa-solid fa-shoe-prints",
         "shop.Color": "fa-solid fa-palette",
-        "shop.Product": "fa-solid fa-burger",
+        "shop.Product": "fa-solid fa-box-open",
         "shop.ProductVariant": "fa-solid fa-plus",
         "shop.ProductType": "fa-solid fa-bowl-food",
         "info.MainInfo": "fa-solid fa-calendar-minus",
