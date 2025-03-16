@@ -576,6 +576,7 @@ JAZZMIN_SETTINGS = {
         "shop.LetterSize": "fa-solid fa-shirt",
         "shop.NumberSize": "fa-solid fa-shoe-prints",
         "shop.Color": "fa-solid fa-palette",
+        "shop.Tag": "fa-solid fa-thumbtack",
         "shop.Product": "fa-solid fa-box-open",
         "shop.ProductVariant": "fa-solid fa-plus",
         "shop.ProductType": "fa-solid fa-bowl-food",
