@@ -205,7 +205,8 @@ class Product(models.Model):
     after_sale_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True,
                                            verbose_name=_("Sale Price"))
 
-    tag = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL, related_name="products", verbose_name=_("Tag"))
+    tag = models.ForeignKey(Tag, blank=True, null=True, on_delete=models.SET_NULL, related_name="products",
+                            verbose_name=_("Tag"))
     letter_sizes = models.ManyToManyField(LetterSize, blank=True, verbose_name=_('Letter Size'))
     number_sizes = models.ManyToManyField(NumberSize, blank=True, verbose_name=_('Number Size'))
     colors = models.ManyToManyField(Color, blank=True, verbose_name=_('Color'))
