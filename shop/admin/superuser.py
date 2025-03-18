@@ -32,9 +32,9 @@ class HeaderImageInlineAdmin(ImageDisplayAminMixin, BaseInlineAdmin):
 class ProductInlineAdmin(TranslationInlineModelAdmin, BaseInlineAdmin):
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'tag', 'order')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
         (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
-        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'color')}),
+        (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     model = Product
@@ -143,9 +143,9 @@ class ProductSuperuserAdmin(TranslationAdmin):
     list_filter = ['is_active', 'ready_to_ship']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'tag', 'order')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
         (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
-        (_('Specs'), {'fields': ('letter_sizes', 'number_sizes', 'colors')}),
+        (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'colors')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductImageInlineAdmin]
