@@ -7,7 +7,7 @@ from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
 
 from ..constants import DEFAULT_THEME_IMAGE_URL
 from ..widgets import ColorCheckboxSelectMultiple
-from ..models import HeaderImage, SocialMediaLink, Product, ProductImage
+from ..models import HeaderImage, SocialMediaLink, Category, Product, ProductImage
 from .base import (PermissionsAllowAllAdminMixin, PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin,
                    ImageDisplayAminMixin)
 
@@ -42,8 +42,8 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomer
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
-        (_('More Info'), {'fields': ('price', 'seal_percentage', 'ready_to_ship', 'is_active')}),
-        (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'color')}),
+        (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
+        (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'colors')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     actions = None
@@ -97,7 +97,8 @@ class ShopCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, 
         super().save_model(request, obj, form, change)
 
 
-class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
+class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin, ImageDisplayAminMixin,
+                            TranslationAdmin):
     list_display = ['order', 'name', 'is_active']
     list_display_links = ('order', 'name')
     readonly_fields = ['create_at', 'update_at']
@@ -108,7 +109,7 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAd
     inlines = [ProductInlineCustomerAdmin]
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
