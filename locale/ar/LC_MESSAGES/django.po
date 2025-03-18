@@ -356,7 +356,7 @@ msgstr "صورة"
 
 #: shop/models.py:190 shop/models.py:208
 msgid "Tag"
-msgstr "أيقونة"
+msgstr "تاج"
 
 #: shop/models.py:191
 msgid "Tags"
