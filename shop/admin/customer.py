@@ -109,7 +109,7 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAd
     inlines = [ProductInlineCustomerAdmin]
 
 
-class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAdminMixin, TranslationAdmin):
+class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
