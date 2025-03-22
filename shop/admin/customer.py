@@ -130,4 +130,6 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
         form = super().get_form(request, obj, **kwargs)
         if 'colors' in form.base_fields:
             form.base_fields['colors'].widget = ColorCheckboxSelectMultiple()
+        if 'category' in form.base_fields:
+            form.base_fields['category'].queryset = Category.objects.filter(shop__id=request.user.shop.id)
         return form
