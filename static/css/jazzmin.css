@@ -30,9 +30,11 @@ body{
 }
 
 .addlink {
-    width: 60px;
+    width: 80px;
+    height: 30px;
 }
 
 .changelink {
-    width: 60px;
+    width: 80px;
+    height: 30px;
 }
