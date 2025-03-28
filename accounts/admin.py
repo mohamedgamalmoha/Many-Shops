@@ -5,6 +5,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.backends import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+from shop.sites import customer_admin_site
+
 
 User = get_user_model()
 
@@ -21,6 +23,16 @@ class LogEntryAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+    def get_queryset(self, request):
+        # Override get_queryset to only show logs of the current user
+        queryset = super().get_queryset(request)
+        queryset = queryset.select_related("content_type", "user")
+        # Show all logs to superusers and only the user's logs to others
+        user = request.user
+        if not user.is_superuser:
+            queryset = queryset.filter(user=user)
+        return queryset
 
 
 class CustomUserAdmin(UserAdmin):
@@ -39,3 +51,4 @@ class CustomUserAdmin(UserAdmin):
 admin.site.unregister(Group)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(LogEntry, LogEntryAdmin)
+customer_admin_site.register(LogEntry, LogEntryAdmin)
