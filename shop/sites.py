@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
+from django.contrib.admin.models import LogEntry
 from django.contrib.admin.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 
@@ -54,6 +55,9 @@ class CustomerAdminSite(AdminSite):
     index_title = _("Shop Management System")
 
     login_form = AuthenticationForm
+
+    def get_log_entries(self, request):
+        return LogEntry.objects.none()
 
     def has_permission(self, request):
         # return request.user.is_authenticated #and not (request.user.is_superuser or request.user.is_admin)
