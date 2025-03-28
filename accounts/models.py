@@ -16,8 +16,7 @@ class User(AbstractUser):
         swappable = "AUTH_USER_MODEL"
 
     def avatar(self):
-        if hasattr(self, 'restaurant'):
-            image = self.restaurant.image
-            if image:
-                return image.url
-        return DEFAULT_USER_URL
+        try:
+            return self.shop.image.url
+        except:
+            return DEFAULT_USER_URL
