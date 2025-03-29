@@ -343,7 +343,7 @@ SPECTACULAR_SETTINGS = {
     # own depending on your requirements. For self-hosting, have a look at
     # the sidecar option in the README.
     'SWAGGER_UI_DIST': 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest',
-    'SWAGGER_UI_FAVICON_HREF': '/static/images/logo.png',
+    'SWAGGER_UI_FAVICON_HREF': '/static/images/logo.jpg',
     'REDOC_DIST': 'https://cdn.jsdelivr.net/npm/redoc@latest',
 
     # Append OpenAPI objects to path and components in addition to the generated objects
@@ -494,10 +494,10 @@ JAZZMIN_SETTINGS = {
     "site_brand": '_',
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "images/logo.png",
+    "site_logo": "images/logo.jpg",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": "images/logo.png",
+    "login_logo": "images/logo.jpg",
 
     # Logo to use for login form in dark themes (defaults to login_logo)
     "login_logo_dark": None,
@@ -506,7 +506,7 @@ JAZZMIN_SETTINGS = {
     "site_logo_classes": "img-circle",
 
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": "images/logo.png",
+    "site_icon": "images/logo.jpg",
 
     # Welcome text on the login screen
     "welcome_sign": _("Welcome To My Shops"),
