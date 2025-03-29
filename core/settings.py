@@ -485,10 +485,10 @@ SPECTACULAR_SETTINGS = {
 #: and other UI-related settings for Django Admin.
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": _("My Shops"),
+    "site_title": _("Stores48"),
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": _("My Shops"),
+    "site_header": _("Stores48"),
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_brand": '_',
@@ -509,10 +509,10 @@ JAZZMIN_SETTINGS = {
     "site_icon": "images/logo.jpg",
 
     # Welcome text on the login screen
-    "welcome_sign": _("Welcome To My Shops"),
+    "welcome_sign": _("Welcome To Stores48"),
 
     # Copyright on the footer
-    "copyright": _("My Shops Menu Development Team"),
+    "copyright": _("Stores48 Development Team"),
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
