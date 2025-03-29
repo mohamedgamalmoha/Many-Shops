@@ -18,33 +18,34 @@ class BaseInlineCustomerAdmin(PermissionsAllowAllAdminMixin, admin.StackedInline
     max_num = 10
     can_delete = True
     show_change_link = False
-    readonly_fields = ('create_at', 'update_at')
+    exclude = ('create_at', 'update_at')
 
 
 class SocialMediaLInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = SocialMediaLink
+    exclude = ('create_at', 'update_at')
 
 
 class ProductImageInlineCustomerAdmin(BaseInlineCustomerAdmin):
     model = ProductImage
+    exclude = ('create_at', 'update_at')
 
 
 class HeaderImageInlineCustomerAdmin(ImageDisplayAminMixin, BaseInlineCustomerAdmin):
     model = HeaderImage
     readonly_image_fields = ['view_image']
-    exclude = ['create_at', 'update_at']
+    exclude = ('create_at', 'update_at')
     fieldsets = (
         (None, {'fields': ('image', 'view_image', 'is_active')}),
     )
 
 
 class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomerAdmin):
-    readonly_fields = ['create_at', 'update_at']
+    exclude = ('create_at', 'update_at')
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
         (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'colors')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     actions = None
     model = Product
@@ -57,7 +58,8 @@ class ProductInlineCustomerAdmin(TranslationInlineModelAdmin, BaseInlineCustomer
 
 class ShopCustomerAdmin(PermissionsAllowOwnerAdminMixin, ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['name', 'is_active']
-    readonly_fields = ['show_theme', 'create_at', 'update_at']
+    readonly_fields = ['show_theme']
+    exclude = ('create_at', 'update_at')
     fieldsets = (
         (_('Main Info'), {'fields': ('email', 'contact_number', 'image', 'view_image')}),
     )
@@ -101,7 +103,7 @@ class CategoryCustomerAdmin(PermissionsAllowOwnerAdminMixin, ShopRelatedObjectAd
                             TranslationAdmin):
     list_display = ['order', 'name', 'is_active']
     list_display_links = ('order', 'name')
-    readonly_fields = ['create_at', 'update_at']
+    exclude = ('create_at', 'update_at')
     actions = None
     fieldsets = (
         (_('Main Info'), {'fields': ('name', 'image', 'view_image', 'is_active', 'order')}),
@@ -113,12 +115,10 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
-    readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
         (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'colors')}),
-        (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
     inlines = [ProductImageInlineCustomerAdmin]
 
