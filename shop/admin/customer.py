@@ -116,8 +116,8 @@ class ProductCustomerAdmin(PermissionsAllowOwnerAdminMixin, TranslationAdmin):
     list_display_links = ['order', 'name']
     list_filter = ['is_active', 'ready_to_ship']
     fieldsets = (
-        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
-        (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
+        (_('Main Info'), {'fields': ('category', 'name', 'description', 'order', 'price', 'after_sale_price',
+                                     'ready_to_ship', 'is_active')}),
         (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'colors')}),
     )
     inlines = [ProductImageInlineCustomerAdmin]
