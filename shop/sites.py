@@ -56,6 +56,8 @@ class CustomerAdminSite(AdminSite):
 
     login_form = AuthenticationForm
 
+    index_template = 'admin/custom_index.html'
+
     def get_log_entries(self, request):
         return LogEntry.objects.none()
 
