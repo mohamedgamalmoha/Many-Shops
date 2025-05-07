@@ -143,6 +143,8 @@ class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if self.action == 'random':
+            queryset = queryset.random_product_for_each_shop()
         if is_expanded(self.request, 'shop'):
             queryset = queryset.select_related('category__shop')
         if is_expanded(self.request, 'category'):
@@ -154,7 +156,4 @@ class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
     @extend_schema(responses={200: ProductSerializer(many=True)}, filters=True)
     @action(["GET"], detail=False, url_path='random')
     def random(self, request, *args, **kwargs):
-        self.ordering = ['?']
-        response = self.list(request, *args, **kwargs)
-        self.ordering = None
-        return response
+        return self.list(request, *args, **kwargs)
