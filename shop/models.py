@@ -8,6 +8,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from info.models import Theme
 from .constants import FORCED_IMAGE_FORMAT, MAX_FILE_SIZE
+from .query import ProductQuerySet
 from .enums import SocialMediaPlatform
 from .validators import FileSizeValidator, validate_hex_color, validate_english_alphanum
 
@@ -217,6 +218,8 @@ class Product(models.Model):
    
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Update At"))
+
+    objects = models.Manager.from_queryset(ProductQuerySet)()
 
     class Meta:
         verbose_name = _("Product")
