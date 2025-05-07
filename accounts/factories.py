@@ -10,7 +10,7 @@ User = get_user_model()
 class UserFactory(factory.django.DjangoModelFactory):
     email = factory.LazyAttribute(lambda obj: f'{obj.username}@example.com')
     full_name = factory.Faker('name')
-    phone_number = factory.Faker('phone_number')
+    # phone_number = factory.Faker('phone_number')
     is_active = True
     password = factory.PostGenerationMethodCall('set_password', 'defaultpassword')
 
