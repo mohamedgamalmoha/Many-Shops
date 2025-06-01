@@ -202,9 +202,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Product Name"))
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
 
-    price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price"))
-    after_sale_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True,
-                                           verbose_name=_("Sale Price"))
+    price = models.CharField(max_length=100, verbose_name=_("Price"))
+    after_sale_price = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Sale Price"))
 
     tag = models.ForeignKey(Tag, blank=True, null=True, on_delete=models.SET_NULL, related_name="products",
                             verbose_name=_("Tag"))
