@@ -29,4 +29,4 @@ class ProductFilterSet(filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ('name', 'description', 'is_active', 'create_at', 'update_at')
+        fields = ('name', 'description', 'is_active', 'is_featured', 'create_at', 'update_at')

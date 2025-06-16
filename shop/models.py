@@ -214,6 +214,7 @@ class Product(models.Model):
 
     ready_to_ship = models.BooleanField(default=True, verbose_name=_("Ready To Ship"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    is_featured = models.BooleanField(default=False, verbose_name=_('Is Featured'))
     order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
    
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Create At"))

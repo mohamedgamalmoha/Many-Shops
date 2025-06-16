@@ -144,7 +144,7 @@ class ProductSuperuserAdmin(TranslationAdmin):
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
-        (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active')}),
+        (_('More Info'), {'fields': ('price', 'after_sale_price', 'ready_to_ship', 'is_active', 'is_featured')}),
         (_('Specs'), {'fields': ('tag', 'letter_sizes', 'number_sizes', 'colors')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )
