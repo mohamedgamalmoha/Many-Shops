@@ -57,7 +57,7 @@ class CategoryInlineAdmin(TranslationInlineModelAdmin, ImageDisplayAminMixin, Ba
 class ShopSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_display = ['order', 'name', 'owner', 'is_active', 'create_at', 'update_at']
     readonly_fields = ['create_at', 'update_at']
-    list_filter = ['is_active']
+    list_filter = ['is_active', 'is_featured']
     fieldsets = (
         (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'email', 'contact_number', 'image', 'view_image',
                                      'is_active', 'is_featured', 'order')}),
@@ -140,7 +140,7 @@ class TagSuperUserAdmin(admin.ModelAdmin):
 class ProductSuperuserAdmin(TranslationAdmin):
     list_display = ['order', 'name', 'category', 'is_active', 'ready_to_ship']
     list_display_links = ['order', 'name']
-    list_filter = ['is_active', 'ready_to_ship']
+    list_filter = ['is_active', 'is_featured', 'ready_to_ship']
     readonly_fields = ['create_at', 'update_at']
     fieldsets = (
         (_('Main Info'), {'fields': ('category', 'name', 'description', 'order')}),
