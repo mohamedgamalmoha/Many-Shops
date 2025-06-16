@@ -78,14 +78,6 @@ class ProductSerializer(FlexFieldsModelSerializer):
         days_ago = timezone.now() - timedelta(days=NEW_PRODUCT_DAYS)
         return obj.create_at > days_ago
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if data['price']:
-            data['price'] = int(float(data['price']))
-        if data['after_sale_price']:
-            data['after_sale_price'] = int(float(data['after_sale_price']))
-        return data
-
 
 class CategorySerializer(DefaultImageSerializerMixin, FlexFieldsModelSerializer):
     default_image_url = DEFAULT_PRODUCT_IMAGE_URL
