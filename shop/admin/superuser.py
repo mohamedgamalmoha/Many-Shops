@@ -60,7 +60,7 @@ class ShopSuperuserAdmin(ImageDisplayAminMixin, TranslationAdmin):
     list_filter = ['is_active']
     fieldsets = (
         (_('Main Info'), {'fields': ('owner', ('name', 'slug'), 'email', 'contact_number', 'image', 'view_image',
-                                     'is_active', 'order')}),
+                                     'is_active', 'is_featured', 'order')}),
         (_('Theme'), {'fields': ('theme', 'primary_color', 'border_color')}),
         (_('Important Dates'), {'fields': ('create_at', 'update_at')}),
     )

@@ -31,6 +31,7 @@ class Shop(models.Model):
                               validators=[FileSizeValidator(max_upload_file_size=MAX_FILE_SIZE)],
                               upload_to='shops/', verbose_name=_("Image"))
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
+    is_featured = models.BooleanField(default=False, verbose_name=_('Is Featured'))
     order = models.PositiveIntegerField(default=0, blank=True, verbose_name=_('Order By'))
 
     theme = models.ForeignKey(Theme, on_delete=models.SET_NULL, null=True, related_name='shops',

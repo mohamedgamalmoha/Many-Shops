@@ -15,7 +15,7 @@ class ShopFilterSet(filters.FilterSet):
 
     class Meta:
         model = Shop
-        fields = ('search', 'email', 'is_active')
+        fields = ('search', 'email', 'is_active', 'is_featured')
 
 
 class CategoryFilterSet(filters.FilterSet):
